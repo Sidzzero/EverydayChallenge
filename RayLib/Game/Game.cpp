@@ -194,6 +194,9 @@ int main(void)
         ClearBackground(DARKBLUE);
         DrawText("Welcome to Breakout", 0, 0, 20, YELLOW);
         GameRender();
+       
+        std::string fps = std::to_string(GetFPS());
+        DrawText(fps.c_str(), screenWidth - 80, 0, 30, GREEN);
         EndDrawing();
     }
     GameShutdown();
