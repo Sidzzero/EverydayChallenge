@@ -8,6 +8,7 @@
 
 const int CELL_SIZE = 30;
 const int CELL_COUNT = 25;
+const int offset = 75;
 
 Color green = { 174,204,94,255 };
 Color darkGreen = {43,50,22,255};
@@ -66,6 +67,12 @@ public:
             //DrawRectangle(body[i].x * CELL_SIZE, body[i].y * CELL_SIZE, CELL_SIZE, CELL_SIZE, darkGreen);
         }
     }
+    void Reset()
+    {
+        body = { Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9} };
+
+        direction = Vector2{ 1,0 };
+    }
 };
 
 class Food
@@ -91,7 +98,7 @@ public :
     void Draw()
     {
         DrawTexture(tex,position.x * CELL_SIZE,position.y * CELL_SIZE,RAYWHITE);
-        DrawRectangle(position.x * CELL_SIZE, position.y * CELL_SIZE, CELL_SIZE, CELL_SIZE, RAYWHITE);
+      //  DrawRectangle(position.x * CELL_SIZE, position.y * CELL_SIZE, CELL_SIZE, CELL_SIZE, RAYWHITE);
     }
     Vector2 GenerateRandomCell()
     {
@@ -118,15 +125,26 @@ public:
     int iScore = 0;
     Snake snake;
     Food food = { snake.body };
+
+    Sound eatFX;
+    Sound wallFx;
     Game()
     {
-       
+        InitAudioDevice();
+        eatFX = LoadSound("Sounds/eat.mp3");
+        wallFx = LoadSound("Sounds/wall.mp3");
     }
     ~Game()
     {
         
     }
     void Start()
+    {
+        isPlaying = true;
+        iScore = 0;
+        food.position=  food.SpawnAtRandomPosition(snake.body);
+    }
+    void Restart()
     {
         isPlaying = true;
         iScore = 0;
@@ -137,34 +155,44 @@ public:
         float currentTime = GetFrameTime();
         food.Update();
         ElaspedWaitTime += currentTime;
+
         if (IsKeyPressed(KEY_UP) && snake.direction.y !=1 )
         {
             snake.direction = Vector2{ 0,-1 };
+            isPlaying = true;
         }
         if (IsKeyPressed(KEY_DOWN) && snake.direction.y != -1)
         {
             snake.direction = Vector2{ 0,1 };
+            isPlaying = true;
         }
         if (IsKeyPressed(KEY_LEFT) && snake.direction.x != 1)
         {
             snake.direction = Vector2{ -1,0 };
+            isPlaying = true;
         }
         if (IsKeyPressed(KEY_RIGHT) && snake.direction.x != -1)
         {
             snake.direction = Vector2{ 1,0 };
+            isPlaying = true;
         }
-        if (ElaspedWaitTime> snakeMoveWait)
+
+        if (isPlaying)
         {
-         snake.Update();
-         ElaspedWaitTime = 0;
-         //Collison
-//Snake and Wall
-
-//Snake and Food
-         CheckCollisionWithFood();
-         //Snake and Self
+            if (ElaspedWaitTime > snakeMoveWait)
+            {
+                snake.Update();
+                ElaspedWaitTime = 0;
+                //Collison
+                 //Snake and Wall
+                CheckCollisonWithWall();
+                CheckCollisonWithSnake();
+                //Snake and Food
+                CheckCollisionWithFood();
+                //Snake and Self
+            }
+      
         }
-
 
     }
     void Draw()
@@ -172,18 +200,51 @@ public:
         food.Draw();
         snake.Draw();
     }
+    void GameEnd()
+    {
+        snake.Reset();
+        food.position = food.SpawnAtRandomPosition(snake.body);
+        isPlaying = false;
+        iScore = 0;
+      
+    }
     void ShutDown()
     {
 
+    }
+    void CheckCollisonWithSnake()
+    {
+        std::deque<Vector2> headlessBody = snake.body;
+        headlessBody.pop_front();
+        if (ElementInDeque(snake.body[0], headlessBody))
+        {
+            PlaySound(wallFx);
+            GameEnd();
+        }
+    }
+
+    void CheckCollisonWithWall()
+    {
+        if (snake.body[0].x >= (CELL_COUNT + 2.5  ) || snake.body[0].x <1.5f) //  30 x X = 75(offset) 
+        {
+            GameEnd();
+            PlaySound(eatFX);
+        }
+        if (snake.body[0].y >= (CELL_COUNT + 2.5) || snake.body[0].y < 1.5f)
+        {
+            PlaySound(eatFX);
+            GameEnd();
+        }
     }
     void CheckCollisionWithFood()
     {
         std::cout<< snake.body[0].x<<"=="<<food.position.x<<"|||"<< snake.body[0].y<<"=="<<food.position.y<<std::endl;
         if (Vector2Equals(snake.body[0],food.position))
         {
-            food.SpawnAtRandomPosition(snake.body);
+            food.position = food.SpawnAtRandomPosition(snake.body);
             snake.isGrowing = true;
             std::cout << "CheckCollisionWithFood !";
+            iScore++;
         }
     }
 private:
@@ -193,7 +254,7 @@ private:
 
 int main(void)
 {
-    InitWindow(CELL_SIZE*CELL_COUNT, CELL_SIZE * CELL_COUNT, "RL_Snake-powered by Raylib");
+    InitWindow(2 * offset + CELL_SIZE*CELL_COUNT, 2 * offset + CELL_SIZE * CELL_COUNT, "RL_Snake-powered by Raylib");
     Game snakeGame;
     snakeGame.Start();
     SetTargetFPS(60);
@@ -204,6 +265,11 @@ int main(void)
         //DrawText("Congrats! You created your first window!", 190, 200, 20, BLACK);
         snakeGame.Update();
         snakeGame.Draw();
+
+        DrawRectangleLinesEx(Rectangle{ (float)offset - 5, (float)offset - 5, (float)CELL_SIZE * CELL_COUNT + 10, (float)CELL_SIZE * CELL_COUNT + 10 }, 5, darkGreen);
+        DrawText("Retro Snake - coded by Sidz", offset - 5, 20, 40, darkGreen);
+        DrawText(TextFormat("%i", snakeGame.iScore), offset - 5, offset + CELL_SIZE * CELL_COUNT + 10, 40, darkGreen);
+      
         EndDrawing();
     }
     snakeGame.ShutDown();
