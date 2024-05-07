@@ -2,19 +2,207 @@
 //
 
 #include "raylib.h"
+#include<deque>
+#include <raymath.h>
+#include <iostream>
+
+const int CELL_SIZE = 30;
+const int CELL_COUNT = 25;
+
+Color green = { 174,204,94,255 };
+Color darkGreen = {43,50,22,255};
+
+bool ElementInDeque(Vector2 element, std::deque<Vector2> deque)
+{
+    for (unsigned int i = 0; i < deque.size(); i++)
+    {
+        if (Vector2Equals(deque[i], element))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+class Snake
+{
+public:
+    std::deque<Vector2> body = { Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9} };
+    Vector2 direction = Vector2{ 1,0 };
+    bool isGrowing = false;
+    Snake()
+    {
+
+    }
+    ~Snake()
+    {
+
+    }
+    void Update()
+    {
+        body.push_front(Vector2Add(body[0], direction));
+        if (isGrowing == false)
+        {
+            body.pop_back();
+         
+        }
+        else
+        {
+            isGrowing = false; //poping required
+        }
+      
+    }
+    void Draw()
+    {
+        for (int i=0;i<body.size();i++)
+        {
+         //   DrawRectangleRounded(body[i].x * CELL_SIZE, body[i].y * CELL_SIZE, CELL_SIZE, CELL_SIZE, darkGreen);
+           // DrawRectangleRounded(Rectangle{ body[i].x * CELL_SIZE, body[i].y * CELL_SIZE, (float)CELL_SIZE, (float)CELL_SIZE },0.5,6, darkGreen);
+            float x = body[i].x;
+            float y = body[i].y;
+            Rectangle segment = Rectangle{  x * CELL_SIZE, y * CELL_SIZE, (float)CELL_SIZE, (float)CELL_SIZE };
+            DrawRectangleRounded(segment, 0.5, 6, darkGreen);
+        }
+    }
+};
+
+class Food
+{
+public :
+    Vector2 position = {5,8};
+    Food()
+    {
+        Image img = LoadImage("Graphics/food.png");
+        tex = LoadTextureFromImage(img);
+        
+        UnloadImage(img);
+    }
+    ~Food()
+    {
+        UnloadTexture(tex);
+    }
+
+    void Update()
+    {
+
+    }
+    void Draw()
+    {
+        DrawTexture(tex,position.x * CELL_COUNT,position.y * CELL_COUNT,RAYWHITE);
+    }
+    Vector2 GenerateRandomCell()
+    {
+        float x = GetRandomValue(0, CELL_COUNT - 1);
+        float y = GetRandomValue(0, CELL_COUNT - 1);
+        return Vector2{ x, y };
+    }
+    Vector2  SpawnAtRandomPosition(std::deque<Vector2> snakeBody)
+    {
+        Vector2 position = GenerateRandomCell();
+        while (ElementInDeque(position, snakeBody))
+        {
+            position = GenerateRandomCell();
+        }
+        return position;
+    }
+private: 
+    Texture tex;
+};
+class Game
+{
+public:
+    bool isPlaying = false;
+    int iScore = 0;
+    Food food;
+    Snake snake;
+    Game()
+    {
+       
+    }
+    ~Game()
+    {
+        
+    }
+    void Start()
+    {
+        isPlaying = true;
+        iScore = 0;
+        food.SpawnAtRandomPosition(snake.body);
+    }
+    void Update()
+    {
+        float currentTime = GetFrameTime();
+        food.Update();
+        ElaspedWaitTime += currentTime;
+        if (IsKeyPressed(KEY_UP) && snake.direction.y !=1 )
+        {
+            snake.direction = Vector2{ 0,-1 };
+        }
+        if (IsKeyPressed(KEY_DOWN) && snake.direction.y != -1)
+        {
+            snake.direction = Vector2{ 0,1 };
+        }
+        if (IsKeyPressed(KEY_LEFT) && snake.direction.x != 1)
+        {
+            snake.direction = Vector2{ -1,0 };
+        }
+        if (IsKeyPressed(KEY_RIGHT) && snake.direction.x != -1)
+        {
+            snake.direction = Vector2{ 1,0 };
+        }
+        if (ElaspedWaitTime> snakeMoveWait)
+        {
+         snake.Update();
+         ElaspedWaitTime = 0;
+         //Collison
+//Snake and Wall
+
+//Snake and Food
+         CheckCollisionWithFood();
+         //Snake and Self
+        }
+
+
+    }
+    void Draw()
+    {
+        food.Draw();
+        snake.Draw();
+    }
+    void ShutDown()
+    {
+
+    }
+    void CheckCollisionWithFood()
+    {
+        std::cout<< snake.body[0].x<<"=="<<food.position.x<<"|||"<< snake.body[0].y<<"=="<<food.position.y<<std::endl;
+        if (Vector2Equals(snake.body[0],food.position))
+        {
+            food.SpawnAtRandomPosition(snake.body);
+            snake.isGrowing = true;
+            std::cout << "CheckCollisionWithFood !";
+        }
+    }
+private:
+    float snakeMoveWait = 0.5f;
+    float ElaspedWaitTime = 0;
+};
 
 int main(void)
 {
-    InitWindow(800, 450, "raylib [core] example - basic window");
-
+    InitWindow(CELL_SIZE*CELL_COUNT, CELL_SIZE * CELL_COUNT, "RL_Snake-powered by Raylib");
+    Game snakeGame;
+    snakeGame.Start();
+    SetTargetFPS(60);
     while (!WindowShouldClose())
     {
         BeginDrawing();
-        ClearBackground(RAYWHITE);
-        DrawText("Congrats! You created your first window!", 190, 200, 20, BLACK);
+        ClearBackground(green);
+        //DrawText("Congrats! You created your first window!", 190, 200, 20, BLACK);
+        snakeGame.Update();
+        snakeGame.Draw();
         EndDrawing();
     }
-
+    snakeGame.ShutDown();
     CloseWindow();
 
     return 0;
