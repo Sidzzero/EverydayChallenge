@@ -27,11 +27,13 @@ class Snake
 {
 public:
     std::deque<Vector2> body = { Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9} };
-    Vector2 direction = Vector2{ 1,0 };
+    Vector2 direction = Vector2{ 0,0 };
     bool isGrowing = false;
     Snake()
     {
-
+       body = { Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9} };
+  
+        direction = Vector2{ 1,0 };
     }
     ~Snake()
     {
@@ -61,6 +63,7 @@ public:
             float y = body[i].y;
             Rectangle segment = Rectangle{  x * CELL_SIZE, y * CELL_SIZE, (float)CELL_SIZE, (float)CELL_SIZE };
             DrawRectangleRounded(segment, 0.5, 6, darkGreen);
+            //DrawRectangle(body[i].x * CELL_SIZE, body[i].y * CELL_SIZE, CELL_SIZE, CELL_SIZE, darkGreen);
         }
     }
 };
@@ -68,12 +71,12 @@ public:
 class Food
 {
 public :
-    Vector2 position = {5,8};
-    Food()
+    Vector2 position = {1,1};
+    Food(std::deque<Vector2> snakeBody)
     {
         Image img = LoadImage("Graphics/food.png");
         tex = LoadTextureFromImage(img);
-        
+        SpawnAtRandomPosition(snakeBody);
         UnloadImage(img);
     }
     ~Food()
@@ -87,7 +90,8 @@ public :
     }
     void Draw()
     {
-        DrawTexture(tex,position.x * CELL_COUNT,position.y * CELL_COUNT,RAYWHITE);
+        DrawTexture(tex,position.x * CELL_SIZE,position.y * CELL_SIZE,RAYWHITE);
+        DrawRectangle(position.x * CELL_SIZE, position.y * CELL_SIZE, CELL_SIZE, CELL_SIZE, RAYWHITE);
     }
     Vector2 GenerateRandomCell()
     {
@@ -112,8 +116,8 @@ class Game
 public:
     bool isPlaying = false;
     int iScore = 0;
-    Food food;
     Snake snake;
+    Food food = { snake.body };
     Game()
     {
        
@@ -183,7 +187,7 @@ public:
         }
     }
 private:
-    float snakeMoveWait = 0.5f;
+    float snakeMoveWait = 0.2f;
     float ElaspedWaitTime = 0;
 };
 
