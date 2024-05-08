@@ -4,7 +4,7 @@
 #include <deque>
 #include <vector>
 #include <string>
-
+#include <iostream>
 class Object
 {
 public:

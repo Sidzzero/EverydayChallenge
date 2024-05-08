@@ -21,16 +21,22 @@ void Player::Draw()
 
  void Player::Update()
  {
-
+	 if (GetKeyPressed() == KEY_SPACE)
+	 {
+		 velocity = Vector2{0,-UpForce };
+	 }
+	 velocity = Vector2Add(velocity, Vector2{ accel.x * GetFrameTime(), accel.y * GetFrameTime() });
+	 pos = Vector2Add(pos, Vector2{ velocity.x * GetFrameTime(), velocity.y * GetFrameTime() });
+	 std::cout << velocity.y <<std::endl;
  }
 
  void Player::Reset()
  {
-	 pos = Vector2{50,50};
-	 accel = Vector2{ 0,1 };
-	 speed = 10;
+	 pos = Vector2{ 180,400 };
+	  accel = Vector2{ 0,1500 };
+	  velocity = Vector2{ 0,400 };
+	  UpForce = 800;
  }
-
  void Player::Cleanup()
  {
 	 UnloadTexture(tex);
