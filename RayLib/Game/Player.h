@@ -7,7 +7,7 @@ public:
 	Vector2 pos;
 	Vector2 accel = Vector2{0,1500};
 	Vector2 velocity = Vector2{ 0,400 };
-	float UpForce = 800;
+	float UpForce = 600;
 	Texture tex;
 
 	 

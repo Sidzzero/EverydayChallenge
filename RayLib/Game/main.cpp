@@ -5,8 +5,7 @@
 #include "Common.h"
 #include "Game.h"
 
-constexpr int SCREEN_WIDTH = 800;
-constexpr int SCREEN_HEIGHT = 900;
+
 int main(void)
 {   
  
@@ -14,7 +13,7 @@ int main(void)
    
     Game ZlappyBird(SCREEN_WIDTH, SCREEN_HEIGHT);
     ZlappyBird.StartUp();
-  
+    SetTargetFPS(60);
     while (!WindowShouldClose())
     {
         BeginDrawing();

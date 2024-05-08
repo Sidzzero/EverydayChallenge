@@ -16,7 +16,7 @@ Player::Player(Vector2 a_pos, const char* ImagePath)
 void Player::Draw()
 {
 	//DrawTexture(tex, pos.x, pos.y, RAYWHITE);
-	DrawTextureEx(tex, pos, 0, 2.0f, RAYWHITE);
+	DrawTextureEx(tex, pos, 0, PLAYER_SCALE, RAYWHITE);
 }
 
  void Player::Update()
@@ -35,7 +35,7 @@ void Player::Draw()
 	 pos = Vector2{ 180,400 };
 	  accel = Vector2{ 0,1500 };
 	  velocity = Vector2{ 0,400 };
-	  UpForce = 800;
+	  UpForce = 600;
  }
  void Player::Cleanup()
  {

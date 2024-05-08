@@ -5,6 +5,12 @@
 #include <vector>
 #include <string>
 #include <iostream>
+
+constexpr int SCREEN_WIDTH = 800;
+constexpr int SCREEN_HEIGHT = (512 * 2);
+
+constexpr float PLAYER_SCALE = 2.0f;
+
 class Object
 {
 public:
