@@ -22,13 +22,13 @@ void Player::Draw()
 
  void Player::Update()
  {
-	 if (GetKeyPressed() == KEY_SPACE)
+	 if (IsKeyPressed(KEY_SPACE))
 	 {
 		 velocity = Vector2{0,-UpForce };
 	 }
 	 velocity = Vector2Add(velocity, Vector2{ accel.x * GetFrameTime(), accel.y * GetFrameTime() });
 	 pos = Vector2Add(pos, Vector2{ velocity.x * GetFrameTime(), velocity.y * GetFrameTime() });
-	 std::cout << velocity.y <<std::endl;
+	 //std::cout << velocity.y <<std::endl;
  }
 
  void Player::Reset()

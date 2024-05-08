@@ -11,6 +11,7 @@ int main(void)
  
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Zlappy Bird - powered by Raylib");
    
+    InitAudioDevice();
     Game ZlappyBird(SCREEN_WIDTH, SCREEN_HEIGHT);
     ZlappyBird.StartUp();
     SetTargetFPS(60);
@@ -24,6 +25,7 @@ int main(void)
         EndDrawing();
     }
     ZlappyBird.Shutdown();
+    CloseAudioDevice();
     CloseWindow();
 
     return 0;
