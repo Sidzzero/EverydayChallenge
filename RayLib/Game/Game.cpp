@@ -20,6 +20,7 @@ Game::Game(int screenWidth, int screenHeight):player(Player(Vector2{ 180,400 }, 
 
 void Game::StartUp()
 {
+	pipe1.GenerateRandomGap(SCREEN_WIDTH+300);
 	pipe1.StartMoving();
 	pipe2.StopMoving();
 }
@@ -28,11 +29,6 @@ void Game::StartUp()
 void Game::Update()
 {
 
-	if ( IsKeyPressed(KEY_R))
-	{
-		yTop = GetRandomValue(100, 600);
-		yBot = GetRandomValue(yTop + 200, 700);
-	}
 	if (isPLaying)
 	{
 
@@ -46,7 +42,7 @@ void Game::Update()
 
 	   if (ptrCurrentPipe->posTop.x<-10 && ptrCurrentPipe->isMoving == true)
 	   {
-		   ptrCurrentPipe->GenerateRandomGap(SCREEN_WIDTH);
+		   ptrCurrentPipe->GenerateRandomGap(SCREEN_WIDTH+25);
 		   auto temp = ptrCurrentPipe;
 		   ptrCurrentPipe = ptrNextPipe;
 		   ptrNextPipe = temp;
@@ -54,16 +50,36 @@ void Game::Update()
 
 	   player.Update();
 	}
+	//GAME OVER THINGS
 	
-	if (player.pos.y> 900)
+	if (player.pos.y> 900 
+		 ||
+		(player.pos.x+50 >= ptrCurrentPipe->posTop.x-100 && player.pos.x+50<= (ptrCurrentPipe->posTop.x) &&
+		player.pos.y<ptrCurrentPipe->posTop.y) ||
+		(player.pos.x + 50 >= ptrCurrentPipe->posBot.x && player.pos.x + 50 <= (ptrCurrentPipe->posBot.x +100) &&
+			player.pos.y >= ptrCurrentPipe->posBot.y)
+		
+		)
+	
 	{
-		//isPLaying = false;
+		
+		isPLaying = false;
 		//player.Reset();
+		ptrCurrentPipe->isMoving = false;
+		ptrNextPipe->isMoving = false;
+		//ptrCurrentPipe->StopMoving();
+		//ptrNextPipe->StopMoving();
 	}
-	if (GetKeyPressed()==KEY_SPACE)
+
+	if (IsKeyPressed(KEY_P) && isPLaying == false)
 	{
 		isPLaying = true;
-	
+		player.Reset();
+		pipe1.StartMoving();
+		pipe1.GenerateRandomGap(SCREEN_WIDTH + 300);
+		pipe2.StopMoving();
+		ptrCurrentPipe = &pipe1;
+		ptrNextPipe = &pipe2;
 	}
 	
 	
@@ -92,6 +108,24 @@ void Game::Draw()
 		0,
 		RAYWHITE);
 	player.Draw();
+
+	DrawCircle(pipe1.posTop.x - 100, pipe1.posTop.y, 5, BLUE);
+	DrawCircle(pipe1.posTop.x, pipe1.posTop.y, 5, RED);
+
+	DrawCircle(pipe2.posTop.x, pipe2.posTop.y, 5, RED);
+	DrawCircle(pipe2.posTop.x-100, pipe2.posTop.y, 5, BLUE);
+
+	DrawCircle(pipe1.posBot.x, pipe1.posBot.y, 5, BLUE);
+	DrawCircle(pipe1.posBot.x+100, pipe1.posBot.y, 5,  RED);
+	DrawCircle(pipe2.posBot.x, pipe2.posBot.y, 5, BLUE);
+	DrawCircle(pipe2.posBot.x + 100, pipe2.posBot.y, 5,  RED);
+
+
+	DrawCircle(player.pos.x, player.pos.y, 10, GREEN);
+	DrawCircle(player.pos.x+50,player.pos.y, 10, DARKGREEN);
+
+	DrawCircle(player.pos.x, player.pos.y+50, 10, PURPLE);
+	DrawCircle(player.pos.x + 50, player.pos.y+50, 10, DARKPURPLE);
 }
 
 void Game::Shutdown()

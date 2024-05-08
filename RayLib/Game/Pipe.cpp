@@ -24,8 +24,8 @@ void Pipe::Update()
 	{
 		return;
 	}
-	posTop.x -= 140.0f * GetFrameTime();
-	posBot.x -= 140.0f * GetFrameTime();
+	posTop.x -= 180.0f * GetFrameTime();
+	posBot.x -= 180.0f * GetFrameTime();
 }
 
 void Pipe::Cleanup()
