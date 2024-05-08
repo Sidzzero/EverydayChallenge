@@ -1,5 +1,6 @@
 #include "Game.h"
-
+float fGroundScroll = 0;
+float fSkyScroll = 0;
 Game::Game(int screenWidth, int screenHeight):player(Player(Vector2{ 180,400 }, "assets\\sprites\\bluebird-downflap.png"))
 {
 	//player = Player( Vector2{ 50,50 }, "assets\sprites\bluebird-downflap.png" );
@@ -50,6 +51,8 @@ void Game::Update()
 	   }
 
 	   player.Update();
+	   fGroundScroll += GetFrameTime() * 200.0f;
+	   fSkyScroll += GetFrameTime() * 30;
 	}
 	//GAME OVER THINGS
 	
@@ -98,7 +101,7 @@ void Game::Draw()
 {
 	
 	//DrawTextureEx(texBG, Vector2{ 0, 0 }, 0, 1, RAYWHITE);
-	DrawTexturePro(texBG, Rectangle{ 0,0,288,512 }, 
+	DrawTexturePro(texBG, Rectangle{ fSkyScroll,0,288,512 },
 		Rectangle{ 0,0,SCREEN_WIDTH,SCREEN_HEIGHT+100 },
 		Vector2{0,100},
 		0 ,
@@ -110,11 +113,13 @@ void Game::Draw()
 	//DrawTextureEx(texPipe, Vector2{ 0,yBot }, 0, PLAYER_SCALE, RAYWHITE);//500 L-700 bottom
 	pipe1.Draw();
 	pipe2.Draw();
-	DrawTexturePro(texGround, Rectangle{ 0,0,336,112 },
+	DrawTexturePro(texGround, Rectangle{ fGroundScroll,0,336,112 },
 		Rectangle{ 0,0,SCREEN_WIDTH,112 + 100 },
 		Vector2{ 0,-910 },
 		0,
 		RAYWHITE);
+	
+	
 	player.Draw();
 	if (isGameOver)
 	{
