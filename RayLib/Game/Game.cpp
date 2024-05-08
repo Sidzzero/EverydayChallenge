@@ -12,7 +12,21 @@ void Game::StartUp()
 
 void Game::Update()
 {
-	player.Update();
+	if (isPLaying)
+	{
+	   player.Update();
+	}
+	
+	if (player.pos.y> 900)
+	{
+		isPLaying = false;
+		player.Reset();
+	}
+	if (GetKeyPressed()==KEY_SPACE)
+	{
+		isPLaying = true;
+	
+	}
 }
 
 void Game::Draw()
