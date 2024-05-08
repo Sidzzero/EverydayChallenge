@@ -17,6 +17,7 @@ void Player::Draw()
 {
 	//DrawTexture(tex, pos.x, pos.y, RAYWHITE);
 	DrawTextureEx(tex, pos, 0, PLAYER_SCALE, RAYWHITE);
+	DrawText(std::string{ std::to_string(iScore)}.c_str(), SCREEN_WIDTH / 2, 0, 100, YELLOW);
 }
 
  void Player::Update()
@@ -36,6 +37,7 @@ void Player::Draw()
 	  accel = Vector2{ 0,1500 };
 	  velocity = Vector2{ 0,400 };
 	  UpForce = 600;
+	  iScore = 0;
  }
  void Player::Cleanup()
  {

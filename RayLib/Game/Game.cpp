@@ -46,6 +46,7 @@ void Game::Update()
 		   auto temp = ptrCurrentPipe;
 		   ptrCurrentPipe = ptrNextPipe;
 		   ptrNextPipe = temp;
+		   isCrossed = false;
 	   }
 
 	   player.Update();
@@ -64,16 +65,23 @@ void Game::Update()
 	{
 		
 		isPLaying = false;
-		//player.Reset();
 		ptrCurrentPipe->isMoving = false;
 		ptrNextPipe->isMoving = false;
-		//ptrCurrentPipe->StopMoving();
-		//ptrNextPipe->StopMoving();
+		isGameOver = true;
 	}
+
+	if (isCrossed == false && player.pos.x+10> ptrCurrentPipe->posTop.x)
+	{
+		player.iScore++;
+		isCrossed = true;
+	}
+
+
 
 	if (IsKeyPressed(KEY_P) && isPLaying == false)
 	{
 		isPLaying = true;
+		isGameOver = false;
 		player.Reset();
 		pipe1.StartMoving();
 		pipe1.GenerateRandomGap(SCREEN_WIDTH + 300);
@@ -108,7 +116,14 @@ void Game::Draw()
 		0,
 		RAYWHITE);
 	player.Draw();
+	if (isGameOver)
+	{
+		DrawText("GAME OVER !!", SCREEN_WIDTH * 0.09f, SCREEN_HEIGHT * 0.45f, 100, RED);
+		DrawText("Press 'P' to Fly Again !", SCREEN_WIDTH * 0.16f, SCREEN_HEIGHT *0.54f, 50, DARKPURPLE);
+		
+	}
 
+	//Debugger
 	DrawCircle(pipe1.posTop.x - 100, pipe1.posTop.y, 5, BLUE);
 	DrawCircle(pipe1.posTop.x, pipe1.posTop.y, 5, RED);
 

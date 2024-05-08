@@ -7,6 +7,9 @@ class Game
 public:
 
 	bool isPLaying = true;
+	bool isGameOver = false;
+
+	bool isCrossed = false;
 	Player player;
 
 	Pipe pipe1;

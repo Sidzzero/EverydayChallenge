@@ -43,8 +43,9 @@ void Pipe::GenerateRandomGap(float a_xPos)
 	posTop.x = a_xPos;
 	posBot.x = a_xPos-104;
 
-	posTop.y = GetRandomValue(100, 600);
-	posBot.y = GetRandomValue(posTop.y + 400, 700);
+	posTop.y = GetRandomValue(100, 700);
+	posBot.y = GetRandomValue(posTop.y + 500, 500);
+	
 }
 
 void Pipe::StartMoving()
