@@ -1,6 +1,6 @@
 ﻿  Game.cpp
-D:\Projects\EverydayChallenge\RayLib\Game\Game.cpp(288,61): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\Projects\EverydayChallenge\RayLib\Game\Game.cpp(288,43): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\Projects\EverydayChallenge\RayLib\Game\Game.cpp(293,71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\Projects\EverydayChallenge\RayLib\Game\Game.cpp(293,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Game.cpp(333,50): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Game.cpp(333,42): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Game.cpp(338,71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Game.cpp(338,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   Game.vcxproj -> D:\Projects\EverydayChallenge\RayLib\Game\x64\Debug\Game.exe

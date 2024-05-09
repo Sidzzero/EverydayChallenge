@@ -44,78 +44,113 @@ public:
     Color col = Color{BLUE};
     bool isBomb = false;
     int iNumberOfNearBombs = 0;
-
+    void SetAsBomb()
+    {
+        iNumberOfNearBombs = 0;
+        isBomb = true;
+        col = BOMB;
+    }
+    void Reset()
+    {
+        iNumberOfNearBombs = 0;
+        col = BLUE;
+        isBomb = false;
+    }
 };
 
 bool IsPressedABomb(Cell (&grid)[ROW][ROW], int x, int y)
 {
     return grid[x][y].isBomb;
 }
+
 void CheckNeightbourForBombAndUpdate(Cell(&grid)[ROW][ROW], int x, int y)
 {
+    if (ColorIsEqual( grid[x][y].col , CLOSE_TO_BOMB)  ||
+        ColorIsEqual(grid[x][y].col, BOMB)||
+        ColorIsEqual(grid[x][y].col, OPEN))
+    {    
+        return;
+   }
+    grid[x][y].col = OPEN;
     if (x - 1 >= 0 && y - 1 >= 0)
     {
-        grid[x - 1][y - 1].col = OPEN;
+        //grid[x - 1][y - 1].col = OPEN;
         if (grid[x - 1][y - 1].isBomb)
         {
+            grid[x - 1][y - 1].col = BOMB;
             grid[x][y].iNumberOfNearBombs++;
         }
+        CheckNeightbourForBombAndUpdate(grid, x-1,y-1);
     }
     if (y - 1 >= 0)
     {
-        grid[x][y - 1].col = OPEN;
+       // grid[x][y - 1].col = OPEN;
         if (grid[x][y - 1].isBomb)
         {
+            grid[x][y - 1].col = BOMB;
             grid[x][y].iNumberOfNearBombs++;
         }
+        CheckNeightbourForBombAndUpdate(grid, x , y - 1);
     }
     if (x + 1 < ROW && y - 1 >= 0)
     {
-        grid[x + 1][y - 1].col = OPEN;
+       // grid[x + 1][y - 1].col = OPEN;
         if (grid[x + 1][y - 1].isBomb)
         {
+            grid[x + 1][y - 1].col = BOMB;
             grid[x][y].iNumberOfNearBombs++;
         }
+        CheckNeightbourForBombAndUpdate(grid, x+1, y - 1);
     }
     if (x - 1 >= 0)
     {
-        grid[x - 1][y].col = OPEN;
+      //  grid[x - 1][y].col = OPEN;
         if (grid[x - 1][y].isBomb)
         {
+            grid[x - 1][y].col = BOMB;
             grid[x][y].iNumberOfNearBombs++;
         }
+        CheckNeightbourForBombAndUpdate(grid, x - 1, y );
     }
     if (x + 1 < ROW)
     {
-        grid[x + 1][y].col = OPEN;
+      //  grid[x + 1][y].col = OPEN;
         if (grid[x + 1][y].isBomb)
         {
+            grid[x + 1][y].col = BOMB;
             grid[x][y].iNumberOfNearBombs++;
         }
+        CheckNeightbourForBombAndUpdate(grid, x + 1, y);
     }
     if (x - 1 >= 0 && y + 1 < ROW)
     {
-        grid[x - 1][y + 1].col = OPEN;
+       // grid[x - 1][y + 1].col = OPEN;
         if (grid[x - 1][y + 1].isBomb)
         {
+            grid[x - 1][y + 1].col = BOMB;
             grid[x][y].iNumberOfNearBombs++;
         }
+        CheckNeightbourForBombAndUpdate(grid, x - 1, y+1);
     }
     if (y + 1 < ROW)
     {
-        grid[x][y + 1].col = OPEN;
+       // grid[x][y + 1].col = OPEN;
         if (grid[x][y + 1].isBomb)
         {
+            grid[x][y + 1].col = BOMB;
             grid[x][y].iNumberOfNearBombs++;
         }
+        CheckNeightbourForBombAndUpdate(grid, x , y + 1);
     }
     if (x + 1 < ROW && y + 1 < ROW)
     {
-        grid[x + 1][y + 1].col = OPEN;
+       // grid[x + 1][y + 1].col = OPEN;
         if (grid[x + 1][y + 1].isBomb)
         {
+            grid[x + 1][y + 1].col = BOMB;
             grid[x][y].iNumberOfNearBombs++;
         }
+        CheckNeightbourForBombAndUpdate(grid, x+1, y + 1);
     }
 }
 
@@ -191,7 +226,12 @@ public:
 
     void Startup()
     {
-        grid[2][2].isBomb = true;
+
+        grid[0][1].SetAsBomb();
+        grid[2][2].SetAsBomb();
+        grid[1][1].SetAsBomb();
+        grid[2][3].SetAsBomb();
+
     }
     void Reset()
     {
@@ -206,6 +246,7 @@ public:
             }
         }
         grid[2][2].isBomb = true;
+        grid[2][2].col = BOMB;
        // visited.clear();
     }
     void Update()
@@ -252,7 +293,10 @@ public:
         strMousePos = std::to_string(mousePos.x) + "," + std::to_string(mousePos.y);;
         DrawCircleV(mousePos, 10, YELLOW);
         DrawText(("MousePos:" + VectorToString(mousePos)).c_str(), 0, 300, 20, BLACK);
-        DrawText(("GRID_POS:" + VectorToString(GetGridPosition(mousePos))).c_str(), 0, 400, 20, BLACK);
+        auto temp = GetGridPosition(mousePos);
+        temp.x -= 1;
+        temp.y -= 1;
+        DrawText(("GRID_POS:" + VectorToString(temp)).c_str(), 0, 400, 20, BLACK);
 
         if (isGameOver)
         {
@@ -275,7 +319,7 @@ private:
             for (int j = 0; j < COLUMN; j++)
             {
                 //DrawRectangle(0,0,GRID_SIZE,GRID_SIZE,RED);
-
+                //reverting here
                 float xPos = START_POINT + (float)j * GRID_SIZE;
                 float yPos = START_POINT + (float)i * GRID_SIZE;
                 DrawRectangleRounded(
@@ -285,7 +329,8 @@ private:
                     GRID_SIZE }, 0.5f, 6, grid[i][j].col);
                 if (grid[i][j].isBomb)
                 {
-                    DrawText("BOMB", xPos +GRID_SIZE/3,yPos + GRID_SIZE / 2, 12, RED);
+                   // DrawText("BOMBXXXXXX", xPos +GRID_SIZE/3,yPos + GRID_SIZE / 2, 15, RED);
+                    DrawText("Bomb", xPos+10,yPos+25,30, BLACK);
                 }
                 else
                 {
