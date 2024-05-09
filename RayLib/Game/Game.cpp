@@ -9,7 +9,7 @@
 
 Vector2 GetGridPosition(Vector2 a_mousePos)
 {
-    Vector2 result = { -5,-5 };
+    Vector2 result = { -1,-1 };
     //starting offset to offset + grid+col
 
     //Out of Grid location
@@ -247,11 +247,22 @@ public:
     bool isGameOver = false;
     bool isCheat = false;
     float Timer = 0;
+    int bombCount = 0;
+
+    Sound sfxEmpty;
+    Sound sfxCLose;
+    Sound sfxBomb;
+    Sound sfxClick;
+
     Cell grid[ROW][COLUMN];
     //std::unordered_set<std::pair<int, int>> visited;
 
     Game()
     {
+        sfxEmpty = LoadSound("res//audio//coin.wav");
+        sfxCLose = LoadSound("res//audio//donk.wav");
+        sfxBomb = LoadSound("res//audio//windowBreak.wav");
+        sfxClick = LoadSound("res//audio//windowBreak.wav");
     }
 
     void Startup()
@@ -300,7 +311,7 @@ public:
         {
             grid[pairs[i].first][pairs[i].second].SetAsBomb();
         }
-
+        bombCount = pairs.size();
             
     }
     void Update()
@@ -315,64 +326,81 @@ public:
         {
             Reset();
         }
-        if (IsKeyPressed(KEY_C)   )
+        if (IsKeyPressed(KEY_P) )
+        {
+            Reset();
+        }
+        if (IsKeyPressed(KEY_C))
         {
             isCheat = !isCheat;
         }
         //debug
         if (IsMouseButtonPressed(0))
         {
+            PlaySound(sfxClick);
             auto tempGridPos = GetGridPosition(mousePos);
-            if (tempGridPos.x != -1 && tempGridPos.y != -1)
+            if (tempGridPos.x != -1 && tempGridPos.y != -1 && isGameOver == false)
             {
-               // grid[(int)tempGridPos.y - 1][(int)tempGridPos.x - 1].col = ORANGE;
-            }
-           // SelectNEighbours(grid, (int)tempGridPos.y - 1, (int)tempGridPos.x - 1);
+                if (IsPressedABomb(grid, (int)tempGridPos.y - 1, (int)tempGridPos.x - 1))
+                {
+                    std::cout << "BOMB CHECK TRUEEEE" << std::endl;
+                    // grid[(int)tempGridPos.y - 1][(int)tempGridPos.x - 1].col = BOMB;
+                    isGameOver = true;
+                    isCheat = true;
+                    PlaySound(sfxBomb);
+                }
+                else
+                {
+                    std::cout << "BOMB CHECK FALSE" << std::endl;
 
-           // CheckNeightbourForBombAndUpdate(grid, (int)tempGridPos.y - 1, (int)tempGridPos.x - 1);
-           
-            if (IsPressedABomb(grid, (int)tempGridPos.y -1, (int)tempGridPos.x- 1))
-            {
-                std::cout<<"BOMB CHECK TRUEEEE"<< std::endl;
-               // grid[(int)tempGridPos.y - 1][(int)tempGridPos.x - 1].col = BOMB;
-                 isGameOver = true;
-                 isCheat = true;
-            }
-            else
-            {
-                std::cout << "BOMB CHECK FALSE" << std::endl;
+                    CheckNeightbourForBombAndUpdate(grid, (int)tempGridPos.y - 1, (int)tempGridPos.x - 1);
+                    if (grid[(int)tempGridPos.y - 1][(int)tempGridPos.x - 1].iNumberOfNearBombs == 0)
+                    {
+                        PlaySound(sfxEmpty);
+                    }
+                    else
+                    {
+                        PlaySound(sfxCLose);
+                    }
 
-                CheckNeightbourForBombAndUpdate(grid, (int)tempGridPos.y - 1, (int)tempGridPos.x - 1);
-                
-            }
+                }
 
+            }
         }
     }
     std::string tmpstrTime;
+    std::string tmpstrBomb;
     void Draw()
     {
         DrawGrid();
         if (isGameOver)
         {
-            DrawText("GAME OVER", GetScreenWidth() *0.25f, GetScreenHeight() * 0.85f, 100, RED);
-        }
+            DrawText("GAME OVER", GetScreenWidth() * 0.25f, GetScreenHeight() * 0.85f, 100, RED);
 
+        }
+        DrawText("'R' to Restart ! 'C' to see the BOMBS ,LOSER!", GetScreenWidth() * 0.01f, GetScreenHeight() * 0.95f, 20, YELLOW);
+        DrawText("=> Coded by SIDZ !", GetScreenWidth() * 0.75f, GetScreenHeight() * 0.95f, 20, GREEN);
         tmpstrTime = "Time:" + std::to_string((int)Timer);
-        DrawText(tmpstrTime.c_str(), GetScreenWidth() * 0.15f, 0, 40, DARKPURPLE);
+        tmpstrBomb = "Bomb Count:" + std::to_string((int)bombCount);
+        DrawText(tmpstrTime.c_str(), GetScreenWidth() * 0.35f, 0, 40, YELLOW);
+        DrawText(tmpstrBomb.c_str(), GetScreenWidth() * 0.69f, 0, 40, RED);
         //debug
         strMousePos = std::to_string(mousePos.x) + "," + std::to_string(mousePos.y);;
         DrawCircleV(mousePos, 10, YELLOW);
-        DrawText(("MousePos:" + VectorToString(mousePos)).c_str(), 0, GetScreenHeight()*0.1, 20, BLACK);
+        //DrawText(("MousePos:" + VectorToString(mousePos)).c_str(), 0, GetScreenHeight()*0.1, 20, BLACK);
         auto temp = GetGridPosition(mousePos);
         temp.x -= 1;
         temp.y -= 1;
-        DrawText(("GRID_POS:" + VectorToString(temp)).c_str(), 0, GetScreenHeight() * 0.15, 20, BLACK);
+       // DrawText(("GRID_POS:" + VectorToString(temp)).c_str(), 0, GetScreenHeight() * 0.15, 20, BLACK);
 
      
     }
     void Shutdown()
     {
-
+        UnloadSound( sfxEmpty);
+        UnloadSound(sfxCLose);
+        UnloadSound(sfxBomb);
+        UnloadSound(sfxClick);
     }
 private:
 
@@ -435,12 +463,13 @@ int main(void)
     while (!WindowShouldClose())
     {
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(DARKBROWN);
         mineSweeper.Update();
         mineSweeper.Draw();
         EndDrawing();
     }
     mineSweeper.Shutdown();
+    CloseAudioDevice();
     CloseWindow();
 
     return 0;
