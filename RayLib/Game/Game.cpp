@@ -2,6 +2,8 @@
 //
 
 #include "Common.h"
+#include <unordered_set>
+#include <utility> // for std::pair
 
 
 Vector2 GetGridPosition(Vector2 a_mousePos)
@@ -51,6 +53,61 @@ bool IsPressedABomb(Cell (&grid)[ROW][ROW], int x, int y)
 }
 
 
+void SelectNEighbours(Cell(&grid)[ROW][ROW], int x, int y)
+{
+    if(x-1>=0 && y-1>=0)
+    grid[x - 1][y - 1].col = OPEN;
+
+    if(y-1>=0)
+    grid[x ][y - 1].col = OPEN;
+
+    if(x+1<ROW && y-1>=0)
+    grid[x+1 ][y-1 ].col = OPEN;
+
+    if (x - 1 >= 0)
+    grid[x - 1][y].col = OPEN;
+
+    if (x + 1 < ROW)
+    grid[x + 1][y].col = OPEN;
+
+    if (x - 1 >= 0 && y+1<ROW)
+    grid[x - 1][y + 1].col = OPEN;
+    if ( y + 1 < ROW)
+    grid[x][y + 1].col = OPEN;
+    if (x+1<ROW &&y + 1 < ROW)
+    grid[x+1][y+1].col = OPEN;
+}
+void UpdateGrid(Cell(&grid)[ROW][ROW] ,int x, int y, std::unordered_set<std::pair<int, int>> & visitedSet)
+{
+    if (x<0 || y<0 || x>=ROW || y>=ROW)
+    {
+        return;
+    }
+  
+    int temp_NeightbourBomb = 0;
+    if (x-1 >0 && y-1>0)//Exisitngs
+    {
+        if (grid[x][x].isBomb)
+        {
+            temp_NeightbourBomb++;
+        }
+    }
+    if (x> 0 && y - 1 > 0)//Exisitngs
+    {
+        if (grid[x][x].isBomb)
+        {
+            temp_NeightbourBomb++;
+        }
+    }
+    if (x - 1 > 0 && y  > 0)//Exisitngs
+    {
+        if (grid[x][x].isBomb)
+        {
+            temp_NeightbourBomb++;
+        }
+    }
+
+}
 
 class Game
 {
@@ -58,6 +115,7 @@ public:
     bool isGameOver = false;
     float Timer = 0;
     Cell grid[ROW][COLUMN];
+    //std::unordered_set<std::pair<int, int>> visited;
 
     Game()
     {
@@ -80,6 +138,7 @@ public:
             }
         }
         grid[2][2].isBomb = true;
+       // visited.clear();
     }
     void Update()
     {
@@ -97,17 +156,21 @@ public:
             {
                // grid[(int)tempGridPos.y - 1][(int)tempGridPos.x - 1].col = ORANGE;
             }
-           
+            SelectNEighbours(grid, (int)tempGridPos.y - 1, (int)tempGridPos.x - 1);
+           // isGameOver = true;
             if (IsPressedABomb(grid, (int)tempGridPos.y -1, (int)tempGridPos.x- 1))
             {
                 std::cout<<"BOMB CHECK TRUEEEE"<< std::endl;
-                grid[(int)tempGridPos.y - 1][(int)tempGridPos.x - 1].col = BOMB;
-                isGameOver = true;
+               // grid[(int)tempGridPos.y - 1][(int)tempGridPos.x - 1].col = BOMB;
+               // isGameOver = true;
             }
             else
             {
                 std::cout << "BOMB CHECK FALSE" << std::endl;
-                grid[(int)tempGridPos.y - 1][(int)tempGridPos.x - 1].col = OPEN;
+               // auto temp = std::pair<int,int>{ (int)tempGridPos.y - 1,(int)tempGridPos.x - 1 };
+               // visited.emplace(temp);
+                //grid[(int)tempGridPos.y - 1][(int)tempGridPos.x - 1].col = OPEN;
+                
             }
 
         }
