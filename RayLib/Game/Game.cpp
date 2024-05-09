@@ -43,7 +43,7 @@ struct Cell
 public:
     Color col = Color{BLUE};
     bool isBomb = false;
-    int iNumberOfNearBombs = -1;
+    int iNumberOfNearBombs = 0;
 
 };
 
@@ -51,7 +51,73 @@ bool IsPressedABomb(Cell (&grid)[ROW][ROW], int x, int y)
 {
     return grid[x][y].isBomb;
 }
-
+void CheckNeightbourForBombAndUpdate(Cell(&grid)[ROW][ROW], int x, int y)
+{
+    if (x - 1 >= 0 && y - 1 >= 0)
+    {
+        grid[x - 1][y - 1].col = OPEN;
+        if (grid[x - 1][y - 1].isBomb)
+        {
+            grid[x][y].iNumberOfNearBombs++;
+        }
+    }
+    if (y - 1 >= 0)
+    {
+        grid[x][y - 1].col = OPEN;
+        if (grid[x][y - 1].isBomb)
+        {
+            grid[x][y].iNumberOfNearBombs++;
+        }
+    }
+    if (x + 1 < ROW && y - 1 >= 0)
+    {
+        grid[x + 1][y - 1].col = OPEN;
+        if (grid[x + 1][y - 1].isBomb)
+        {
+            grid[x][y].iNumberOfNearBombs++;
+        }
+    }
+    if (x - 1 >= 0)
+    {
+        grid[x - 1][y].col = OPEN;
+        if (grid[x - 1][y].isBomb)
+        {
+            grid[x][y].iNumberOfNearBombs++;
+        }
+    }
+    if (x + 1 < ROW)
+    {
+        grid[x + 1][y].col = OPEN;
+        if (grid[x + 1][y].isBomb)
+        {
+            grid[x][y].iNumberOfNearBombs++;
+        }
+    }
+    if (x - 1 >= 0 && y + 1 < ROW)
+    {
+        grid[x - 1][y + 1].col = OPEN;
+        if (grid[x - 1][y + 1].isBomb)
+        {
+            grid[x][y].iNumberOfNearBombs++;
+        }
+    }
+    if (y + 1 < ROW)
+    {
+        grid[x][y + 1].col = OPEN;
+        if (grid[x][y + 1].isBomb)
+        {
+            grid[x][y].iNumberOfNearBombs++;
+        }
+    }
+    if (x + 1 < ROW && y + 1 < ROW)
+    {
+        grid[x + 1][y + 1].col = OPEN;
+        if (grid[x + 1][y + 1].isBomb)
+        {
+            grid[x][y].iNumberOfNearBombs++;
+        }
+    }
+}
 
 void SelectNEighbours(Cell(&grid)[ROW][ROW], int x, int y)
 {
@@ -72,8 +138,10 @@ void SelectNEighbours(Cell(&grid)[ROW][ROW], int x, int y)
 
     if (x - 1 >= 0 && y+1<ROW)
     grid[x - 1][y + 1].col = OPEN;
+
     if ( y + 1 < ROW)
     grid[x][y + 1].col = OPEN;
+
     if (x+1<ROW &&y + 1 < ROW)
     grid[x+1][y+1].col = OPEN;
 }
@@ -134,7 +202,7 @@ public:
             {
                 grid[i][j].isBomb = false;
                 grid[i][j].col = UNOPENED;
-                grid[i][j].iNumberOfNearBombs = -1;
+                grid[i][j].iNumberOfNearBombs = 0;
             }
         }
         grid[2][2].isBomb = true;
@@ -156,8 +224,10 @@ public:
             {
                // grid[(int)tempGridPos.y - 1][(int)tempGridPos.x - 1].col = ORANGE;
             }
-            SelectNEighbours(grid, (int)tempGridPos.y - 1, (int)tempGridPos.x - 1);
-           // isGameOver = true;
+           // SelectNEighbours(grid, (int)tempGridPos.y - 1, (int)tempGridPos.x - 1);
+
+            CheckNeightbourForBombAndUpdate(grid, (int)tempGridPos.y - 1, (int)tempGridPos.x - 1);
+            isGameOver = true;
             if (IsPressedABomb(grid, (int)tempGridPos.y -1, (int)tempGridPos.x- 1))
             {
                 std::cout<<"BOMB CHECK TRUEEEE"<< std::endl;
