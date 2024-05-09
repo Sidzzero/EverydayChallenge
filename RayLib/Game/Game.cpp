@@ -20,7 +20,7 @@ Vector2 GetGridPosition(Vector2 a_mousePos)
     {
         return Vector2{ -1,-1 };
     }
-    result.x = floor((a_mousePos.x / (GRID_SIZE * COLUMN)) / (1.0f / COLUMN));
+    result.x = floor(  (a_mousePos.x / (GRID_SIZE * COLUMN)) / (1.0f / COLUMN) );
     result.y = floor(a_mousePos.y / (GRID_SIZE * ROW) / (1.0f / ROW));
 
     return result;
@@ -275,11 +275,9 @@ public:
                 grid[i][j].iNumberOfNearBombs = 0;
             }
         }
-      //  grid[0][1].SetAsBomb();
-       // grid[2][2].SetAsBomb();
-       // grid[1][1].SetAsBomb();
-       // grid[2][3].SetAsBomb();
         GenerateRandomBombCell();
+        isCheat = false;
+        Timer = 0;
     }
 
     void GenerateRandomBombCell()
@@ -307,6 +305,10 @@ public:
     }
     void Update()
     {
+        if (isGameOver == false)
+        {
+            Timer += 1.0f * GetFrameTime();
+        }
         mousePos = GetMousePosition();
 
         if (IsKeyPressed(KEY_R) && isGameOver)
@@ -327,41 +329,46 @@ public:
             }
            // SelectNEighbours(grid, (int)tempGridPos.y - 1, (int)tempGridPos.x - 1);
 
-            CheckNeightbourForBombAndUpdate(grid, (int)tempGridPos.y - 1, (int)tempGridPos.x - 1);
-            isGameOver = true;
+           // CheckNeightbourForBombAndUpdate(grid, (int)tempGridPos.y - 1, (int)tempGridPos.x - 1);
+           
             if (IsPressedABomb(grid, (int)tempGridPos.y -1, (int)tempGridPos.x- 1))
             {
                 std::cout<<"BOMB CHECK TRUEEEE"<< std::endl;
                // grid[(int)tempGridPos.y - 1][(int)tempGridPos.x - 1].col = BOMB;
-               // isGameOver = true;
+                 isGameOver = true;
+                 isCheat = true;
             }
             else
             {
                 std::cout << "BOMB CHECK FALSE" << std::endl;
-               // auto temp = std::pair<int,int>{ (int)tempGridPos.y - 1,(int)tempGridPos.x - 1 };
-               // visited.emplace(temp);
-                //grid[(int)tempGridPos.y - 1][(int)tempGridPos.x - 1].col = OPEN;
+
+                CheckNeightbourForBombAndUpdate(grid, (int)tempGridPos.y - 1, (int)tempGridPos.x - 1);
                 
             }
 
         }
     }
+    std::string tmpstrTime;
     void Draw()
     {
         DrawGrid();
+        if (isGameOver)
+        {
+            DrawText("GAME OVER", GetScreenWidth() *0.25f, GetScreenHeight() * 0.85f, 100, RED);
+        }
+
+        tmpstrTime = "Time:" + std::to_string((int)Timer);
+        DrawText(tmpstrTime.c_str(), GetScreenWidth() * 0.15f, 0, 40, DARKPURPLE);
         //debug
         strMousePos = std::to_string(mousePos.x) + "," + std::to_string(mousePos.y);;
         DrawCircleV(mousePos, 10, YELLOW);
-        DrawText(("MousePos:" + VectorToString(mousePos)).c_str(), 0, 300, 20, BLACK);
+        DrawText(("MousePos:" + VectorToString(mousePos)).c_str(), 0, GetScreenHeight()*0.1, 20, BLACK);
         auto temp = GetGridPosition(mousePos);
         temp.x -= 1;
         temp.y -= 1;
-        DrawText(("GRID_POS:" + VectorToString(temp)).c_str(), 0, 400, 20, BLACK);
+        DrawText(("GRID_POS:" + VectorToString(temp)).c_str(), 0, GetScreenHeight() * 0.15, 20, BLACK);
 
-        if (isGameOver)
-        {
-            DrawText("GAME OVER",SCREEN_WIDTH/2,0,40,RED);
-        }
+     
     }
     void Shutdown()
     {
@@ -387,6 +394,10 @@ private:
                 if (isCheat == false && grid[i][j].isBomb)
                 {
                     grid[i][j].col = UNOPENED;
+                }
+                else if ( (isGameOver||isCheat == true) && grid[i][j].isBomb )
+                {
+                    grid[i][j].col = BOMB;
                 }
                     
                 DrawRectangleRounded(
@@ -414,7 +425,8 @@ private:
 
 int main(void)
 {
-    InitWindow(SCREEN_WIDTH, SCREEN_WIDTH, "RL_Minesweeper - powered by RAYLIB");
+   // InitWindow(SCREEN_WIDTH, SCREEN_WIDTH, "RL_Minesweeper - powered by RAYLIB");
+    InitWindow(GRID_SIZE*ROW + GRID_SIZE*4, GRID_SIZE * ROW+ GRID_SIZE*4, "RL_Minesweeper - powered by RAYLIB");
     InitAudioDevice();
     Game mineSweeper;
     mineSweeper.Startup();
