@@ -48,12 +48,12 @@ public:
     {
         iNumberOfNearBombs = 0;
         isBomb = true;
-        col = BOMB;
+        col = UNOPENED;
     }
     void Reset()
     {
         iNumberOfNearBombs = 0;
-        col = BLUE;
+        col = UNOPENED;
         isBomb = false;
     }
 };
@@ -65,6 +65,10 @@ bool IsPressedABomb(Cell (&grid)[ROW][ROW], int x, int y)
 
 void CheckNeightbourForBombAndUpdate(Cell(&grid)[ROW][ROW], int x, int y)
 {
+    if (x<0 || y<0 || x>=ROW || y>=ROW)
+    {
+        return;
+    }
     if (ColorIsEqual( grid[x][y].col , CLOSE_TO_BOMB)  ||
         ColorIsEqual(grid[x][y].col, BOMB)||
         ColorIsEqual(grid[x][y].col, OPEN))
@@ -80,7 +84,8 @@ void CheckNeightbourForBombAndUpdate(Cell(&grid)[ROW][ROW], int x, int y)
             grid[x - 1][y - 1].col = BOMB;
             grid[x][y].iNumberOfNearBombs++;
         }
-        CheckNeightbourForBombAndUpdate(grid, x-1,y-1);
+       // else
+       // CheckNeightbourForBombAndUpdate(grid, x-1,y-1);
     }
     if (y - 1 >= 0)
     {
@@ -90,7 +95,8 @@ void CheckNeightbourForBombAndUpdate(Cell(&grid)[ROW][ROW], int x, int y)
             grid[x][y - 1].col = BOMB;
             grid[x][y].iNumberOfNearBombs++;
         }
-        CheckNeightbourForBombAndUpdate(grid, x , y - 1);
+       // else
+       // CheckNeightbourForBombAndUpdate(grid, x , y - 1);
     }
     if (x + 1 < ROW && y - 1 >= 0)
     {
@@ -100,7 +106,8 @@ void CheckNeightbourForBombAndUpdate(Cell(&grid)[ROW][ROW], int x, int y)
             grid[x + 1][y - 1].col = BOMB;
             grid[x][y].iNumberOfNearBombs++;
         }
-        CheckNeightbourForBombAndUpdate(grid, x+1, y - 1);
+       // else
+       // CheckNeightbourForBombAndUpdate(grid, x+1, y - 1);
     }
     if (x - 1 >= 0)
     {
@@ -110,7 +117,8 @@ void CheckNeightbourForBombAndUpdate(Cell(&grid)[ROW][ROW], int x, int y)
             grid[x - 1][y].col = BOMB;
             grid[x][y].iNumberOfNearBombs++;
         }
-        CheckNeightbourForBombAndUpdate(grid, x - 1, y );
+       // else
+       // CheckNeightbourForBombAndUpdate(grid, x - 1, y );
     }
     if (x + 1 < ROW)
     {
@@ -120,7 +128,8 @@ void CheckNeightbourForBombAndUpdate(Cell(&grid)[ROW][ROW], int x, int y)
             grid[x + 1][y].col = BOMB;
             grid[x][y].iNumberOfNearBombs++;
         }
-        CheckNeightbourForBombAndUpdate(grid, x + 1, y);
+        //else
+       // CheckNeightbourForBombAndUpdate(grid, x + 1, y);
     }
     if (x - 1 >= 0 && y + 1 < ROW)
     {
@@ -130,7 +139,8 @@ void CheckNeightbourForBombAndUpdate(Cell(&grid)[ROW][ROW], int x, int y)
             grid[x - 1][y + 1].col = BOMB;
             grid[x][y].iNumberOfNearBombs++;
         }
-        CheckNeightbourForBombAndUpdate(grid, x - 1, y+1);
+       // else
+      //  CheckNeightbourForBombAndUpdate(grid, x - 1, y+1);
     }
     if (y + 1 < ROW)
     {
@@ -140,7 +150,8 @@ void CheckNeightbourForBombAndUpdate(Cell(&grid)[ROW][ROW], int x, int y)
             grid[x][y + 1].col = BOMB;
             grid[x][y].iNumberOfNearBombs++;
         }
-        CheckNeightbourForBombAndUpdate(grid, x , y + 1);
+        //else
+      //  CheckNeightbourForBombAndUpdate(grid, x , y + 1);
     }
     if (x + 1 < ROW && y + 1 < ROW)
     {
@@ -150,8 +161,25 @@ void CheckNeightbourForBombAndUpdate(Cell(&grid)[ROW][ROW], int x, int y)
             grid[x + 1][y + 1].col = BOMB;
             grid[x][y].iNumberOfNearBombs++;
         }
-        CheckNeightbourForBombAndUpdate(grid, x+1, y + 1);
+        //else
+      //  CheckNeightbourForBombAndUpdate(grid, x+1, y + 1);
     }
+    if (grid[x][y].iNumberOfNearBombs>0)
+    {
+        grid[x][y].col = CLOSE_TO_BOMB;
+    }
+    else
+    {
+        CheckNeightbourForBombAndUpdate(grid, x - 1, y - 1);
+        CheckNeightbourForBombAndUpdate(grid, x, y - 1);
+        CheckNeightbourForBombAndUpdate(grid, x + 1, y - 1);
+        CheckNeightbourForBombAndUpdate(grid, x + 1, y);
+        CheckNeightbourForBombAndUpdate(grid, x - 1, y + 1);
+        CheckNeightbourForBombAndUpdate(grid, x, y + 1);
+        CheckNeightbourForBombAndUpdate(grid, x + 1, y + 1);
+    }
+
+  
 }
 
 void SelectNEighbours(Cell(&grid)[ROW][ROW], int x, int y)
