@@ -4,6 +4,7 @@
 #include "Common.h"
 #include <unordered_set>
 #include <utility> // for std::pair
+#include <random>
 
 
 Vector2 GetGridPosition(Vector2 a_mousePos)
@@ -244,6 +245,7 @@ class Game
 {
 public:
     bool isGameOver = false;
+    bool isCheat = false;
     float Timer = 0;
     Cell grid[ROW][COLUMN];
     //std::unordered_set<std::pair<int, int>> visited;
@@ -255,11 +257,11 @@ public:
     void Startup()
     {
 
-        grid[0][1].SetAsBomb();
-        grid[2][2].SetAsBomb();
-        grid[1][1].SetAsBomb();
-        grid[2][3].SetAsBomb();
-
+      //  grid[0][1].SetAsBomb();
+      //  grid[2][2].SetAsBomb();
+      //  grid[1][1].SetAsBomb();
+      //  grid[2][3].SetAsBomb();
+        GenerateRandomBombCell();
     }
     void Reset()
     {
@@ -273,17 +275,47 @@ public:
                 grid[i][j].iNumberOfNearBombs = 0;
             }
         }
-        grid[2][2].isBomb = true;
-        grid[2][2].col = BOMB;
-       // visited.clear();
+      //  grid[0][1].SetAsBomb();
+       // grid[2][2].SetAsBomb();
+       // grid[1][1].SetAsBomb();
+       // grid[2][3].SetAsBomb();
+        GenerateRandomBombCell();
+    }
+
+    void GenerateRandomBombCell()
+    {
+        //TODO: I GOOGLE THIS AND WROTE NO IDEA HOW IT WORKS
+        std::vector<std::pair<int, int>> pairs;
+        auto numPairs = GetRandomValue(0, ROW * ROW - ROW * ROW * 0.5);
+
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(0, ROW - 1);
+
+        for (int i = 0; i < numPairs; ++i) {
+            int x = dis(gen);
+            int y = dis(gen);
+            pairs.push_back(std::make_pair(x, y));
+        }
+
+        for (int i=0;i<pairs.size();i++)
+        {
+            grid[pairs[i].first][pairs[i].second].SetAsBomb();
+        }
+
+            
     }
     void Update()
     {
         mousePos = GetMousePosition();
 
-        if (GetKeyPressed()==KEY_R && isGameOver)
+        if (IsKeyPressed(KEY_R) && isGameOver)
         {
             Reset();
+        }
+        if (IsKeyPressed(KEY_C)   )
+        {
+            isCheat = !isCheat;
         }
         //debug
         if (IsMouseButtonPressed(0))
@@ -350,12 +382,19 @@ private:
                 //reverting here
                 float xPos = START_POINT + (float)j * GRID_SIZE;
                 float yPos = START_POINT + (float)i * GRID_SIZE;
+                
+                Color actualCol = grid[i][j].col;
+                if (isCheat == false && grid[i][j].isBomb)
+                {
+                    grid[i][j].col = UNOPENED;
+                }
+                    
                 DrawRectangleRounded(
                     Rectangle{ xPos,
                     yPos,
                     GRID_SIZE,
                     GRID_SIZE }, 0.5f, 6, grid[i][j].col);
-                if (grid[i][j].isBomb)
+                if (grid[i][j].isBomb && isCheat)
                 {
                    // DrawText("BOMBXXXXXX", xPos +GRID_SIZE/3,yPos + GRID_SIZE / 2, 15, RED);
                     DrawText("Bomb", xPos+10,yPos+25,30, BLACK);
