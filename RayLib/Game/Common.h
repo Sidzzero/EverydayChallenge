@@ -1,9 +1,50 @@
 #pragma once
+#include <iostream>
 #include "raylib.h"
 #include <raymath.h>
 #include <vector>
+#include <string>
 
 
+
+struct Ray2D
+{
+public:
+    Ray2D(Vector2 a_pos, Vector2 a_dir)
+    {
+        pos = a_pos;
+        dir = a_dir;
+    }
+    Vector2 pos;
+    Vector2 dir;
+
+    Vector2 GetPointAtT(float t)
+    {
+        Vector2 result;
+        auto scaledDir = Vector2{ dir.x * t,dir.y * t };
+        result = Vector2Add(pos,scaledDir);
+        return result;
+    }
+
+    bool GetIntersectionWithSegement(Vector2 &a, Vector2 &b,float currentT,Vector2 &closedPoint)
+    {
+        //a-rv0/(rvd +a-b)
+        auto ScaleDir = GetPointAtT(currentT);
+        auto top = Vector2Subtract(a, this->pos);
+        auto botAB = Vector2Subtract(a,b);
+        auto bot = Vector2Add(ScaleDir,botAB);
+       // float t = Vector2Length(top) / Vector2Length(bot);
+        float t = Vector2Divide(top, bot);
+        std::cout <<"T:"<< t<<std::endl ;
+        if (t>=0 && t<=1.0f)
+        {
+            closedPoint = Vector2Add(this->pos, Vector2Scale(this->dir,t));
+            return true;
+        }
+        return false;
+    }
+
+};
 struct RigidBod2
 {
 public:
@@ -143,30 +184,56 @@ Rectangle CreateBoundBox(std::vector<Vector2> polgygons)
     result.y = Ymin;
     result.width =  XMax-Xmin;
     result.height =  Ymax - Ymin;
-
+  
     return result;
 
 }
 
-Vector2 ClosestPointOnBoundingBox(Vector2 point , std::vector<Vector2>& polygon)
+Vector2 ClosestPointOnBoundingBox(Vector2 point , Rectangle rectBox,std::vector<Vector2> vertices,bool &a_Result)
 {
     Vector2 closesPoint = { INT_MAX,INT_MAX };
     //Error of sigle point check and min 3 point a.k.a triangle
     Vector2 nextPoint = Vector2{ 0,0 };
     Vector2 currentPoint = Vector2{ 0,0 };
-    for (int i=0;i<polygon.size();i+=2)
+    Vector2 bluePoint = Vector2{ rectBox.x + rectBox.width/* + 0.002f*/,rectBox.y + rectBox.height / 2};
+    float bluepointDist = Vector2Distance(bluePoint, point);
+    Vector2 rayDirect = Vector2Normalize( Vector2Scale(Vector2{ 1,0 }, bluepointDist));
+    //std::cout <<"bluepointDist" << bluepointDist << "\n";
+    DrawText( std::to_string(bluepointDist).c_str(), point.x, point.y+30, 10, WHITE);
+    Ray2D ray2D = Ray2D
+    { 
+        point,rayDirect
+    };
+    bool isColliding = false;
+    int iCount = 0;//keep track of overall collision
+    Vector2 currentSliceA = Vector2{ 0,0 };
+    Vector2 currentSliceB = Vector2{0,0};
+    for (int i=0;i<vertices.size();i+=2)
     {
-        currentPoint = polygon[i];
-        if (i==polygon.size()-1)//last point
+        currentSliceA = vertices[i];
+        if (i == vertices.size()-1)//last point
         {
-            nextPoint = polygon[0];
+            currentSliceB = vertices[0];
         }
         else
         {
-            nextPoint = polygon[i + 1];
+            currentSliceB = vertices[i + 1];
+        }
+        if (ray2D.GetIntersectionWithSegement(currentSliceA, currentSliceB, bluepointDist, closesPoint))
+        {
+            iCount++;
         }
 
     }
+    if (iCount%2==0)
+    {
+        a_Result = false;
+    }
+    else
+    {
+        a_Result = true;
+    }
+    std::cout << " INterestcCount:" << iCount << std::endl;
     return closesPoint;
 }
 
@@ -199,9 +266,20 @@ public:
 
         boxWithRigid.Draw();
 
-        auto tempBox = boxWithRigid.GetAllVertice();
-        DrawRectangleLinesEx(CreateBoundBox(tempBox),1.0f, YELLOW);
-        DrawCircleLinesV(ClosestPointOnBoundingBox(m_currentMousePos, tempBox), 10.0f, PURPLE);
+        auto tempVertices = boxWithRigid.GetAllVertice();
+        auto  tempBox = CreateBoundBox(tempVertices);
+        DrawRectangleLinesEx(tempBox,1.0f, YELLOW);
+        bool Colide = false;
+        auto tempCCollid = ClosestPointOnBoundingBox(m_currentMousePos, tempBox, tempVertices, Colide);
+        if (Colide)
+        {
+            DrawCircleLinesV(tempCCollid, 30.0f, GREEN);
+        }
+        else
+        {
+            DrawCircleLinesV(m_currentMousePos, 30.0f, RED);
+        }
+        
         
 
     }
