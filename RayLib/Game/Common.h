@@ -28,19 +28,26 @@ public:
 
     bool GetIntersectionWithSegement(Vector2 &a, Vector2 &b,float currentT,Vector2 &closedPoint)
     {
-        //a-rv0/(rvd +a-b)
-        auto ScaleDir = GetPointAtT(currentT);
-        auto top = Vector2Subtract(a, this->pos);
-        auto botAB = Vector2Subtract(a,b);
-        auto bot = Vector2Add(ScaleDir,botAB);
-       // float t = Vector2Length(top) / Vector2Length(bot);
-        float t = Vector2Divide(top, bot);
-        std::cout <<"T:"<< t<<std::endl ;
-        if (t>=0 && t<=1.0f)
+        float distanceAB = Vector2Distance(a,b);
+        if (distanceAB<=0.000001f)
         {
-            closedPoint = Vector2Add(this->pos, Vector2Scale(this->dir,t));
+            return false;
+        }
+        auto ScaleDir = GetPointAtT(currentT);
+
+        float topN = (ScaleDir.x - a.x) * (b.x - a.x) + (ScaleDir.y - a.y) * (b.y - a.y);
+        float u = topN / distanceAB;
+       // DrawLineV( Vector2Add(  pos, Vector2{0,25} ),
+          //  Vector2Add(  ScaleDir, Vector2{ 0,25 }),
+         //   BROWN);
+
+
+        if (u>=0 && u<=1.0f)
+        {
+            closedPoint = Vector2Add(this->pos, Vector2Scale(this->dir,u));
             return true;
         }
+
         return false;
     }
 
@@ -195,15 +202,39 @@ Vector2 ClosestPointOnBoundingBox(Vector2 point , Rectangle rectBox,std::vector<
     //Error of sigle point check and min 3 point a.k.a triangle
     Vector2 nextPoint = Vector2{ 0,0 };
     Vector2 currentPoint = Vector2{ 0,0 };
-    Vector2 bluePoint = Vector2{ rectBox.x + rectBox.width/* + 0.002f*/,rectBox.y + rectBox.height / 2};
-    float bluepointDist = Vector2Distance(bluePoint, point);
-    Vector2 rayDirect = Vector2Normalize( Vector2Scale(Vector2{ 1,0 }, bluepointDist));
+    Vector2 redPoint = Vector2{ rectBox.x + rectBox.width + 10.0f,rectBox.y + rectBox.height / 2};
+    DrawCircleV(redPoint,4.0f,RED);
+    float bluepointDist = Vector2Distance(redPoint, point);
+    Vector2 rayDirect = Vector2{1,0};
+
+    
+    float pointNearRightBBDistance = Vector2Distance
+    (
+        Vector2{ rectBox .x + rectBox.width/2 , rectBox.y + rectBox.height},
+        redPoint
+    );
+
     //std::cout <<"bluepointDist" << bluepointDist << "\n";
-    DrawText( std::to_string(bluepointDist).c_str(), point.x, point.y+30, 10, WHITE);
+    DrawText( std::to_string(pointNearRightBBDistance).c_str(), point.x, point.y+30, 10, WHITE);
+    float distMouseToRightBBDotted = 0;
+    distMouseToRightBBDotted = Vector2DotProduct
+    (
+        Vector2Subtract(redPoint,point)     ,
+        Vector2{1,0}
+    );
+
     Ray2D ray2D = Ray2D
     { 
         point,rayDirect
     };
+    auto tttt = Vector2Scale(Vector2{ 1,0 }, pointNearRightBBDistance);
+    DrawLineV(Vector2Add(point, Vector2{0,40}), 
+        Vector2Add( Vector2Add(point, tttt), Vector2{ 0,40 })
+        ,
+        YELLOW);
+
+    tttt = Vector2Scale(Vector2{ 1,0 }, distMouseToRightBBDotted);
+    DrawLineV(point, Vector2Add(point, tttt), BLUE);
     bool isColliding = false;
     int iCount = 0;//keep track of overall collision
     Vector2 currentSliceA = Vector2{ 0,0 };
@@ -219,7 +250,7 @@ Vector2 ClosestPointOnBoundingBox(Vector2 point , Rectangle rectBox,std::vector<
         {
             currentSliceB = vertices[i + 1];
         }
-        if (ray2D.GetIntersectionWithSegement(currentSliceA, currentSliceB, bluepointDist, closesPoint))
+        if (ray2D.GetIntersectionWithSegement(currentSliceA, currentSliceB, distMouseToRightBBDotted, closesPoint))
         {
             iCount++;
         }
@@ -233,7 +264,7 @@ Vector2 ClosestPointOnBoundingBox(Vector2 point , Rectangle rectBox,std::vector<
     {
         a_Result = true;
     }
-    std::cout << " INterestcCount:" << iCount << std::endl;
+    std::cout << " INterestcCount:" << iCount <<": closesPoint:" <<closesPoint.x<<"::"<<closesPoint.y<< std::endl;
     return closesPoint;
 }
 
