@@ -1,2 +1,8 @@
 ﻿  Game.cpp
+D:\Projects\EverydayChallenge\RayLib\Game\Common.h(120,16): warning C4305: 'initializing': truncation from 'int' to 'float'
+  (compiling source file 'Game.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\Common.h(120,47): warning C4305: 'initializing': truncation from 'int' to 'float'
+  (compiling source file 'Game.cpp')
+  
   Game.vcxproj -> D:\Projects\EverydayChallenge\RayLib\Game\x64\Debug\Game.exe
