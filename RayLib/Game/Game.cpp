@@ -2,16 +2,112 @@
 //
 
 #include "raylib.h"
+#include <raymath.h>
+#include <vector>
+
+
+struct Shape
+{
+public:
+    std::vector<Vector2> vertices;
+    float radius = 10.0f;
+    Color col;
+    bool bDrawLine = false;
+    void Draw()
+    {
+        for (int i=0;i<vertices.size();i++)
+        {
+            DrawCircleV(vertices[i], radius, col);
+            if (i>=1 && bDrawLine)
+            {
+                DrawLineV(vertices[i], vertices[i-1],RAYWHITE);
+            }
+        }
+        if(bDrawLine)
+        DrawLineV(vertices[vertices.size()-1], vertices[0], ORANGE);
+    }
+
+    void UpdatePos(int index,Vector2 newPos)
+    {
+        if (index <0 || vertices.empty() || index>=vertices.size())
+        {
+            return;
+        }
+        vertices[index] = newPos;
+    }
+
+    void AddVertice(Vector2 newVertex)
+    {
+        vertices.push_back(newVertex);
+    }
+};
+
+struct RigidBod2
+{
+public:
+    Vector2 pos = Vector2{400 , 0};
+    Vector2 accel = Vector2{0,9.8f};
+    Vector2 velocity = Vector2{0,0};
+    void Update(float currentFrameDelta)
+    {
+         auto tempAccel = Vector2{ accel.x * currentFrameDelta,accel.y * currentFrameDelta };
+        velocity = Vector2Add(velocity, tempAccel);
+         auto tempVector = Vector2{ velocity.x * currentFrameDelta,velocity.y * currentFrameDelta };
+         pos = Vector2Add(pos, tempVector);
+    }
+};
+class World
+{
+public:
+    Shape mouseShap;
+    Shape boxShape;
+    RigidBod2 boxRigid;
+    
+    World()
+    {
+        mouseShap.AddVertice(Vector2{0,0});
+
+        boxShape.AddVertice(Vector2{ 100,100 });
+        boxShape.AddVertice(Vector2{ 100,200 });
+        boxShape.AddVertice(Vector2{ 200,200 });
+        boxShape.AddVertice(Vector2{ 200,100 });
+        boxShape.col = DARKBLUE;
+        boxShape.bDrawLine = true;
+    }
+    void Draw() 
+    {
+        mouseShap.Draw();
+        boxShape.Draw();
+        DrawCircleV(boxRigid.pos, 30, BROWN);
+        
+    }
+    void Update()
+    {
+        m_currentFrame = GetFrameTime();
+        m_currentMousePos = GetMousePosition();
+        mouseShap.UpdatePos(0, m_currentMousePos);
+        boxRigid.Update(m_currentFrame);
+
+
+    }
+private:
+    float m_currentFrame = 0;
+    Vector2 m_currentMousePos = {0,0};
+};
+
 
 int main(void)
 {
-    InitWindow(800, 450, "raylib [core] example - basic window");
-
+    InitWindow(800, 450, "Simulation PLayground- powered by Raylib");
+    World world;
     while (!WindowShouldClose())
     {
         BeginDrawing();
-        ClearBackground(RAYWHITE);
-        DrawText("Congrats! You created your first window!", 190, 200, 20, BLACK);
+        ClearBackground(DARKGREEN);
+        
+        world.Update();
+        world.Draw();
+
         EndDrawing();
     }
 
