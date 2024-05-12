@@ -1,11 +1,11 @@
 ﻿  Game.cpp
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(107,13): warning C4305: 'initializing': truncation from 'int' to 'float'
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(119,13): warning C4305: 'initializing': truncation from 'int' to 'float'
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(107,45): warning C4305: 'initializing': truncation from 'int' to 'float'
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(119,45): warning C4305: 'initializing': truncation from 'int' to 'float'
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(155,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(167,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   (compiling source file 'Game.cpp')
   
   Game.vcxproj -> D:\Projects\EverydayChallenge\RayLib\Game\x64\Debug\Game.exe

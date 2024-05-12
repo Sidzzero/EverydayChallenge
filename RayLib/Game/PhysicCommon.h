@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 bool GetClosestPointOnRay(Vector2 a, Vector2 b, Vector2 point, float& u);
+bool IsPointOnLine(Vector2 a, Vector2 b, Vector2 point);
+Vector2 GetPointOnTwoVector(Vector2 a, Vector2 b, float t);
 struct PointMass
 {
 public:
@@ -39,7 +41,7 @@ void Polygon::Draw()
 			temp_iNextIndex = 0;
 		}
 
-		DrawLineEx(pointMass[i].pos, pointMass[temp_iNextIndex].pos, 5.0f, WHITE);
+		DrawLineEx(pointMass[i].pos, pointMass[temp_iNextIndex].pos, 5.0f, BLUE);
 	}
 }
 
@@ -62,7 +64,7 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 
 	auto tempMousePos = GetMousePosition();
 	Vector2 rectCornerToMouse = Vector2Subtract
-	   ( Vector2{rect.x+rect.width+15.0f,rect.y}, 
+	   ( Vector2{rect.x+rect.width+25.0f,rect.y}, 
 		tempMousePos);
 	float dotMouseCorner = Vector2DotProduct(rectCornerToMouse, Vector2{ 1.0f,0 });
 	Vector2 adjustedMouseToCornerPointEnd = Vector2Add
@@ -71,13 +73,14 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 	);
 	DrawLineV(tempMousePos, adjustedMouseToCornerPointEnd, YELLOW);//Mouse Cutter RAY
 
-	DrawLineV(Vector2{ rect.x + rect.width + 15.0f,rect.y },
-		Vector2Add(Vector2{ rect.x + rect.width + 15.0f,rect.y+5.0f },
+	DrawLineV(Vector2{ rect.x + rect.width + 25.0f,rect.y },
+		Vector2Add(Vector2{ rect.x + rect.width + 25.0f,rect.y+5.0f },
 		Vector2Scale(Vector2{0,1},500)),
 		YELLOW);//CUT LINE HORIZONTAL
-	int count = 0;
+	int countForPoints = 0;
+	int countForSide = 0;
 	for (int i = 0; i < pointMass.size(); i++)
-   //  for (int i = 1; i <= 1; i++)
+     //for (int i = 1; i <= 1; i++)
 	{
 		int temp_iNextIndex = i + 1;
 		if (i == pointMass.size() - 1)
@@ -88,13 +91,22 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 		//Check only with mouse ray
 		if (GetClosestPointOnRay(tempMousePos, adjustedMouseToCornerPointEnd,pointMass[i].pos,u))
 		{
-			if(u>=0 && u<=0.99f)
-			count++;
-			
+			if (u >= 0 && u <= 0.99f)
+			{
+				DrawLineV(tempMousePos, pointMass[i].pos,BLUE);
+				countForPoints++;
+				
+				Vector2 pointOnMouseRay = GetPointOnTwoVector(tempMousePos, adjustedMouseToCornerPointEnd, u);
+				DrawCircleLinesV(pointOnMouseRay, 25, RED);
+				if (IsPointOnLine(pointMass[i].pos,pointMass[temp_iNextIndex].pos, pointOnMouseRay) )
+				{
+					countForSide++;
+				}
+			}
 		}
 		
 	}
-	std::cout << count << std::endl;
+	std::cout <<"countForPoints:" << countForPoints <<",countForSide" << countForSide<< std::endl;
 }
 Rectangle Polygon::CreateBoundBox()
 {
@@ -154,6 +166,31 @@ bool GetClosestPointOnRay(Vector2 a, Vector2 b, Vector2 point,float &u)
 
 	u = dotProduct / magnitudeSquared;
 	return true;
+}
+
+bool IsPointOnLine(Vector2 a, Vector2 b, Vector2 point)
+{
+	float aTOPoint = Vector2Distance(a, point);
+	float pointTOB = Vector2Distance(point, b);
+	float atoB = Vector2Distance(a,b);
+
+	float TotalWithPoint = aTOPoint + pointTOB;
+	//std::string temp_text = "T:" + std::to_string(atoB);
+	//temp_text = temp_text.substr(0, temp_text.find(".") + 3);
+	if (TotalWithPoint - atoB >=0.0f && TotalWithPoint - atoB<=1.0f)
+	{
+		return true;
+	}
+	return false;
+}
+
+Vector2 GetPointOnTwoVector(Vector2 a, Vector2 b, float t)
+{
+	Vector2 sub = Vector2Subtract(b,a);
+	Vector2 Scale = Vector2Scale(sub, t);
+	Vector2 endPoint = Vector2Add(a, Scale);
+	return endPoint;
+
 }
 //END------Polygon--------------------
 //PHYSIC WORLD--------------------
