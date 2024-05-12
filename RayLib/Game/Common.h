@@ -26,25 +26,29 @@ public:
         return result;
     }
 
-    bool GetIntersectionWithSegement(Vector2 &a, Vector2 &b,float currentT,Vector2 &closedPoint)
+    bool GetIntersectionWithSegement(Vector2 &a, Vector2 &b,Vector2 &pointToTest,Vector2 &closedPoint)
     {
-        float distanceAB = Vector2Distance(a,b);
-        if (distanceAB<=0.000001f)
-        {
-            return false;
-        }
-        auto ScaleDir = GetPointAtT(currentT);
+       
+        float u = -1;
+       
+        double dx1 = b.x - a.x;
+        double dy1 = b.y - a.y;
+        double dx2 = pointToTest.x - a.x;
+        double dy2 = pointToTest.y - a.y;
 
-        float topN = (ScaleDir.x - a.x) * (b.x - a.x) + (ScaleDir.y - a.y) * (b.y - a.y);
-        float u = topN / distanceAB;
-       // DrawLineV( Vector2Add(  pos, Vector2{0,25} ),
-          //  Vector2Add(  ScaleDir, Vector2{ 0,25 }),
-         //   BROWN);
+        // Calculate the dot product (point - A) dot (B - A)
+        double dotProduct = dx2 * dx1 + dy2 * dy1;
 
-
+        // Calculate the squared magnitude of vector B - A
+        double magnitudeSquared = dx1 * dx1 + dy1 * dy1;
+        u = dotProduct / magnitudeSquared;
+        DrawText(std::to_string(u).c_str(), pos.x, pos.y + 60, 50, WHITE);
         if (u>=0 && u<=1.0f)
         {
-            closedPoint = Vector2Add(this->pos, Vector2Scale(this->dir,u));
+           
+            closedPoint = Vector2Add
+            (a,
+             Vector2Scale(Vector2Subtract(b, a), u));
             return true;
         }
 
@@ -52,6 +56,43 @@ public:
     }
 
 };
+
+bool IsPresentInBoundBox(Vector2 a, Vector2 b, std::vector<Vector2> &vertices)
+{
+    int iCount = 0;
+   // Vector2 segement = Vector2Subtract(b,a);
+    for (int i = 0; i < vertices.size(); i++)
+   // for (int i=1;i<=1;i++)
+    {
+        float u = -1;
+
+        double dx1 = b.x - a.x;
+        double dy1 = b.y - a.y;
+        double dx2 = vertices[i].x - a.x;
+        double dy2 = vertices[i].y - a.y;
+
+        // Calculate the squared magnitude of vector B - A
+        double magnitudeSquared = dx1 * dx1 + dy1 * dy1;
+        if (magnitudeSquared == 0)
+        {
+            return false;
+        }
+        // Calculate the dot product (point - A) dot (B - A)
+        double dotProduct = dx2 * dx1 + dy2 * dy1;
+
+        u = dotProduct / magnitudeSquared;
+       auto temp = Vector2Add
+        (a,Vector2Scale(Vector2Subtract(b, a), u));
+       DrawCircleLinesV(temp,10,DARKGREEN);
+        if (u<0 || u>1)
+        {
+            continue;
+        }
+        iCount++;
+    }
+    std::cout<<"iCount?" <<(iCount)<< std::endl;
+    return (iCount > 0) && iCount % 2 != 0;
+}
 struct RigidBod2
 {
 public:
@@ -202,7 +243,7 @@ Vector2 ClosestPointOnBoundingBox(Vector2 point , Rectangle rectBox,std::vector<
     //Error of sigle point check and min 3 point a.k.a triangle
     Vector2 nextPoint = Vector2{ 0,0 };
     Vector2 currentPoint = Vector2{ 0,0 };
-    Vector2 redPoint = Vector2{ rectBox.x + rectBox.width + 10.0f,rectBox.y + rectBox.height / 2};
+    Vector2 redPoint = Vector2{ rectBox.x + rectBox.width  + 30.0f  ,rectBox.y + rectBox.height / 2};
     DrawCircleV(redPoint,4.0f,RED);
     float bluepointDist = Vector2Distance(redPoint, point);
     Vector2 rayDirect = Vector2{1,0};
@@ -225,7 +266,7 @@ Vector2 ClosestPointOnBoundingBox(Vector2 point , Rectangle rectBox,std::vector<
 
     Ray2D ray2D = Ray2D
     { 
-        point,rayDirect
+        point,Vector2{1,0}
     };
     auto tttt = Vector2Scale(Vector2{ 1,0 }, pointNearRightBBDistance);
     DrawLineV(Vector2Add(point, Vector2{0,40}), 
@@ -239,8 +280,16 @@ Vector2 ClosestPointOnBoundingBox(Vector2 point , Rectangle rectBox,std::vector<
     int iCount = 0;//keep track of overall collision
     Vector2 currentSliceA = Vector2{ 0,0 };
     Vector2 currentSliceB = Vector2{0,0};
-    for (int i=0;i<vertices.size();i+=2)
+
+    //Check first 
+    auto tempCCollid = IsPresentInBoundBox(point, Vector2Add(point, tttt), vertices);
+
+
+
+    for (int i = 0; i < vertices.size(); i++)
+   //  for (int i=1;i<=1;i++)
     {
+
         currentSliceA = vertices[i];
         if (i == vertices.size()-1)//last point
         {
@@ -250,21 +299,34 @@ Vector2 ClosestPointOnBoundingBox(Vector2 point , Rectangle rectBox,std::vector<
         {
             currentSliceB = vertices[i + 1];
         }
-        if (ray2D.GetIntersectionWithSegement(currentSliceA, currentSliceB, distMouseToRightBBDotted, closesPoint))
+        if (i==1)
+        {
+
+         //   DrawLineEx(currentSliceA, currentSliceB, 5.0f, BLUE);
+        }
+       
+       //if (ray2D.GetIntersectionWithSegement(currentSliceA, currentSliceB, point, closesPoint))
+        Vector2 currentClosePoint = Vector2{ -11111,-11111 };
+        if (ray2D.GetIntersectionWithSegement(currentSliceA, currentSliceB, point, currentClosePoint))
         {
             iCount++;
         }
+        if (Vector2Equals(closesPoint,currentClosePoint)>0)
+        {
+            closesPoint = currentClosePoint;
+        }
 
     }
-    if (iCount%2==0)
+    if (tempCCollid)
     {
-        a_Result = false;
+       // a_Result = false;
+        a_Result = true;
     }
     else
     {
-        a_Result = true;
+        a_Result = false;
     }
-    std::cout << " INterestcCount:" << iCount <<": closesPoint:" <<closesPoint.x<<"::"<<closesPoint.y<< std::endl;
+   // std::cout << " IsInisde?:" << tempCCollid <<": closesPoint:" <<closesPoint.x<<"::"<<closesPoint.y<< std::endl;
     return closesPoint;
 }
 
@@ -302,6 +364,8 @@ public:
         DrawRectangleLinesEx(tempBox,1.0f, YELLOW);
         bool Colide = false;
         auto tempCCollid = ClosestPointOnBoundingBox(m_currentMousePos, tempBox, tempVertices, Colide);
+
+     
         if (Colide)
         {
             DrawCircleLinesV(tempCCollid, 30.0f, GREEN);
