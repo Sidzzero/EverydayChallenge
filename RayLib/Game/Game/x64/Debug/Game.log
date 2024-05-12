@@ -11,28 +11,31 @@ D:\Projects\EverydayChallenge\RayLib\Game\Common.h(45,48): warning C4244: 'argum
 D:\Projects\EverydayChallenge\RayLib\Game\Common.h(83,24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\Common.h(209,16): warning C4305: 'initializing': truncation from 'int' to 'float'
+D:\Projects\EverydayChallenge\RayLib\Game\Common.h(123,24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\Common.h(209,47): warning C4305: 'initializing': truncation from 'int' to 'float'
+D:\Projects\EverydayChallenge\RayLib\Game\Common.h(288,16): warning C4305: 'initializing': truncation from 'int' to 'float'
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\Common.h(242,29): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+D:\Projects\EverydayChallenge\RayLib\Game\Common.h(288,47): warning C4305: 'initializing': truncation from 'int' to 'float'
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\Common.h(242,29): warning C4305: 'initializing': truncation from 'int' to 'float'
+D:\Projects\EverydayChallenge\RayLib\Game\Common.h(321,29): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\Common.h(242,37): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+D:\Projects\EverydayChallenge\RayLib\Game\Common.h(321,29): warning C4305: 'initializing': truncation from 'int' to 'float'
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\Common.h(242,37): warning C4305: 'initializing': truncation from 'int' to 'float'
+D:\Projects\EverydayChallenge\RayLib\Game\Common.h(321,37): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\Common.h(259,81): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Common.h(321,37): warning C4305: 'initializing': truncation from 'int' to 'float'
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\Common.h(259,70): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Common.h(338,81): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\Common.h(338,70): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
   Game.vcxproj -> D:\Projects\EverydayChallenge\RayLib\Game\x64\Debug\Game.exe

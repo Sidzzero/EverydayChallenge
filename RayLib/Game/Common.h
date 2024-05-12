@@ -93,6 +93,85 @@ bool IsPresentInBoundBox(Vector2 a, Vector2 b, std::vector<Vector2> &vertices)
     std::cout<<"iCount?" <<(iCount)<< std::endl;
     return (iCount > 0) && iCount % 2 != 0;
 }
+
+bool IsPresentInBoundBox2(Vector2 a, Vector2 b, std::vector<Vector2>& vertices)
+{
+    int iCount = 0;
+    // Vector2 segement = Vector2Subtract(b,a);
+    std::vector<std::pair<int,int>> segemetns;
+    float u = -1;
+    float dotABp2p1 = 0;
+   // for (int i = 0; i < vertices.size(); i++)
+        for (int i=2;i<=2;i++)
+    {
+ 
+
+        double dx1 = b.x - a.x;
+        double dy1 = b.y - a.y;
+        double dx2 = vertices[i].x - a.x;
+        double dy2 = vertices[i].y - a.y;
+
+        // Calculate the squared magnitude of vector B - A
+        double magnitudeSquared = dx1 * dx1 + dy1 * dy1;
+        if (magnitudeSquared == 0)
+        {
+            return false;
+        }
+        // Calculate the dot product (point - A) dot (B - A)
+        double dotProduct = dx2 * dx1 + dy2 * dy1;
+
+        u = dotProduct / magnitudeSquared;
+        auto temp = Vector2Add
+        (a, Vector2Scale(Vector2Subtract(b, a), u));
+        DrawCircleLinesV(temp, 10, DARKGREEN);
+     
+        if (u < 0 || u>1)
+        {
+            continue;
+        }
+       
+       Vector2 diffAB = Vector2Subtract(b,a);
+       Vector2 ABpoint = Vector2Add(a, Vector2Scale(diffAB, u));
+
+       int nextINdex = i + 1;
+       if (i== vertices.size()-1)//last
+       {
+           nextINdex = 0;
+       }
+       Vector2 p2p1 = Vector2Subtract(vertices[nextINdex],vertices[i]);
+        dotABp2p1 = Vector2DotProduct
+       (
+           Vector2Subtract(ABpoint,vertices[i]),
+           p2p1
+       );
+       if (dotABp2p1>=0 && dotABp2p1<=1)
+       {
+           segemetns.push_back(std::pair<int,int>{i, nextINdex});
+           iCount++;
+       }
+    
+    }
+    std::string result = std::string{ "" };
+    std::string first = std::string{ "" };
+    std::string second = std::string{""};
+    
+    for (int i=0;i<segemetns.size();i++)
+    {
+        first = std::to_string(segemetns[i].first);
+        second = std::to_string(segemetns[i].second);
+        result = result+ (first + "->" + second+",");
+    }
+    result = result + +",Size:"+std::to_string(segemetns.size())
+        +",dotABp2p1:"
+        +
+        std::to_string( dotABp2p1)
+    +
+        ",U:"
+        +
+        std::to_string(u);
+    std::cout << "iCount?" << (iCount) <<",Frames:" << result << std::endl;
+    return (iCount > 0) && iCount % 2 != 0;
+}
 struct RigidBod2
 {
 public:
@@ -282,7 +361,7 @@ Vector2 ClosestPointOnBoundingBox(Vector2 point , Rectangle rectBox,std::vector<
     Vector2 currentSliceB = Vector2{0,0};
 
     //Check first 
-    auto tempCCollid = IsPresentInBoundBox(point, Vector2Add(point, tttt), vertices);
+    auto tempCCollid = IsPresentInBoundBox2(point, Vector2Add(point, tttt), vertices);
 
 
 
@@ -343,10 +422,10 @@ public:
     {
         mouseShap.AddVertice(Vector2{ 0,0 });
 
-        boxWithRigid.AddVertice(Vector2{ 100,100 });
-        boxWithRigid.AddVertice(Vector2{ 100,200 });
-        boxWithRigid.AddVertice(Vector2{ 200,200 });
-        boxWithRigid.AddVertice(Vector2{ 200,100 });
+        boxWithRigid.AddVertice(Vector2{ 100,100 });//0
+        boxWithRigid.AddVertice(Vector2{ 100,200 });//1
+        boxWithRigid.AddVertice(Vector2{ 200,200 });//2
+        boxWithRigid.AddVertice(Vector2{ 200,100 });//3
        // boxWithRigid.AddVertice(Vector2{ 200,30 });
         boxWithRigid.col = DARKBLUE;
         boxWithRigid.bDrawLine = true;
