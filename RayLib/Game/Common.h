@@ -105,7 +105,6 @@ bool IsPresentInBoundBox2(Vector2 a, Vector2 b, std::vector<Vector2>& vertices)
         for (int i=2;i<=2;i++)
     {
  
-
         double dx1 = b.x - a.x;
         double dy1 = b.y - a.y;
         double dx2 = vertices[i].x - a.x;

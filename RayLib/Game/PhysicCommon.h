@@ -4,7 +4,7 @@
 #include <raymath.h>
 #include <vector>
 #include <string>
-
+bool GetClosestPointOnRay(Vector2 a, Vector2 b, Vector2 point, float& u);
 struct PointMass
 {
 public:
@@ -69,16 +69,32 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 	(tempMousePos,
 		Vector2Scale(Vector2{ 1.0f,0 }, dotMouseCorner)
 	);
-	DrawLineV(tempMousePos, adjustedMouseToCornerPointEnd,YELLOW);
+	DrawLineV(tempMousePos, adjustedMouseToCornerPointEnd, YELLOW);//Mouse Cutter RAY
+
+	DrawLineV(Vector2{ rect.x + rect.width + 15.0f,rect.y },
+		Vector2Add(Vector2{ rect.x + rect.width + 15.0f,rect.y+5.0f },
+		Vector2Scale(Vector2{0,1},500)),
+		YELLOW);//CUT LINE HORIZONTAL
+	int count = 0;
 	for (int i = 0; i < pointMass.size(); i++)
+   //  for (int i = 1; i <= 1; i++)
 	{
 		int temp_iNextIndex = i + 1;
 		if (i == pointMass.size() - 1)
 		{
 			temp_iNextIndex = 0;
 		}
-
+		float u = -500;
+		//Check only with mouse ray
+		if (GetClosestPointOnRay(tempMousePos, adjustedMouseToCornerPointEnd,pointMass[i].pos,u))
+		{
+			if(u>=0 && u<=0.99f)
+			count++;
+			
+		}
+		
 	}
+	std::cout << count << std::endl;
 }
 Rectangle Polygon::CreateBoundBox()
 {
@@ -117,6 +133,27 @@ Rectangle Polygon::CreateBoundBox()
 
 	return result;
 
+}
+
+bool GetClosestPointOnRay(Vector2 a, Vector2 b, Vector2 point,float &u)
+{
+	u = -5000;
+	double dx1 = b.x - a.x;
+	double dy1 = b.y - a.y;
+	double dx2 = point.x - a.x;
+	double dy2 = point.y - a.y;
+
+	// Calculate the squared magnitude of vector B - A
+	double magnitudeSquared = dx1 * dx1 + dy1 * dy1;
+	if (magnitudeSquared == 0)
+	{
+		return false;
+	}
+	// Calculate the dot product (point - A) dot (B - A)
+	double dotProduct = dx2 * dx1 + dy2 * dy1;
+
+	u = dotProduct / magnitudeSquared;
+	return true;
 }
 //END------Polygon--------------------
 //PHYSIC WORLD--------------------
