@@ -1,9 +1,32 @@
 // Game.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include "Common.h"
+#include "PhysicCommon.h"
 
 
+int main(void)
+{
+    InitWindow(1024, 780, "Simulation PLayground 2.0- powered by Raylib");
+    PhysicWorld world;
+    world.Setup();
+    while (!WindowShouldClose())
+    {
+        BeginDrawing();
+        ClearBackground(BLACK);
+
+        world.Update();
+        world.Draw();
+
+        DrawFPS(0,0);
+        EndDrawing();
+    }
+
+    CloseWindow();
+
+    return 0;
+}
+
+/*
 int main(void)
 {
     InitWindow(800, 450, "Simulation PLayground- powered by Raylib");
@@ -23,7 +46,7 @@ int main(void)
 
     return 0;
 }
-
+*/
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
 

@@ -131,8 +131,9 @@ bool IsPresentInBoundBox2(Vector2 a, Vector2 b, std::vector<Vector2>& vertices)
         }
        
        Vector2 diffAB = Vector2Subtract(b,a);
+       diffAB = Vector2Normalize(diffAB);
        Vector2 ABpoint = Vector2Add(a, Vector2Scale(diffAB, u));
-
+       ABpoint = Vector2Scale(diffAB, u);
        int nextINdex = i + 1;
        if (i== vertices.size()-1)//last
        {
@@ -183,7 +184,9 @@ public:
     {
         auto tempAccel = Vector2{ accel.x * currentFrameDelta,accel.y * currentFrameDelta };
         velocity = Vector2Add(velocity, tempAccel);
-        auto tempVector = Vector2{ velocity.x * currentFrameDelta / mass,velocity.y * currentFrameDelta / mass };
+        auto tempVector = Vector2{ 
+            velocity.x * currentFrameDelta / mass,
+            velocity.y * currentFrameDelta / mass };
         pos = Vector2Add(pos, tempVector);
     }
 
