@@ -79,8 +79,8 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 		YELLOW);//CUT LINE HORIZONTAL
 	int countForPoints = 0;
 	int countForSide = 0;
-	for (int i = 0; i < pointMass.size(); i++)
-     //for (int i = 1; i <= 1; i++)
+	//for (int i = 0; i < pointMass.size(); i++)
+     for (int i = 1; i <= 1; i++)
 	{
 		int temp_iNextIndex = i + 1;
 		if (i == pointMass.size() - 1)
@@ -98,7 +98,27 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 				
 				Vector2 pointOnMouseRay = GetPointOnTwoVector(tempMousePos, adjustedMouseToCornerPointEnd, u);
 				DrawCircleLinesV(pointOnMouseRay, 25, RED);
-				if (IsPointOnLine(pointMass[i].pos,pointMass[temp_iNextIndex].pos, pointOnMouseRay) )
+
+				Vector2 acutalPoint = Vector2Subtract(pointOnMouseRay, pointMass[i].pos);
+				Vector2 sideUnitLenght = Vector2Subtract(
+					pointMass[temp_iNextIndex].pos, pointMass[i].pos);
+
+				sideUnitLenght = Vector2Normalize(sideUnitLenght);
+
+				float projectOnSide = Vector2DotProduct(acutalPoint, sideUnitLenght);
+			
+				DrawLineV(pointMass[i].pos, pointOnMouseRay,PURPLE);
+				Vector2 actualPointOnSide = Vector2Add(pointMass[i].pos,
+					Vector2Scale((sideUnitLenght), projectOnSide)
+				);
+
+				DrawText(std::to_string(projectOnSide).c_str(), 0, 100, 25, BLUE);
+				std::string stractualPointOnSide = " " + std::to_string(actualPointOnSide.x) + "," + std::to_string(actualPointOnSide.y);
+				std::string strsideUnitLenght = " " + std::to_string(sideUnitLenght.x) + "," + std::to_string(sideUnitLenght.y);
+				DrawText(stractualPointOnSide.c_str(), 0, 120, 25, BLUE);
+				DrawText(strsideUnitLenght.c_str(), 0, 140, 25, BLUE);
+
+				if (IsPointOnLine(pointMass[i].pos,pointMass[temp_iNextIndex].pos, actualPointOnSide) )
 				{
 					countForSide++;
 				}
@@ -175,9 +195,24 @@ bool IsPointOnLine(Vector2 a, Vector2 b, Vector2 point)
 	float atoB = Vector2Distance(a,b);
 
 	float TotalWithPoint = aTOPoint + pointTOB;
-	//std::string temp_text = "T:" + std::to_string(atoB);
-	//temp_text = temp_text.substr(0, temp_text.find(".") + 3);
-	if (TotalWithPoint - atoB >=0.0f && TotalWithPoint - atoB<=1.0f)
+	std::string temp_text = "atoB:" + std::to_string(atoB);
+	temp_text = temp_text.substr(0, temp_text.find(".") + 3);
+
+	std::string temp_text1 = "aTOPoint:" + std::to_string(aTOPoint);
+	temp_text1 = temp_text1.substr(0, temp_text1.find(".") + 3);
+	std::string temp_text2 = "pointTOB:" + std::to_string(pointTOB);
+	temp_text2 = temp_text2.substr(0, temp_text2.find(".") + 3);
+
+	DrawText(temp_text.c_str(), GetMousePosition().x, GetMousePosition().y + 25, 25, GREEN);
+	DrawText(temp_text1.c_str(), GetMousePosition().x, GetMousePosition().y + 50, 25, GREEN);
+	DrawText(temp_text2.c_str(), GetMousePosition().x, GetMousePosition().y + 75, 25, GREEN);
+
+	DrawLineV(a, point, BROWN);
+	DrawCircleLinesV(a, 25, DARKBROWN);
+	DrawCircleLinesV(b, 25, DARKBROWN);
+	DrawCircleV(point, 25, BROWN);
+	
+	if ( abs(atoB - TotalWithPoint) >=0.0f && abs(atoB - TotalWithPoint)<=0.001f)
 	{
 		return true;
 	}
@@ -211,6 +246,7 @@ void PhysicWorld::Setup()
 	std::vector<Vector2> cubespoint;
 	cubespoint.push_back(Vector2{ 100,100 });
 	cubespoint.push_back(Vector2{ 500,100 });
+	cubespoint.push_back(Vector2{ 300,300 });
 	cubespoint.push_back(Vector2{ 500,500 });
 	cubespoint.push_back(Vector2{ 100,500 });
 
