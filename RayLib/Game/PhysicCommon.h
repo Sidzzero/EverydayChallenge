@@ -58,7 +58,18 @@ void Polygon::Update(float frameDelta)
 
 void Polygon::CheckCollsion(PointMass a_pointMass)
 {
+	Rectangle rect = CreateBoundBox();
 
+	auto tempMousePos = GetMousePosition();
+	Vector2 rectCornerToMouse = Vector2Subtract
+	   ( Vector2{rect.x+rect.width+15.0f,rect.y}, 
+		tempMousePos);
+	float dotMouseCorner = Vector2DotProduct(rectCornerToMouse, Vector2{ 1.0f,0 });
+	Vector2 adjustedMouseToCornerPointEnd = Vector2Add
+	(tempMousePos,
+		Vector2Scale(Vector2{ 1.0f,0 }, dotMouseCorner)
+	);
+	DrawLineV(tempMousePos, adjustedMouseToCornerPointEnd,YELLOW);
 	for (int i = 0; i < pointMass.size(); i++)
 	{
 		int temp_iNextIndex = i + 1;
