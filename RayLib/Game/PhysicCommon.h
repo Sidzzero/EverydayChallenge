@@ -7,6 +7,7 @@
 bool GetClosestPointOnRay(Vector2 a, Vector2 b, Vector2 point, float& u);
 bool IsPointOnLine(Vector2 a, Vector2 b, Vector2 point);
 Vector2 GetPointOnTwoVector(Vector2 a, Vector2 b, float t);
+bool findIntersectionBetweenSegements(const Vector2& A, const Vector2& B, const Vector2& V1, const Vector2& V2, Vector2& intersection);
 struct PointMass
 {
 public:
@@ -79,8 +80,9 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 		YELLOW);//CUT LINE HORIZONTAL
 	int countForPoints = 0;
 	int countForSide = 0;
+	float v = -1;
 	//for (int i = 0; i < pointMass.size(); i++)
-     for (int i = 1; i <= 1; i++)
+     for (int i = 2; i <= 2; i++)
 	{
 		int temp_iNextIndex = i + 1;
 		if (i == pointMass.size() - 1)
@@ -112,21 +114,26 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 					Vector2Scale((sideUnitLenght), projectOnSide)
 				);
 
-				DrawText(std::to_string(projectOnSide).c_str(), 0, 100, 25, BLUE);
+				//DrawText(std::to_string(projectOnSide).c_str(), 0, 100, 25, BLUE);
 				std::string stractualPointOnSide = " " + std::to_string(actualPointOnSide.x) + "," + std::to_string(actualPointOnSide.y);
 				std::string strsideUnitLenght = " " + std::to_string(sideUnitLenght.x) + "," + std::to_string(sideUnitLenght.y);
-				DrawText(stractualPointOnSide.c_str(), 0, 120, 25, BLUE);
-				DrawText(strsideUnitLenght.c_str(), 0, 140, 25, BLUE);
-
-				if (IsPointOnLine(pointMass[i].pos,pointMass[temp_iNextIndex].pos, actualPointOnSide) )
+				//DrawText(stractualPointOnSide.c_str(), 0, 120, 25, BLUE);
+				//DrawText(strsideUnitLenght.c_str(), 0, 140, 25, BLUE);
+				Vector2 intersectionPoint = Vector2{ 0,0 };
+				DrawLineEx(pointMass[i].pos, GetMousePosition(), 10.0f, RED);
+				DrawLineEx(pointMass[temp_iNextIndex].pos, pointOnMouseRay, 10.0f, RED);
+				if (findIntersectionBetweenSegements(pointMass[i].pos, pointMass[temp_iNextIndex].pos,GetMousePosition(),pointOnMouseRay, intersectionPoint) )
 				{
 					countForSide++;
+					
 				}
+				DrawCircleV(intersectionPoint, 25.0f, RED);
+
 			}
 		}
 		
 	}
-	std::cout <<"countForPoints:" << countForPoints <<",countForSide" << countForSide<< std::endl;
+	std::cout <<"countForPoints:" << countForPoints <<",countForSide" << countForSide<<","<<v<< std::endl;
 }
 Rectangle Polygon::CreateBoundBox()
 {
@@ -226,6 +233,55 @@ Vector2 GetPointOnTwoVector(Vector2 a, Vector2 b, float t)
 	Vector2 endPoint = Vector2Add(a, Scale);
 	return endPoint;
 
+}
+
+/// <summary>
+/// Finds Segements intersection
+/// </summary>
+bool findIntersectionBetweenSegements(const Vector2& A, const Vector2& B, const Vector2& V1, const Vector2& V2, Vector2& intersection)
+{
+	// Calculate the components of vectors B - A and V2 - V1
+	double dx1 = B.x - A.x;
+	double dy1 = B.y - A.y;
+	double dx2 = V2.x - V1.x;
+	double dy2 = V2.y - V1.y;
+
+	// Calculate the determinant
+	double determinant = (-dx1 * dy2) + (dy1 * dx2);
+
+	// Check if the line segments are parallel
+	if (determinant == 0) {
+		// Line segments are parallel or collinear, no intersection
+		intersection = Vector2{ 0, 0 }; // Return some default value to indicate no intersection
+		return false;
+	}
+
+	// Calculate the values of t and u
+	double t = ((V1.y - A.y) * dx2 - (V1.x - A.x) * dy2) / determinant;
+	double u = -((V1.y - A.y) * -dx1 + (V1.x - A.x) * dy1) / determinant;
+
+	// Check if both t and u are within the range [0, 1]
+	if (t >= 0 && t <= 1 && u >= 0 && u <= 1) {
+		// Calculate the intersection point
+		Vector2 intersection;
+		intersection.x = A.x + t * dx1;
+		intersection.y = A.y + t * dy1;
+		intersection = intersection;
+		DrawText(std::to_string(t).c_str(), 300, 600, 25, RED);
+		DrawText(std::to_string(u).c_str(), 500, 600, 25, RED);
+		return true;
+	}
+	else {
+		// No intersection within the line segments
+		intersection = Vector2{ 0, 0 }; // Return some default value to indicate no intersection
+		Vector2 intersection;
+		intersection.x = A.x + t * dx1;
+		intersection.y = A.y + t * dy1;
+		intersection = intersection;
+		DrawText(std::to_string(t).c_str(), 300, 600, 25, RED);
+		DrawText(std::to_string(u).c_str(), 500, 600, 25, RED);
+		return false;
+	}
 }
 //END------Polygon--------------------
 //PHYSIC WORLD--------------------
