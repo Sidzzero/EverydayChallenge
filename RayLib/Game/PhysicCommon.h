@@ -81,8 +81,9 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 	int countForPoints = 0;
 	int countForSide = 0;
 	float v = -1;
-	//for (int i = 0; i < pointMass.size(); i++)
-     for (int i = 2; i <= 2; i++)
+	Vector2 intersectionPoint = Vector2{ 0,0 };
+	for (int i = 0; i < pointMass.size(); i++)
+     //for (int i = 2; i <= 2; i++)
 	{
 		int temp_iNextIndex = i + 1;
 		if (i == pointMass.size() - 1)
@@ -90,7 +91,20 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 			temp_iNextIndex = 0;
 		}
 		float u = -500;
+		
+		if (findIntersectionBetweenSegements
+		(pointMass[i].pos,
+		pointMass[temp_iNextIndex].pos,
+			tempMousePos,
+			adjustedMouseToCornerPointEnd, intersectionPoint)
+			)
+		{
+			countForSide++;
+		}
+		DrawCircleLinesV(intersectionPoint, 15, WHITE);
+		DrawText(std::to_string(i).c_str(), intersectionPoint.x+25, intersectionPoint.y,20, WHITE);
 		//Check only with mouse ray
+	/*
 		if (GetClosestPointOnRay(tempMousePos, adjustedMouseToCornerPointEnd,pointMass[i].pos,u))
 		{
 			if (u >= 0 && u <= 0.99f)
@@ -131,9 +145,11 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 
 			}
 		}
+	*/
 		
 	}
-	std::cout <<"countForPoints:" << countForPoints <<",countForSide" << countForSide<<","<<v<< std::endl;
+	// std::cout << "countForPoints:" << countForPoints << ",countForSide" << countForSide << "," << v << std::endl;
+	 std::cout <<",countForSide" << countForSide<<","<< intersectionPoint.x<<"," << intersectionPoint.y<< std::endl;
 }
 Rectangle Polygon::CreateBoundBox()
 {
@@ -240,6 +256,10 @@ Vector2 GetPointOnTwoVector(Vector2 a, Vector2 b, float t)
 /// </summary>
 bool findIntersectionBetweenSegements(const Vector2& A, const Vector2& B, const Vector2& V1, const Vector2& V2, Vector2& intersection)
 {
+	DrawCircleLinesV(A, 15, WHITE);
+	DrawCircleLinesV(B, 15, WHITE);
+	DrawCircleLinesV(V1, 15, WHITE);
+	DrawCircleLinesV(V2,15,WHITE);
 	// Calculate the components of vectors B - A and V2 - V1
 	double dx1 = B.x - A.x;
 	double dy1 = B.y - A.y;
@@ -253,6 +273,7 @@ bool findIntersectionBetweenSegements(const Vector2& A, const Vector2& B, const 
 	if (determinant == 0) {
 		// Line segments are parallel or collinear, no intersection
 		intersection = Vector2{ 0, 0 }; // Return some default value to indicate no intersection
+	
 		return false;
 	}
 
@@ -263,23 +284,25 @@ bool findIntersectionBetweenSegements(const Vector2& A, const Vector2& B, const 
 	// Check if both t and u are within the range [0, 1]
 	if (t >= 0 && t <= 1 && u >= 0 && u <= 1) {
 		// Calculate the intersection point
-		Vector2 intersection;
+		 ;
 		intersection.x = A.x + t * dx1;
 		intersection.y = A.y + t * dy1;
 		intersection = intersection;
-		DrawText(std::to_string(t).c_str(), 300, 600, 25, RED);
-		DrawText(std::to_string(u).c_str(), 500, 600, 25, RED);
+		//DrawText(std::to_string(i).c_str(), intersectionPoint.x + 25, intersectionPoint.y, 20, WHITE);
+		DrawText(std::to_string(t).c_str(), intersection.x + 35, intersection.y+25, 20, GREEN);
+		DrawText(std::to_string(u).c_str(), intersection.x + 35, intersection.y+55, 20, GREEN);
+	
 		return true;
 	}
 	else {
 		// No intersection within the line segments
 		intersection = Vector2{ 0, 0 }; // Return some default value to indicate no intersection
-		Vector2 intersection;
+		 ;
 		intersection.x = A.x + t * dx1;
 		intersection.y = A.y + t * dy1;
 		intersection = intersection;
-		DrawText(std::to_string(t).c_str(), 300, 600, 25, RED);
-		DrawText(std::to_string(u).c_str(), 500, 600, 25, RED);
+		DrawText(std::to_string(t).c_str(), intersection.x + 35, intersection.y+25, 25, RED);
+		DrawText(std::to_string(u).c_str(), intersection.x + 35, intersection.y+55, 25, RED);
 		return false;
 	}
 }
