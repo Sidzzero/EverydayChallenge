@@ -85,6 +85,11 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 	for (int i = 0; i < pointMass.size(); i++)
      //for (int i = 2; i <= 2; i++)
 	{
+		DrawText((std::to_string(i)).c_str(),
+			pointMass[i].pos.x + 15,
+			pointMass[i].pos.y,
+			20,
+			YELLOW);
 		int temp_iNextIndex = i + 1;
 		if (i == pointMass.size() - 1)
 		{
@@ -102,51 +107,21 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 			countForSide++;
 		}
 		DrawCircleLinesV(intersectionPoint, 15, WHITE);
-		DrawText(std::to_string(i).c_str(), intersectionPoint.x+25, intersectionPoint.y,20, WHITE);
-		//Check only with mouse ray
-	/*
-		if (GetClosestPointOnRay(tempMousePos, adjustedMouseToCornerPointEnd,pointMass[i].pos,u))
-		{
-			if (u >= 0 && u <= 0.99f)
-			{
-				DrawLineV(tempMousePos, pointMass[i].pos,BLUE);
-				countForPoints++;
-				
-				Vector2 pointOnMouseRay = GetPointOnTwoVector(tempMousePos, adjustedMouseToCornerPointEnd, u);
-				DrawCircleLinesV(pointOnMouseRay, 25, RED);
-
-				Vector2 acutalPoint = Vector2Subtract(pointOnMouseRay, pointMass[i].pos);
-				Vector2 sideUnitLenght = Vector2Subtract(
-					pointMass[temp_iNextIndex].pos, pointMass[i].pos);
-
-				sideUnitLenght = Vector2Normalize(sideUnitLenght);
-
-				float projectOnSide = Vector2DotProduct(acutalPoint, sideUnitLenght);
-			
-				DrawLineV(pointMass[i].pos, pointOnMouseRay,PURPLE);
-				Vector2 actualPointOnSide = Vector2Add(pointMass[i].pos,
-					Vector2Scale((sideUnitLenght), projectOnSide)
-				);
-
-				//DrawText(std::to_string(projectOnSide).c_str(), 0, 100, 25, BLUE);
-				std::string stractualPointOnSide = " " + std::to_string(actualPointOnSide.x) + "," + std::to_string(actualPointOnSide.y);
-				std::string strsideUnitLenght = " " + std::to_string(sideUnitLenght.x) + "," + std::to_string(sideUnitLenght.y);
-				//DrawText(stractualPointOnSide.c_str(), 0, 120, 25, BLUE);
-				//DrawText(strsideUnitLenght.c_str(), 0, 140, 25, BLUE);
-				Vector2 intersectionPoint = Vector2{ 0,0 };
-				DrawLineEx(pointMass[i].pos, GetMousePosition(), 10.0f, RED);
-				DrawLineEx(pointMass[temp_iNextIndex].pos, pointOnMouseRay, 10.0f, RED);
-				if (findIntersectionBetweenSegements(pointMass[i].pos, pointMass[temp_iNextIndex].pos,GetMousePosition(),pointOnMouseRay, intersectionPoint) )
-				{
-					countForSide++;
-					
-				}
-				DrawCircleV(intersectionPoint, 25.0f, RED);
-
-			}
-		}
-	*/
+		DrawText( (std::to_string(i)+"<->"+ std::to_string(temp_iNextIndex)).c_str(), 
+			intersectionPoint.x + 25,
+			intersectionPoint.y, 
+			20,
+			WHITE);
 		
+	}
+	if (countForSide%2==0)
+	{
+		DrawText("OUTSIDE of Polygon", GetScreenWidth() * 0.30f, GetScreenHeight() * 0.80f, 50, RED);
+	}
+	else
+	{
+		DrawText("INSIDE of Polygon",GetScreenWidth()*0.30f, GetScreenHeight() * 0.80f, 50, GREEN);
+
 	}
 	// std::cout << "countForPoints:" << countForPoints << ",countForSide" << countForSide << "," << v << std::endl;
 	 std::cout <<",countForSide" << countForSide<<","<< intersectionPoint.x<<"," << intersectionPoint.y<< std::endl;
@@ -272,7 +247,7 @@ bool findIntersectionBetweenSegements(const Vector2& A, const Vector2& B, const 
 	// Check if the line segments are parallel
 	if (determinant == 0) {
 		// Line segments are parallel or collinear, no intersection
-		intersection = Vector2{ 0, 0 }; // Return some default value to indicate no intersection
+		intersection = Vector2{ 10, 10+B.y }; // Return some default value to indicate no intersection
 	
 		return false;
 	}
@@ -296,7 +271,7 @@ bool findIntersectionBetweenSegements(const Vector2& A, const Vector2& B, const 
 	}
 	else {
 		// No intersection within the line segments
-		intersection = Vector2{ 0, 0 }; // Return some default value to indicate no intersection
+		intersection = Vector2{ 10,10 + B.y }; // Return some default value to indicate no intersection
 		 ;
 		intersection.x = A.x + t * dx1;
 		intersection.y = A.y + t * dy1;
