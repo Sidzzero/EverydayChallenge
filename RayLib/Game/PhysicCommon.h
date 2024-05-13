@@ -82,6 +82,8 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 	int countForSide = 0;
 	float v = -1;
 	Vector2 intersectionPoint = Vector2{ 0,0 };
+	Vector2 closestOnSide = Vector2{INT_MAX*1.0f,INT_MAX*1.0f };
+	float closestDistance = INT_MAX * 1.0f;
 	for (int i = 0; i < pointMass.size(); i++)
      //for (int i = 2; i <= 2; i++)
 	{
@@ -112,15 +114,29 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 			intersectionPoint.y, 
 			20,
 			WHITE);
-		
+		float uForCLosest = -1;
+		if (GetClosestPointOnRay(pointMass[i].pos,pointMass[temp_iNextIndex].pos, tempMousePos,uForCLosest))
+		{
+			auto tempCurrentPointOnSide = GetPointOnTwoVector(pointMass[i].pos, pointMass[temp_iNextIndex].pos, uForCLosest);
+			auto temoDist = Vector2Distance(tempCurrentPointOnSide, tempMousePos);
+			if (closestDistance > temoDist)
+			{
+				closestDistance = temoDist;
+				closestOnSide = tempCurrentPointOnSide;
+			}
+		}
 	}
+
+
 	if (countForSide%2==0)
 	{
 		DrawText("OUTSIDE of Polygon", GetScreenWidth() * 0.30f, GetScreenHeight() * 0.80f, 50, RED);
+	
 	}
 	else
 	{
 		DrawText("INSIDE of Polygon",GetScreenWidth()*0.30f, GetScreenHeight() * 0.80f, 50, GREEN);
+		DrawCircle(closestOnSide.x, closestOnSide.y, 30, ORANGE);
 
 	}
 	// std::cout << "countForPoints:" << countForPoints << ",countForSide" << countForSide << "," << v << std::endl;
@@ -300,9 +316,17 @@ void PhysicWorld::Setup()
 	std::vector<Vector2> cubespoint;
 	cubespoint.push_back(Vector2{ 100,100 });
 	cubespoint.push_back(Vector2{ 500,100 });
-	cubespoint.push_back(Vector2{ 300,300 });
-	cubespoint.push_back(Vector2{ 500,500 });
+	//cubespoint.push_back(Vector2{ 300,300 });
+    cubespoint.push_back(Vector2{ 500,500 });
 	cubespoint.push_back(Vector2{ 100,500 });
+
+	//cubespoint.push_back(Vector2{ 300,300 });
+	//cubespoint.push_back(Vector2{ 400,200 });
+	//cubespoint.push_back(Vector2{ 300,300 });
+	//cubespoint.push_back(Vector2{ 500,300 });
+	//cubespoint.push_back(Vector2{ 400,600 });
+
+
 
 	for (int i=0;i<cubespoint.size();i++)
 	{
