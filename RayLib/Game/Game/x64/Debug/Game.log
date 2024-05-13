@@ -1,95 +1,89 @@
 ﻿  Game.cpp
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(92,20): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(174,20): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(91,23): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(173,23): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(114,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(196,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(113,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(195,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(133,78): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  (compiling source file 'Game.cpp')
-  
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(133,51): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  (compiling source file 'Game.cpp')
-  
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(138,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  (compiling source file 'Game.cpp')
-  
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(138,48): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  (compiling source file 'Game.cpp')
-  
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(139,44): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  (compiling source file 'Game.cpp')
-  
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(139,27): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  (compiling source file 'Game.cpp')
-  
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(153,13): warning C4305: 'initializing': truncation from 'int' to 'float'
-  (compiling source file 'Game.cpp')
-  
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(153,45): warning C4305: 'initializing': truncation from 'int' to 'float'
-  (compiling source file 'Game.cpp')
-  
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(201,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  (compiling source file 'Game.cpp')
-  
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(220,73): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(220,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
 D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(220,48): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(221,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(221,44): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(221,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(221,27): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(222,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(235,13): warning C4305: 'initializing': truncation from 'int' to 'float'
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(222,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(235,45): warning C4305: 'initializing': truncation from 'int' to 'float'
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(279,24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(283,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(280,24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(302,73): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(283,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(302,48): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(283,54): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(303,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(284,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(303,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(284,54): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(304,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(292,24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(304,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(293,24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(361,24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(295,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(362,24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(295,54): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(365,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(296,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(365,54): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(296,54): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(366,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(366,54): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(374,24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(375,24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(377,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(377,54): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(378,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\PhysicCommon.h(378,54): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
   Game.vcxproj -> D:\Projects\EverydayChallenge\RayLib\Game\x64\Debug\Game.exe

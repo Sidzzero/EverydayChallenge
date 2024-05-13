@@ -14,10 +14,90 @@ public:
 	Vector2 pos;
 	Vector2 accel;
 	Vector2 velocity;
-	
+	Vector2 force =Vector2{ 0,0 };
+	Vector2 Springforce = Vector2{ 0,0 };
 	float mass = 1.0f;
 	Color color = Color{ GREEN };
 
+	void Update(float frameDelta)
+	{
+		force = Vector2{0,0};
+		force = Vector2Add(force,Springforce);
+
+		auto tempAccel = Vector2Scale(force, frameDelta);
+		velocity = Vector2Add(velocity, tempAccel);
+		auto NewVector = Vector2Scale(velocity, frameDelta / mass);
+		pos = Vector2Add(pos, NewVector);
+	}
+
+	void AddForce(Vector2 a_UpdatedForce)
+	{
+		Springforce = a_UpdatedForce;
+	}
+
+
+	
+};
+struct Spring
+{
+public:
+	PointMass* pointA;
+	PointMass* pointB;
+	float resetLenght = 200;
+	//float kStiffness = 0.09f;
+	//float kDamping = 0.001f;
+	float kStiffness = 20.9f;
+	float kDamping = 0.1f;
+
+	void Draw()
+	{
+		DrawCircleLinesV(pointA->pos, 15, YELLOW);
+		DrawCircleLinesV(pointB->pos,15,YELLOW);
+		DrawLineEx(pointA->pos, pointB->pos, 3.0f, GREEN);
+		DrawLine(700,80,900,80,DARKGREEN);
+	}
+	void Update(float FrameDelta)
+	{
+		auto totalSPringForce = GetTotalSpringForce();
+		
+		Vector2 UnitDirectionBA = Vector2Normalize((Vector2Subtract(pointB->pos, pointA->pos)));
+		Vector2 fA = Vector2Scale(UnitDirectionBA, totalSPringForce);
+		Vector2 fB = Vector2Scale(UnitDirectionBA, -totalSPringForce);
+		pointA->AddForce(fA);
+		pointB->AddForce(fB);
+		//TODO: NEED TO BE HERE !!!
+		pointB->Update(FrameDelta);
+		pointA->Update(FrameDelta);
+
+		std::cout << 
+			"GetSpringForce():"<< GetSpringForce()
+			<< "GetDampingForce():" << GetDampingForce()
+		<<	std::endl ;
+	}
+
+	float GetSpringForce()
+	{
+		//F= Ks * X
+		float x = Vector2Distance(pointA->pos, pointB->pos) - resetLenght;
+		DrawLine(700, 80, 900, 80, DARKGREEN);
+		DrawText(std::to_string(x).c_str(), 700, 80, 15, GREEN);
+		return kStiffness * x;
+	}
+
+	float GetDampingForce()
+	{
+		//f =  dot (v2-v1, Unit(b-a)) * kD
+
+		Vector2 UnitDirectionBA = Vector2Normalize((Vector2Subtract(pointB->pos,pointA->pos)));
+		Vector2 DirectionOfVelocityForce = Vector2Subtract(pointB->velocity, pointA->velocity);
+		float dotOfThem = Vector2DotProduct(DirectionOfVelocityForce, UnitDirectionBA);
+		DrawText(std::to_string(dotOfThem).c_str(), 700, 150, 15, GREEN);
+		return dotOfThem;
+	}
+	float GetTotalSpringForce()
+	{
+		return GetSpringForce() +GetDampingForce();
+	}
 };
 
 //Polygon--------------------
@@ -48,13 +128,14 @@ void Polygon::Draw()
 
 void Polygon::Update(float frameDelta)
 {
-	return;
+
 	for (int i=0;i<pointMass.size();i++)
 	{
-		auto tempAccel = Vector2Scale(pointMass[i].accel, frameDelta);
-		pointMass[i].velocity = Vector2Add(pointMass[i].velocity, tempAccel);
-		auto NewVector = Vector2Scale(pointMass[i].velocity,frameDelta/ pointMass[i].mass);
-		pointMass[i].pos = Vector2Add(pointMass[i].pos,NewVector);
+		pointMass[i].Update(frameDelta);
+		//auto tempAccel = Vector2Scale(pointMass[i].accel, frameDelta);
+		//pointMass[i].velocity = Vector2Add(pointMass[i].velocity, tempAccel);
+		//auto NewVector = Vector2Scale(pointMass[i].velocity,frameDelta/ pointMass[i].mass);
+		//pointMass[i].pos = Vector2Add(pointMass[i].pos,NewVector);
 	}
 
 }
@@ -64,6 +145,7 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 	Rectangle rect = CreateBoundBox();
 
 	auto tempMousePos = GetMousePosition();
+	tempMousePos = a_pointMass.pos;
 	Vector2 rectCornerToMouse = Vector2Subtract
 	   ( Vector2{rect.x+rect.width+25.0f,rect.y}, 
 		tempMousePos);
@@ -130,7 +212,7 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 
 	if (countForSide%2==0)
 	{
-		DrawText("OUTSIDE of Polygon", GetScreenWidth() * 0.30f, GetScreenHeight() * 0.80f, 50, RED);
+		//DrawText("OUTSIDE of Polygon", GetScreenWidth() * 0.30f, GetScreenHeight() * 0.80f, 50, RED);
 	
 	}
 	else
@@ -139,8 +221,8 @@ void Polygon::CheckCollsion(PointMass a_pointMass)
 		DrawCircle(closestOnSide.x, closestOnSide.y, 30, ORANGE);
 
 	}
-	// std::cout << "countForPoints:" << countForPoints << ",countForSide" << countForSide << "," << v << std::endl;
-	 std::cout <<",countForSide" << countForSide<<","<< intersectionPoint.x<<"," << intersectionPoint.y<< std::endl;
+
+	// std::cout <<",countForSide" << countForSide<<","<< intersectionPoint.x<<"," << intersectionPoint.y<< std::endl;//FOR DEBUGGING
 }
 Rectangle Polygon::CreateBoundBox()
 {
@@ -303,7 +385,11 @@ class PhysicWorld
 {
 public:
 	Polygon polygon;
+	Polygon polygon2;
 	PointMass mousePos;
+
+	Spring testSpring;
+	PointMass* pA, * pB;
 	
 	void Setup();
 	void Draw();
@@ -326,7 +412,11 @@ void PhysicWorld::Setup()
 	//cubespoint.push_back(Vector2{ 500,300 });
 	//cubespoint.push_back(Vector2{ 400,600 });
 
-
+	std::vector<Vector2> cubespoint2;
+	cubespoint2.push_back(Vector2{ 600,500 });
+	cubespoint2.push_back(Vector2{ 700,500 });
+	cubespoint2.push_back(Vector2{ 700,600 });
+	cubespoint2.push_back(Vector2{ 600,600 });
 
 	for (int i=0;i<cubespoint.size();i++)
 	{
@@ -336,6 +426,23 @@ void PhysicWorld::Setup()
 		temp.velocity = Vector2{ 0,0 };
 		polygon.pointMass.push_back(temp);
 	}
+	for (int i = 0; i < cubespoint2.size(); i++)
+	{
+		PointMass temp;
+		temp.pos = cubespoint2[i];
+		temp.accel = Vector2{ 0,9.8f };
+		temp.velocity = Vector2{ 0,0 };
+		polygon2.pointMass.push_back(temp);
+	}
+
+	//Spring
+	pA = new PointMass();
+	pB = new PointMass();
+	pA->pos = Vector2{ 500,50 };//use 700
+	pB->pos = Vector2{900,50};
+
+	testSpring.pointA = pA;
+	testSpring.pointB = pB;
 
 }
 void PhysicWorld::Update()
@@ -343,12 +450,21 @@ void PhysicWorld::Update()
 	mousePos.pos = GetMousePosition();
 	auto temp = GetFrameTime();
 	//polygon.Update(temp);// DISABLED THE MOPVEMENT
-	polygon.CheckCollsion(mousePos);
+	//polygon2.Update(temp);// DISABLED THE MOPVEMENT
+	//polygon2.CheckCollsion(PointMass{ Vector2{600,600} });
+ 	polygon.CheckCollsion(mousePos);
+
+	//Test spring
+	testSpring.Update(temp);
+	
+
 }
 void PhysicWorld::Draw()
 {
 	polygon.Draw();
+	polygon2.Draw();
 	DrawCircleV(mousePos.pos, 10.0f, ORANGE);
+	testSpring.Draw();
 
 }
 // END-------PHYSIC WORLD--------------------
