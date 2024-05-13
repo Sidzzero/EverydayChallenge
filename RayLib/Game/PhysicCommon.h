@@ -58,6 +58,25 @@ public:
 	}
 	void Update(float FrameDelta)
 	{
+		
+		if (IsMouseButtonDown(MouseButton::MOUSE_BUTTON_LEFT))
+		{
+			auto mousePos = GetMousePosition();
+			if (Vector2Distance(pointA->pos, mousePos) <=10.f)
+			{
+				pointA->pos = mousePos;
+				
+			}
+			else if (Vector2Distance(pointB->pos, mousePos) <= 10.f)
+			{
+				pointB->pos = mousePos;
+				
+			}
+			
+
+			return;
+		}
+
 		auto totalSPringForce = GetTotalSpringForce();
 		
 		Vector2 UnitDirectionBA = Vector2Normalize((Vector2Subtract(pointB->pos, pointA->pos)));
