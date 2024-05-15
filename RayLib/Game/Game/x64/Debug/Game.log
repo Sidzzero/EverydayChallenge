@@ -1,2 +1,4 @@
 ﻿  Game.cpp
+D:\Projects\EverydayChallenge\RayLib\Game\Game.cpp(41,34): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Game.cpp(42,41): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Game.vcxproj -> D:\Projects\EverydayChallenge\RayLib\Game\x64\Debug\Game.exe

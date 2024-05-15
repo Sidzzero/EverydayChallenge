@@ -1,17 +1,45 @@
 // Game.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include "raylib.h"
-
+#include "Common.h"
+#include "SpriteAnimation.h"
 int main(void)
 {
-    InitWindow(800, 450, "raylib [core] example - basic window");
+    InitWindow(1024, 768, "raylib [core] example - basic window");
+
+    Image knightImg = LoadImage("assets/images/Knight_Idle.png");
+    Image knightRunImg = LoadImage("assets/images/Knight_Run.png");
+
+    Texture2D temp = LoadTextureFromImage(knightImg);
+
+    Rectangle rectanglesTemp[] = 
+    {
+        {0,0 ,589,709},
+        {589,0 ,589,709},
+        {589 * 2,0 ,589,709},
+        {589 * 3,0 ,589,709},
+        {589 * 4,0 ,589,709},
+        {589 * 5,0 ,589,709},
+        {589 * 6,0 ,589,709},
+        {589 * 8,0 ,589,709},
+        {589 * 9,0 ,589,709},
+        {589 *10,0 ,589,709},
+
+    };
+    SpriteAnimation knightSprite(temp, rectanglesTemp, 10, 15);
+    temp = LoadTextureFromImage(knightRunImg);
+    SpriteAnimation knightRunningSprite(temp, rectanglesTemp, 10, 15);
+    auto tempKnightRect = Rectangle{ 0,80,512,709 };
+    auto tempKnightRunRect = Rectangle{ 520,80,512,709 };
 
     while (!WindowShouldClose())
     {
         BeginDrawing();
-        ClearBackground(RAYWHITE);
-        DrawText("Congrats! You created your first window!", 190, 200, 20, BLACK);
+        ClearBackground(BLUE);
+        DrawText("Congrats! You created your first window!", 80, 80, 40, GREEN);
+      
+        knightSprite.Draw(GetTime(), tempKnightRect, Vector2{ 0,0 }, 0.0f, WHITE);
+        knightRunningSprite.Draw(GetTime(), tempKnightRunRect, Vector2{ 0,0 }, 0.0f, WHITE);
         EndDrawing();
     }
 
