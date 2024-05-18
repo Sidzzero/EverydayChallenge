@@ -24,9 +24,9 @@ public :
 	Grid();
 
 private:
-	int numRows = 1;
-	int numCols = 1;
-	int cellSize ;
+	int numRows = 20;
+	int numCols = 10;
+	int cellSize = 30 ;
 	float elaspedSinceLast = 0;
 	float waitTime = WAIT_TIME;
 

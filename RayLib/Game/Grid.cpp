@@ -79,7 +79,7 @@ void Grid::MoveCurrentDown()
 	if (CheckIfOutSide() == true)
 	{
 		currentBLock.Move(0, -1);
-		//LockInBlock();
+		LockInBlock();
 	}
 
 }
@@ -125,7 +125,7 @@ bool Grid::CheckIfOutSide()
 	auto CurrentBlocksPos = currentBLock.GetCurrentPositions();
 	for (auto pos:CurrentBlocksPos)
 	{
-		if (pos.x<0 || pos.y<0 || pos.x>=numRows || pos.y>=numCols)
+		if (pos.x<0 || pos.y<0 || pos.x>=numCols || pos.y>=numRows)
 		{
 			return true;
 		}
@@ -140,14 +140,14 @@ void Grid::LockInBlock()
 	for (auto pos : CurrentBlocksPos)
 	{
 		std::cout<<pos.x<<":" <<pos.y<< "\n";
-		grids[pos.x][pos.y] = currentBLock.id;
+		grids[pos.y][pos.x] = currentBLock.id;
 	}
 
 	for (int i = 0; i < numRows; i++)
 	{
 		for (int j = 0; j < numCols; j++)
 		{
-			std::cout << grids[j][i];
+			std::cout << (grids[i][j]);
 			std::cout << " ";
 		}
 		std::cout << "\n";
@@ -157,6 +157,9 @@ void Grid::LockInBlock()
 	nextBLock = GetRandomBlock();//Simple random giver but maybe random list each time?
 	std::cout <<"After" << currentBLock.id << ":" << nextBLock.id << "\n";
 }
+
+
+
 
 Block Grid::GetRandomBlock()
 {

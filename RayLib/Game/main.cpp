@@ -6,7 +6,9 @@
 #include "GAme.h"
 int main(void)
 {
-    InitWindow(ROW*CELL_SIZE + CELL_SIZE + 55, COLUMN*CELL_SIZE + CELL_SIZE+25, "Tetris Game- powered by RAYLIB");
+    InitWindow(20*CELL_SIZE + CELL_SIZE + 55, 
+        40*CELL_SIZE + CELL_SIZE+25, 
+        "Tetris Game- powered by RAYLIB");
 
     Image knightImg = LoadImage("assets/images/Knight_Idle.png");
     Image knightRunImg = LoadImage("assets/images/Knight_Run.png");
