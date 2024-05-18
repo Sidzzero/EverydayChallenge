@@ -4,6 +4,7 @@
 class Block
 {
 public:
+	int id = 0;
 	int x;
 	int y;
 	int rotation = 0;
@@ -63,6 +64,7 @@ public:
 	{
 		x = 0;
 		y = 0;
+		id = 1;
 		color = LBlockColor;
 		rotationMap =
 		{ {0 ,  std::vector<Position> { {0,1},{1,1},{2,1},{2,2} }},
@@ -80,6 +82,7 @@ public:
 	{
 		x = 0;
 		y = 0;
+		id = 2;
 		color = JBlockColor;
 		rotationMap =
 		{ {0 ,  std::vector<Position> { {0,0},{1,0},{1,1},{1,2} }},
@@ -96,6 +99,7 @@ public:
 	{
 		x = 0;
 		y = 0;
+		id = 3;
 		color = IBlockColor;
 		rotationMap =
 		{ {0 ,  std::vector<Position> { {1,0},{1,1},{1,2},{1,3} }},
@@ -113,6 +117,7 @@ public:
 	{
 		x = 0;
 		y = 0;
+		id = 4;
 		color = OBlockColor;
 		rotationMap =
 		{ {0 ,  std::vector<Position> { {0,0},{0,1},{1,0},{1,1} }}
@@ -127,6 +132,7 @@ public:
 	{
 		x = 0;
 		y = 0;
+		id = 5;
 		color = SBlockColor;
 		rotationMap =
 		{ {0 ,  std::vector<Position> { {0,1},{0,2},{1,0},{1,1} }},
@@ -144,6 +150,7 @@ public:
 	{
 		x = 0;
 		y = 0;
+		id = 6;
 		color = TBlockColor;
 		rotationMap =
 		{ {0 ,  std::vector<Position> { {0,1},{1,0},{1,1},{1,2} }},
@@ -162,6 +169,7 @@ public:
 	{
 		x = 0;
 		y = 0;
+		id = 7;
 		color = ZBlockColor;
 		rotationMap =
 		{ {0 ,  std::vector<Position> { {0,0},{0,1},{1,1},{1,2} }},

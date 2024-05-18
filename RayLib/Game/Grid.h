@@ -18,6 +18,9 @@ public :
 	void RotateccwCurrent();
 	void FallBlocks();
 	bool CheckIfOutSide();
+
+	void LockInBlock();
+	Block GetRandomBlock();
 	Grid();
 
 private:

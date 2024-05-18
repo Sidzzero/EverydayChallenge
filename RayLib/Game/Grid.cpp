@@ -4,9 +4,9 @@
 
 void Grid::Initialize()
 {
-	numRows = 11;
-	numCols = COLUMN;
-	cellSize = CELL_SIZE;
+	numRows = 20;
+	numCols = 10;
+	cellSize = 30;
 	blockColors = GetBlockColors();
 	for (int i = 0; i < numRows; i++)
 	{
@@ -18,8 +18,10 @@ void Grid::Initialize()
 	}
 
 	blocks = { LBLock{}, JBLock {},IBLock{},OBLock{},SBLock{},TBLock{}, ZBLock{} };
-	IBLock temp;
-	currentBLock = temp;
+	
+	currentBLock = GetRandomBlock();
+	nextBLock = GetRandomBlock();
+	std::cout <<"ROW:" << numRows << ",COL:" << numCols<<"\n";
 }
 
 void Grid::Draw()
@@ -77,6 +79,7 @@ void Grid::MoveCurrentDown()
 	if (CheckIfOutSide() == true)
 	{
 		currentBLock.Move(0, -1);
+		LockInBlock();
 	}
 
 }
@@ -131,8 +134,42 @@ bool Grid::CheckIfOutSide()
 	return false;;
 }
 
+void Grid::LockInBlock()
+{
+	auto CurrentBlocksPos = currentBLock.GetCurrentPositions();
+	for (auto pos : CurrentBlocksPos)
+	{
+		std::cout<<pos.x<<":" <<pos.y<< "\n";
+		grids[pos.x][pos.y] = currentBLock.id;
+	}
+
+	for (int i = 0; i < numRows; i++)
+	{
+		for (int j = 0; j < numCols; j++)
+		{
+			std::cout << grids[i][j];
+			std::cout << " ";
+		}
+		std::cout << "\n";
+	}
+	std::cout <<"Before" << currentBLock.id << ":" << nextBLock.id << "\n";
+	currentBLock = nextBLock;
+	nextBLock = GetRandomBlock();//Simple random giver but maybe random list each time?
+	std::cout <<"After" << currentBLock.id << ":" << nextBLock.id << "\n";
+}
+
+Block Grid::GetRandomBlock()
+{
+	int temp_iRand = GetRandomValue(0, blocks.size() - 1);
+	std::cout << "Random Block Generated with ID:!"<< temp_iRand <<"\n";
+	return blocks[temp_iRand];
+}
+
 Grid::Grid()
 {
+	numRows = 20;
+	numCols = 10;
+	cellSize = 30;
 	std::cout <<"construct!\n";
 }
 
