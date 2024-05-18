@@ -7,6 +7,7 @@ class Grid
 {
 public :
 	int grids[20][10];//Holds the color 
+	std::vector<Block> blocks;
 	void Initialize();
 	void Draw();
 	void Update();
@@ -22,6 +23,7 @@ private:
 	int numCols = 1;
 	int cellSize ;
 	std::vector<Color> blockColors;
+
 	Block currentBLock;
 	Block nextBLock;
 

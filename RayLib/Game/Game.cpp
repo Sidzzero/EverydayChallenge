@@ -29,6 +29,8 @@ void GAme::Update()
 	{
 		grid.RotateccwCurrent();
 	}
+
+	grid.Update();
 }
 void GAme::OnPlayingState()
 {

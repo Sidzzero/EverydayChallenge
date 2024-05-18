@@ -16,7 +16,9 @@ void Grid::Initialize()
 		}
 
 	}
-	LBLock temp;
+
+	blocks = { LBLock{}, JBLock {},IBLock{},OBLock{},SBLock{},TBLock{}, ZBLock{} };
+	IBLock temp;
 	currentBLock = temp;
 }
 
@@ -35,9 +37,17 @@ void Grid::Draw()
 
 	currentBLock.Draw();
 }
+int tempCurrentINdex = 0;
 void Grid::Update()
 {
 	//Make the current block fall or accept movement
+	//TESTING
+	if (IsKeyPressed(KEY_G))
+	{
+		tempCurrentINdex++;
+		tempCurrentINdex = tempCurrentINdex < blocks.size() ? tempCurrentINdex:0;
+		currentBLock = blocks[tempCurrentINdex];
+	}
 }
 
 void Grid::MoveCurrentLeft()
@@ -59,7 +69,7 @@ void Grid::MoveCurrentDown()
 void Grid::RotatecwCurrent()
 {
 	currentBLock.rotation++;
-	if (currentBLock.rotation > 3)//TODO: Make it like a clamp and move it to block logic?
+	if (currentBLock.rotation > currentBLock.rotationMap.size())//TODO: Make it like a clamp and move it to block logic?
 	{
 		currentBLock.rotation = 0;
 	}
@@ -70,7 +80,7 @@ void Grid::RotateccwCurrent()
 	currentBLock.rotation--;
 	if (currentBLock.rotation<0)
 	{
-		currentBLock.rotation = 3;
+		currentBLock.rotation = currentBLock.rotationMap.size()-1;
 	}
 }
 

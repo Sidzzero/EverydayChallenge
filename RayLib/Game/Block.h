@@ -55,4 +55,101 @@ public:
 	}
 };
 
+class JBLock : public Block
+{
+public:
+	JBLock()
+	{
+		x = 0;
+		y = 0;
+		color = JBlockColor;
+		rotationMap =
+		{ {0 ,  std::vector<Position> { {0,0},{1,0},{1,1},{1,2} }},
+		  {1 ,  std::vector<Position> { {0,1},{0,2},{1,1},{2,1} }},
+		  {2 ,  std::vector<Position> { {1,0},{1,1},{1,2},{2,2} }},
+		  {3 ,  std::vector<Position> { {0,1},{1,1},{2,0},{2,1} }}
+		};
+	}
+};
+class IBLock : public Block
+{
+public:
+	IBLock()
+	{
+		x = 0;
+		y = 0;
+		color = IBlockColor;
+		rotationMap =
+		{ {0 ,  std::vector<Position> { {1,0},{1,1},{1,2},{1,3} }},
+		  {1 ,  std::vector<Position> { {0,2},{1,2},{2,2},{3,2} }},
+		  {2 ,  std::vector<Position> { {2,0},{2,1},{2,2},{2,3} }},
+		  {3 ,  std::vector<Position> { {0,1},{1,1},{2,1},{3,1} }}
+		};
+	}
+};
 
+class OBLock : public Block
+{
+public:
+	OBLock()
+	{
+		x = 0;
+		y = 0;
+		color = OBlockColor;
+		rotationMap =
+		{ {0 ,  std::vector<Position> { {0,0},{0,1},{1,0},{1,1} }}
+		};
+	}
+};
+
+class SBLock : public Block
+{
+public:
+	SBLock()
+	{
+		x = 0;
+		y = 0;
+		color = SBlockColor;
+		rotationMap =
+		{ {0 ,  std::vector<Position> { {0,1},{0,2},{1,0},{1,1} }},
+		  {1 ,  std::vector<Position> { {0,1},{1,1},{1,2},{2,2} }},
+		  {2 ,  std::vector<Position> { {1,1},{1,2},{2,0},{2,1} }},
+		  {3 ,  std::vector<Position> { {0,0},{1,0},{1,1},{2,1} }}
+		};
+	}
+};
+
+class TBLock : public Block
+{
+public:
+	TBLock()
+	{
+		x = 0;
+		y = 0;
+		color = TBlockColor;
+		rotationMap =
+		{ {0 ,  std::vector<Position> { {0,1},{1,0},{1,1},{1,2} }},
+		  {1 ,  std::vector<Position> { {0,1},{1,1},{1,2},{2,1} }},
+		  {2 ,  std::vector<Position> { {1,0},{1,1},{1,2},{2,1} }},
+		  {3 ,  std::vector<Position> { {0,1},{1,0},{1,1},{2,1} }}
+		};
+	}
+};
+
+
+class ZBLock : public Block
+{
+public:
+	ZBLock()
+	{
+		x = 0;
+		y = 0;
+		color = ZBlockColor;
+		rotationMap =
+		{ {0 ,  std::vector<Position> { {0,0},{0,1},{1,1},{1,2} }},
+		  {1 ,  std::vector<Position> { {0,2},{1,1},{1,2},{2,1} }},
+		  {2 ,  std::vector<Position> { {1,0},{1,1},{2,1},{2,2} }},
+		  {3 ,  std::vector<Position> { {0,1},{1,0},{1,1},{2,0} }}
+		};
+	}
+};

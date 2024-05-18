@@ -3,12 +3,12 @@
 
 extern const Color darkGrey;
 extern const Color LBlockColor;
-extern const Color red;
-extern const Color orange;
-extern const Color yellow;
-extern const Color purple;
-extern const Color cyan;
-extern const Color blue;
+extern const Color JBlockColor;
+extern const Color IBlockColor;
+extern const Color OBlockColor;
+extern const Color SBlockColor;
+extern const Color TBlockColor;
+extern const Color ZBlockColor;
 extern const Color lightBlue;
 extern const Color darkBlue;
 
