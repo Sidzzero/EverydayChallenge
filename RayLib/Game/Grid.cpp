@@ -51,18 +51,34 @@ void Grid::Update()
 
 void Grid::MoveCurrentLeft()
 {
-	currentBLock.x--;
+	//currentBLock.x--;
+	currentBLock.Move(-1, 0);
+	if (CheckIfOutSide() == true)
+	{
+		currentBLock.Move(1, 0);
+	}
 }
 
 
 void Grid::MoveCurrentRight()
 {
-	currentBLock.x++;
+	//currentBLock.x++;
+	currentBLock.Move(1, 0);
+	if (CheckIfOutSide() == true)
+	{
+		currentBLock.Move(-1, 0);
+	}
 }
 
 void Grid::MoveCurrentDown()
 {
-	currentBLock.y++;
+	//currentBLock.y++;
+	currentBLock.Move(0, 1);
+	if (CheckIfOutSide() == true)
+	{
+		currentBLock.Move(0, -1);
+	}
+
 }
 
 void Grid::RotatecwCurrent()
@@ -71,6 +87,10 @@ void Grid::RotatecwCurrent()
 	if (currentBLock.rotation >= currentBLock.rotationMap.size())//TODO: Make it like a clamp and move it to block logic?
 	{
 		currentBLock.rotation = 0;
+	}
+	 if (CheckIfOutSide())
+	{
+		RotateccwCurrent();
 	}
 }
 
@@ -81,6 +101,10 @@ void Grid::RotateccwCurrent()
 	{
 		currentBLock.rotation = currentBLock.rotationMap.size()-1;
 	}
+	 if (CheckIfOutSide())
+	{
+		RotatecwCurrent();
+	}
 }
 
 void Grid::FallBlocks()
@@ -89,8 +113,22 @@ void Grid::FallBlocks()
 	if (elaspedSinceLast>waitTime)
 	{
 		elaspedSinceLast = 0;
-		currentBLock.y++;
+		MoveCurrentDown();
     }
+}
+
+bool Grid::CheckIfOutSide()
+{
+	auto CurrentBlocksPos = currentBLock.GetCurrentPositions();
+	for (auto pos:CurrentBlocksPos)
+	{
+		if (pos.x<0 || pos.y<0 || pos.x>=numRows || pos.y>=numCols)
+		{
+			return true;
+		}
+	}
+
+	return false;;
 }
 
 Grid::Grid()

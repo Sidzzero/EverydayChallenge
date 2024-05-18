@@ -17,6 +17,7 @@ public :
 	void RotatecwCurrent();
 	void RotateccwCurrent();
 	void FallBlocks();
+	bool CheckIfOutSide();
 	Grid();
 
 private:

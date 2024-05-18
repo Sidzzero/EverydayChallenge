@@ -11,11 +11,29 @@ public:
 	std::unordered_map<int, std::vector<Position>> rotationMap;//BETTER TO MANAGE THINGS. EACH NEW BLOCKS ADDS ITS STUFF HERE
 	void Draw() 
 	{
-		auto tempCurrentPos = rotationMap[rotation];
+		auto tempCurrentPos = GetCurrentPositions();
+
 		for (int i=0;i<tempCurrentPos.size();i++)
 		{
-			DrawRectangle((x+ tempCurrentPos[i].x)*CELL_SIZE +OFFSET_X+11,(y + tempCurrentPos[i].y) * CELL_SIZE + OFFSET_Y + 11, CELL_SIZE-1, CELL_SIZE-1, color);
+			DrawRectangle((tempCurrentPos[i].x)*CELL_SIZE +OFFSET_X+11,( tempCurrentPos[i].y) * CELL_SIZE + OFFSET_Y + 11, CELL_SIZE-1, CELL_SIZE-1, color);
 		}
+	}
+
+	std::vector<Position> GetCurrentPositions()
+	{
+		auto tempCurrentPos = rotationMap[rotation];
+		std::vector<Position> result;
+		for (auto pos : tempCurrentPos)
+		{
+			result.push_back(Position{ pos.x + x ,pos.y + y });
+		}
+		return result;
+	}
+
+	void Move(int a_x, int a_y)
+	{
+		x += a_x;
+		y += a_y;
 	}
 
 };
