@@ -139,12 +139,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="BlockColor.cpp" />
+    <ClCompile Include="GAme.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="SpriteAnimation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BlockColor.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="GAme.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="SpriteAnimation.h" />
   </ItemGroup>

@@ -1,14 +1,20 @@
 #pragma once
+#include "Common.h"
+#include "BlockColor.h"
+
 class Grid
 {
 public :
-	Grid();
+	int grids[20][10];//Holds the color 
 	void Initialize();
-	int grid[20][10];
+	void Draw();
+	Grid();
 
 private:
-	int numRows;
-	int numCols;
-	int cellSize;
+	int numRows = 1;
+	int numCols = 1;
+	int cellSize ;
+	std::vector<Color> blockColors;
+
 };
 
