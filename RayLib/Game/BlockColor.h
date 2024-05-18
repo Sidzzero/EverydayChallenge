@@ -2,7 +2,7 @@
 #include "Common.h"
 
 extern const Color darkGrey;
-extern const Color green;
+extern const Color LBlockColor;
 extern const Color red;
 extern const Color orange;
 extern const Color yellow;

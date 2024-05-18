@@ -42,7 +42,7 @@ int main(void)
     {
         BeginDrawing();
         ClearBackground(BLUE);
-       // DrawText("Congrats! You created your first window!", 80, 80, 40, DARKBLUE);
+       // DrawText("Congrats! You created your first window!", 80, 80, 40, DARKBLUE);s
         tetris.Update();
         tetris.Draw();
 

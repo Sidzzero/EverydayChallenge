@@ -9,6 +9,12 @@ public :
 	int grids[20][10];//Holds the color 
 	void Initialize();
 	void Draw();
+	void Update();
+	void MoveCurrentLeft();
+	void MoveCurrentRight();
+	void MoveCurrentDown();
+	void RotatecwCurrent();
+	void RotateccwCurrent();
 	Grid();
 
 private:

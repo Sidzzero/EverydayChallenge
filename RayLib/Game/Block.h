@@ -1,6 +1,6 @@
 #pragma once
 #include "Common.h"
-
+#include "BlockColor.h"
 class Block
 {
 public:
@@ -14,10 +14,10 @@ public:
 		auto tempCurrentPos = rotationMap[rotation];
 		for (int i=0;i<tempCurrentPos.size();i++)
 		{
-			DrawRectangle(x+ tempCurrentPos[i].x*CELL_SIZE +OFFSET_X+11,x + tempCurrentPos[i].y * CELL_SIZE + OFFSET_Y + 11, CELL_SIZE-1, CELL_SIZE-1, color);
+			DrawRectangle((x+ tempCurrentPos[i].x)*CELL_SIZE +OFFSET_X+11,(y + tempCurrentPos[i].y) * CELL_SIZE + OFFSET_Y + 11, CELL_SIZE-1, CELL_SIZE-1, color);
 		}
 	}
-	
+
 };
 
 /*
@@ -45,7 +45,7 @@ public:
 	{
 		x = 0;
 		y = 0;
-		color = RED;
+		color = LBlockColor;
 		rotationMap =
 		{ {0 ,  std::vector<Position> { {0,1},{1,1},{2,1},{2,2} }},
 		  {1 ,  std::vector<Position> { {1,0},{1,1},{1,2},{2,0} }},
