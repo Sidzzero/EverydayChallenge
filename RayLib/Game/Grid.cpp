@@ -24,8 +24,6 @@ void Grid::Initialize()
 
 void Grid::Draw()
 {
-
-	
 	for (int i = 0; i < numRows; i++)
 	{
 		for (int j = 0; j < numCols; j++)
@@ -48,6 +46,7 @@ void Grid::Update()
 		tempCurrentINdex = tempCurrentINdex < blocks.size() ? tempCurrentINdex:0;
 		currentBLock = blocks[tempCurrentINdex];
 	}
+	FallBlocks();
 }
 
 void Grid::MoveCurrentLeft()
@@ -69,7 +68,7 @@ void Grid::MoveCurrentDown()
 void Grid::RotatecwCurrent()
 {
 	currentBLock.rotation++;
-	if (currentBLock.rotation > currentBLock.rotationMap.size())//TODO: Make it like a clamp and move it to block logic?
+	if (currentBLock.rotation >= currentBLock.rotationMap.size())//TODO: Make it like a clamp and move it to block logic?
 	{
 		currentBLock.rotation = 0;
 	}
@@ -82,6 +81,16 @@ void Grid::RotateccwCurrent()
 	{
 		currentBLock.rotation = currentBLock.rotationMap.size()-1;
 	}
+}
+
+void Grid::FallBlocks()
+{
+	elaspedSinceLast += 1.0f * GetFrameTime();
+	if (elaspedSinceLast>waitTime)
+	{
+		elaspedSinceLast = 0;
+		currentBLock.y++;
+    }
 }
 
 Grid::Grid()

@@ -16,12 +16,16 @@ public :
 	void MoveCurrentDown();
 	void RotatecwCurrent();
 	void RotateccwCurrent();
+	void FallBlocks();
 	Grid();
 
 private:
 	int numRows = 1;
 	int numCols = 1;
 	int cellSize ;
+	float elaspedSinceLast = 0;
+	float waitTime = WAIT_TIME;
+
 	std::vector<Color> blockColors;
 
 	Block currentBLock;
