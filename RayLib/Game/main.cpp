@@ -7,7 +7,7 @@
 int main(void)
 {
     InitWindow(20*CELL_SIZE + CELL_SIZE + 55, 
-        40*CELL_SIZE + CELL_SIZE+25, 
+        10*CELL_SIZE + CELL_SIZE+400, 
         "Tetris Game- powered by RAYLIB");
 
     Image knightImg = LoadImage("assets/images/Knight_Idle.png");
@@ -44,7 +44,19 @@ int main(void)
     {
         BeginDrawing();
         ClearBackground(BLUE);
-       // DrawText("Congrats! You created your first window!", 80, 80, 40, DARKBLUE);s
+        DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(),DARKPURPLE);
+        DrawRectangle(GetScreenWidth() * 0.65, 0, GetScreenHeight() * 0.65, GetScreenHeight(), DARKBLUE);
+
+        DrawRectangle(GetScreenWidth() * 0.68, GetScreenHeight() * .10,
+                     GetScreenWidth()*.45 * 0.65, GetScreenHeight()*0.15, BLUE);
+
+        DrawText("SCORE", GetScreenWidth() * 0.76, GetScreenHeight() * .11, 25, YELLOW);
+        DrawText(std::to_string(tetris.GetCurrentGridScore()).c_str(), GetScreenWidth() * 0.80, GetScreenHeight() * .15, 55, DARKGRAY);
+
+        DrawRectangle(GetScreenWidth() * 0.68, GetScreenHeight() * .40,
+            GetScreenWidth() * .45 * 0.65, GetScreenHeight() * 0.45, BLUE);
+
+       
         tetris.Update();
         tetris.Draw();
 

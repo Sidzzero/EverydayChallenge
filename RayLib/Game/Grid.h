@@ -7,6 +7,7 @@ class Grid
 {
 public :
 	int grids[20][10];//Holds the color 
+	int iScore = 0;
 	std::vector<Block> blocks;
 	void Initialize();
 	void Draw();

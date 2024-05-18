@@ -40,3 +40,8 @@ void GAme::OnPlayingState()
 void GAme::Shutdown()
 {
 }
+
+int GAme::GetCurrentGridScore()
+{
+	return grid.iScore;
+}

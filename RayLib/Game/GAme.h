@@ -12,13 +12,14 @@ class GAme
 {
 public:
 	State currentState = State::Playing;
-	int iScore = 0;
+	
 	
 
 	void Start();
 	void Draw();
 	void Update();
 	void Shutdown();
+	int GetCurrentGridScore();
 private:
 	Grid grid;
 	void OnPlayingState();

@@ -81,6 +81,10 @@ void Grid::MoveCurrentDown()
 		currentBLock.Move(0, -1);
 		LockInBlock();
 	}
+	else
+	{
+		iScore++;
+	}
 
 }
 
@@ -139,7 +143,7 @@ bool Grid::CheckCellNotFree()
 	auto CurrentBlocksPos = currentBLock.GetCurrentPositions();
 	for (auto pos : CurrentBlocksPos)
 	{
-		if (grids[pos.y][pos.x] != 0 && grids[pos.y][pos.x] !=currentBLock.id)
+		if (grids[pos.y][pos.x] != 0 )
 		{
 			return true;
 		}
@@ -169,6 +173,7 @@ void Grid::LockInBlock()
 	currentBLock = nextBLock;
 	nextBLock = GetRandomBlock();//Simple random giver but maybe random list each time?
 	std::cout <<"After" << currentBLock.id << ":" << nextBLock.id << "\n";
+	
 }
 
 
