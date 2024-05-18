@@ -5,7 +5,7 @@
 #include "SpriteAnimation.h"
 int main(void)
 {
-    InitWindow(1024, 768, "raylib [core] example - basic window");
+    InitWindow(1024, 768, "Tetris Game- powered by RAYLIB");
 
     Image knightImg = LoadImage("assets/images/Knight_Idle.png");
     Image knightRunImg = LoadImage("assets/images/Knight_Run.png");
@@ -32,14 +32,14 @@ int main(void)
     auto tempKnightRect = Rectangle{ 0,80,512,709 };
     auto tempKnightRunRect = Rectangle{ 520,80,512,709 };
 
+    SetTargetFPS(60);
     while (!WindowShouldClose())
     {
         BeginDrawing();
         ClearBackground(BLUE);
-        DrawText("Congrats! You created your first window!", 80, 80, 40, GREEN);
+        DrawText("Congrats! You created your first window!", 80, 80, 40, DARKBLUE);
       
-        knightSprite.Draw(GetTime(), tempKnightRect, Vector2{ 0,0 }, 0.0f, WHITE);
-        knightRunningSprite.Draw(GetTime(), tempKnightRunRect, Vector2{ 0,0 }, 0.0f, WHITE);
+
         EndDrawing();
     }
 
