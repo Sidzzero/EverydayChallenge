@@ -55,7 +55,7 @@ void Grid::MoveCurrentLeft()
 {
 	//currentBLock.x--;
 	currentBLock.Move(-1, 0);
-	if (CheckIfOutSide() == true)
+	if (CheckIfOutSide() == true || CheckCellNotFree() == true)
 	{
 		currentBLock.Move(1, 0);
 	}
@@ -66,7 +66,7 @@ void Grid::MoveCurrentRight()
 {
 	//currentBLock.x++;
 	currentBLock.Move(1, 0);
-	if (CheckIfOutSide() == true)
+	if (CheckIfOutSide() == true || CheckCellNotFree() == true)
 	{
 		currentBLock.Move(-1, 0);
 	}
@@ -76,7 +76,7 @@ void Grid::MoveCurrentDown()
 {
 	//currentBLock.y++;
 	currentBLock.Move(0, 1);
-	if (CheckIfOutSide() == true)
+	if (CheckIfOutSide() == true || CheckCellNotFree()==true)
 	{
 		currentBLock.Move(0, -1);
 		LockInBlock();
@@ -91,7 +91,7 @@ void Grid::RotatecwCurrent()
 	{
 		currentBLock.rotation = 0;
 	}
-	 if (CheckIfOutSide())
+	 if (CheckIfOutSide() || CheckCellNotFree() == true)
 	{
 		RotateccwCurrent();
 	}
@@ -104,7 +104,7 @@ void Grid::RotateccwCurrent()
 	{
 		currentBLock.rotation = currentBLock.rotationMap.size()-1;
 	}
-	 if (CheckIfOutSide())
+	 if (CheckIfOutSide() || CheckCellNotFree() == true)
 	{
 		RotatecwCurrent();
 	}
@@ -132,6 +132,19 @@ bool Grid::CheckIfOutSide()
 	}
 
 	return false;;
+}
+
+bool Grid::CheckCellNotFree()
+{
+	auto CurrentBlocksPos = currentBLock.GetCurrentPositions();
+	for (auto pos : CurrentBlocksPos)
+	{
+		if (grids[pos.y][pos.x] != 0 && grids[pos.y][pos.x] !=currentBLock.id)
+		{
+			return true;
+		}
+	}
+	return  false;
 }
 
 void Grid::LockInBlock()

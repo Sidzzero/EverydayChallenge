@@ -18,7 +18,7 @@ public :
 	void RotateccwCurrent();
 	void FallBlocks();
 	bool CheckIfOutSide();
-
+	bool CheckCellNotFree();
 	void LockInBlock();
 	Block GetRandomBlock();
 	Grid();
