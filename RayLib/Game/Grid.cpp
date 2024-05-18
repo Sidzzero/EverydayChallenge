@@ -30,7 +30,7 @@ void Grid::Draw()
 	{
 		for (int j = 0; j < numCols; j++)
 		{
-			DrawRectangle(i*CELL_SIZE+10+OFFSET_X, j * CELL_SIZE+10 + OFFSET_Y, cellSize-1, cellSize-1, blockColors[grids[i][j]]);
+			DrawRectangle(j*CELL_SIZE+10+OFFSET_X, i * CELL_SIZE+10 + OFFSET_Y, cellSize-1, cellSize-1, blockColors[grids[i][j]]);
 		}
 
 	}
@@ -79,7 +79,7 @@ void Grid::MoveCurrentDown()
 	if (CheckIfOutSide() == true)
 	{
 		currentBLock.Move(0, -1);
-		LockInBlock();
+		//LockInBlock();
 	}
 
 }
@@ -147,7 +147,7 @@ void Grid::LockInBlock()
 	{
 		for (int j = 0; j < numCols; j++)
 		{
-			std::cout << grids[i][j];
+			std::cout << grids[j][i];
 			std::cout << " ";
 		}
 		std::cout << "\n";
