@@ -22,6 +22,8 @@ public :
 	bool CheckCellNotFree();
 	void LockInBlock();
 	Block GetRandomBlock();
+
+	void ChecAndClearRows();
 	Grid();
 
 private:
@@ -30,7 +32,8 @@ private:
 	int cellSize = 30 ;
 	float elaspedSinceLast = 0;
 	float waitTime = WAIT_TIME;
-
+	void ShiftAllRows(int a_iRowStart, int a_Count);
+	void ClearRow(int a_iRow);
 	std::vector<Color> blockColors;
 
 	Block currentBLock;
