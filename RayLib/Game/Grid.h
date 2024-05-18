@@ -1,6 +1,7 @@
 #pragma once
 #include "Common.h"
 #include "BlockColor.h"
+#include "Block.h"
 
 class Grid
 {
@@ -15,6 +16,8 @@ private:
 	int numCols = 1;
 	int cellSize ;
 	std::vector<Color> blockColors;
+	Block currentBLock;
+	Block nextBLock;
 
 };
 
