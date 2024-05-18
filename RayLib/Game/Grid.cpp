@@ -16,7 +16,6 @@ void Grid::Initialize()
 		}
 
 	}
-	std::cout << "Init\n";
 }
 
 void Grid::Draw()

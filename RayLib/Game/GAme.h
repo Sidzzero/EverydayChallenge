@@ -20,7 +20,7 @@ public:
 	void Update();
 	void Shutdown();
 private:
-	//Grid grid;
+	Grid grid;
 	void OnPlayingState();
 
 };

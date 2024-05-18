@@ -37,14 +37,12 @@ int main(void)
 
     GAme tetris;
     tetris.Start();
-    Grid grid;
-    grid.Initialize();
+
     while (!WindowShouldClose())
     {
         BeginDrawing();
         ClearBackground(BLUE);
        // DrawText("Congrats! You created your first window!", 80, 80, 40, DARKBLUE);
-        grid.Draw();
         tetris.Update();
         tetris.Draw();
 

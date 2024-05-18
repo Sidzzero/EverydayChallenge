@@ -2,13 +2,12 @@
 
 void GAme::Start()
 {
-	//grid.Initialize();
-	std::cout << "DO LOALA";
+	grid.Initialize();
 }
 
 void GAme::Draw()
 {
-	//grid.Draw();
+	grid.Draw();
 }
 
 void GAme::Update()

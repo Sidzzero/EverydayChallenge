@@ -1,12 +1,10 @@
-﻿  BlockColor.cpp
-  GAme.cpp
+﻿  GAme.cpp
 D:\Projects\EverydayChallenge\RayLib\Game\GAme.h(6,47): warning C4091: 'typedef ': ignored on left of 'State' when no variable is declared
   (compiling source file 'GAme.cpp')
   
   Grid.cpp
-D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(28,60): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(28,32): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  SpriteAnimation.cpp
+D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(27,60): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(27,32): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   main.cpp
 D:\Projects\EverydayChallenge\RayLib\Game\GAme.h(6,47): warning C4091: 'typedef ': ignored on left of 'State' when no variable is declared
   (compiling source file 'main.cpp')
