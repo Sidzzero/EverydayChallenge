@@ -223,12 +223,14 @@ Block Grid::GetRandomBlock()
 void Grid::ChecAndClearRows()
 {
 	int temp_CountClearedRows = 0;
-	int temp_RowStartNotEmpty = -1;
+	
 	int i, j;
+	bool temp_bClear = false;
+
 	for ( i = ROW - 1; i >= 0; i--)
 	{
-		temp_RowStartNotEmpty = i;
 		bool bFoundEmpty = false;
+		//We check only last row all rows needs to be scanned
 		for ( j = 0; j < COLUMN; j++)
 		{
 			if (grids[i][j] == 0)
@@ -243,29 +245,34 @@ void Grid::ChecAndClearRows()
 			{
 				grids[i][k] = 0;
 			}
+			temp_bClear = true;
 			temp_CountClearedRows++;
-		}
-		else
-		{
 			break;
 		}
+
 	}
+
 	if (temp_CountClearedRows > 0)
 	{
 		ShiftAllRows(i,temp_CountClearedRows);
+	}
+
+	if (temp_bClear)
+	{
+		ChecAndClearRows();
 	}
 }
 
 void Grid::ShiftAllRows(int a_iRowStart , int a_Count)
 {
-	for (int i = a_iRowStart; i >= 0; i--)
+	for (int i = a_iRowStart-1; i >= 0; i--)
 	{
 		for (int j = 0; j < COLUMN; j++)
 		{
 			grids[i + a_Count][j] = grids[i][j];
 			grids[i][j] = 0;
 		}
-		iScore += 100;
+		iScore += 10;
 	}
 
 }
