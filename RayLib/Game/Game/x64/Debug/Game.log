@@ -1,14 +1,32 @@
-﻿  main.cpp
+﻿  GAme.cpp
+D:\Projects\EverydayChallenge\RayLib\Game\Block.h(19,109): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'GAme.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\Block.h(19,59): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'GAme.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\Block.h(28,156): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'GAme.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\Block.h(28,83): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'GAme.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\GAme.h(6,47): warning C4091: 'typedef ': ignored on left of 'State' when no variable is declared
+  (compiling source file 'GAme.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\GAme.cpp(20,86): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\GAme.cpp(20,59): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  main.cpp
 D:\Projects\EverydayChallenge\RayLib\Game\Block.h(19,109): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'main.cpp')
   
 D:\Projects\EverydayChallenge\RayLib\Game\Block.h(19,59): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'main.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\Block.h(28,124): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Block.h(28,156): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'main.cpp')
   
-D:\Projects\EverydayChallenge\RayLib\Game\Block.h(28,67): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Block.h(28,83): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'main.cpp')
   
 D:\Projects\EverydayChallenge\RayLib\Game\GAme.h(6,47): warning C4091: 'typedef ': ignored on left of 'State' when no variable is declared
@@ -32,4 +50,28 @@ D:\Projects\EverydayChallenge\RayLib\Game\main.cpp(66,31): warning C4244: 'argum
 D:\Projects\EverydayChallenge\RayLib\Game\main.cpp(65,50): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
 D:\Projects\EverydayChallenge\RayLib\Game\main.cpp(68,76): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 D:\Projects\EverydayChallenge\RayLib\Game\main.cpp(68,44): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Grid.cpp
+D:\Projects\EverydayChallenge\RayLib\Game\Block.h(19,109): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Grid.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\Block.h(19,59): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Grid.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\Block.h(28,156): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Grid.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\Block.h(28,83): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Grid.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(45,68): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(45,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(53,34): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(54,42): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(55,79): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(55,53): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(59,79): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(59,53): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(145,59): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(233,51): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
   Game.vcxproj -> D:\Projects\EverydayChallenge\RayLib\Game\x64\Debug\Game.exe

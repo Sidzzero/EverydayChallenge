@@ -5,8 +5,8 @@ class Block
 {
 public:
 	int id = 0;
-	int x;
-	int y;
+	int x = 4;
+	int y = 0;
 	int rotation = 0;
 	Color color;
 	std::unordered_map<int, std::vector<Position>> rotationMap;//BETTER TO MANAGE THINGS. EACH NEW BLOCKS ADDS ITS STUFF HERE
@@ -19,13 +19,13 @@ public:
 			DrawRectangle((tempCurrentPos[i].x)*CELL_SIZE +OFFSET_X+11,( tempCurrentPos[i].y) * CELL_SIZE + OFFSET_Y + 11, CELL_SIZE-1, CELL_SIZE-1, color);
 		}
 	}
-	void DrawAt(float a_x , float a_y)
+	void DrawAt(float a_x , float a_y, int a_XCellOffset, int a_YCellOffset)
 	{
 		auto tempCurrentPos = GetCurrentPositions();
 
 		for (int i = 0; i < tempCurrentPos.size(); i++)
 		{
-			DrawRectangle((tempCurrentPos[i].x) * CELL_SIZE + OFFSET_X + 11+ a_x, (tempCurrentPos[i].y) * CELL_SIZE + OFFSET_Y + 11 + a_y, 
+			DrawRectangle((tempCurrentPos[i].x + a_XCellOffset) * CELL_SIZE + OFFSET_X + 11+ a_x, (tempCurrentPos[i].y + a_YCellOffset) * CELL_SIZE + OFFSET_Y + 11 + a_y,
 				CELL_SIZE - 1, CELL_SIZE - 1, color);
 		}
 	}
@@ -72,7 +72,7 @@ class LBLock : public Block
 public:
 	LBLock()
 	{
-		x = 0;
+		x = 4;
 		y = 0;
 		id = 1;
 		color = LBlockColor;
@@ -90,7 +90,7 @@ class JBLock : public Block
 public:
 	JBLock()
 	{
-		x = 0;
+		x = 4;
 		y = 0;
 		id = 2;
 		color = JBlockColor;
@@ -107,7 +107,7 @@ class IBLock : public Block
 public:
 	IBLock()
 	{
-		x = 0;
+		x = 3;
 		y = 0;
 		id = 3;
 		color = IBlockColor;
@@ -125,7 +125,7 @@ class OBLock : public Block
 public:
 	OBLock()
 	{
-		x = 0;
+		x = 4;
 		y = 0;
 		id = 4;
 		color = OBlockColor;
@@ -140,7 +140,7 @@ class SBLock : public Block
 public:
 	SBLock()
 	{
-		x = 0;
+		x = 4;
 		y = 0;
 		id = 5;
 		color = SBlockColor;
@@ -158,7 +158,7 @@ class TBLock : public Block
 public:
 	TBLock()
 	{
-		x = 0;
+		x = 4;
 		y = 0;
 		id = 6;
 		color = TBlockColor;
@@ -177,7 +177,7 @@ class ZBLock : public Block
 public:
 	ZBLock()
 	{
-		x = 0;
+		x = 4;
 		y = 0;
 		id = 7;
 		color = ZBlockColor;
