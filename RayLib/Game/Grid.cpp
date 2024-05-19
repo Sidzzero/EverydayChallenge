@@ -4,6 +4,7 @@
 
 void Grid::Initialize()
 {
+	iScore = 0;
 	numRows = 20;
 	numCols = 10;
 	cellSize = 30;
@@ -22,6 +23,7 @@ void Grid::Initialize()
 	currentBLock = GetRandomBlock();
 	nextBLock = GetRandomBlock();
 	std::cout << "ROW:" << numRows << ",COL:" << numCols << "\n";
+	bFull = false;
 
 	/*
 	for (int j = 0; j < numCols; j++)
@@ -50,6 +52,11 @@ void Grid::Draw()
 	{
 		DrawRectangle(GetScreenWidth() / 9.f, GetScreenHeight() / 2,550,100,DARKBROWN);
 		DrawText("Game Over", GetScreenWidth() / 8.0f, GetScreenHeight() / 2, 100, RED);
+		DrawText("Press R to restart !", GetScreenWidth() / 8.5f, GetScreenHeight() *0.90, 50, YELLOW);
+	}
+	else
+	{
+		DrawText("Press R to restart !", GetScreenWidth() *0.70f, GetScreenHeight() * 0.95f, 18, RAYWHITE);
 	}
 }
 int tempCurrentINdex = 0;
@@ -215,7 +222,6 @@ void Grid::LockInBlock()
 Block Grid::GetRandomBlock()
 {
 	int temp_iRand = GetRandomValue(0, blocks.size() - 1);
-	temp_iRand = 3;
 	std::cout << "Random Block Generated with ID:!" << temp_iRand << "\n";
 	return blocks[temp_iRand];
 }

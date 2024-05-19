@@ -8,29 +8,40 @@ void GAme::Start()
 void GAme::Draw()
 {
 	grid.Draw();
+	DrawText("TETRIS CLONE: Coded by SIDZ", GetScreenWidth() * 0.07f, GetScreenHeight() * 0.01f, 25, GREEN);
 }
 
 void GAme::Update()
 {
 	auto currentKeyPressed = GetKeyPressed();
-	if (currentKeyPressed == KEY_LEFT)
+	if (grid.bFull == false)
 	{
-		grid.MoveCurrentLeft();
+		if (currentKeyPressed == KEY_LEFT)
+		{
+			grid.MoveCurrentLeft();
+		}
+		else if (currentKeyPressed == KEY_RIGHT)
+		{
+			grid.MoveCurrentRight();
+		}
+		else if (currentKeyPressed == KEY_UP)
+		{
+			grid.RotatecwCurrent();
+		}
+		else if (currentKeyPressed == KEY_DOWN)
+		{
+			//grid.RotateccwCurrent();
+			grid.MoveCurrentDown();
+		}
 	}
-	else if (currentKeyPressed == KEY_RIGHT)
+	else
 	{
-		grid.MoveCurrentRight();
+	  //GAME OVER THINGS>>>
 	}
-	else if (currentKeyPressed == KEY_UP)
+	if (currentKeyPressed == KEY_R)
 	{
-		grid.RotatecwCurrent();
+		grid.Initialize();
 	}
-	else if (currentKeyPressed == KEY_DOWN)
-	{
-		//grid.RotateccwCurrent();
-		grid.MoveCurrentDown();
-	}
-
 	grid.Update();
 }
 void GAme::OnPlayingState()

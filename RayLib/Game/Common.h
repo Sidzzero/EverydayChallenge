@@ -9,7 +9,7 @@
 const int  ROW = 20;
 const int COLUMN = 10;
 const int CELL_SIZE = 30;
-const float OFFSET_X = 50; const float OFFSET_Y = 25;
+const float OFFSET_X = 50; const float OFFSET_Y = 50;
 const float WAIT_TIME = 0.25f;
 
 struct Position
