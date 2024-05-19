@@ -79,6 +79,7 @@ void Grid::Update()
 	{
 		ChecAndClearRows();
 	}
+	
 	FallBlocks();
 }
 
@@ -130,6 +131,10 @@ void Grid::RotatecwCurrent()
 	{
 		RotateccwCurrent();
 	}
+	else
+	{
+		PlaySound(fxRotate);
+	}
 }
 
 void Grid::RotateccwCurrent()
@@ -142,6 +147,10 @@ void Grid::RotateccwCurrent()
 	if (CheckIfOutSide() || CheckCellNotFree() == true)
 	{
 		RotatecwCurrent();
+	}
+	else
+	{
+		PlaySound(fxRotate);
 	}
 }
 
@@ -250,6 +259,7 @@ void Grid::ChecAndClearRows()
 			for (int k = 0; k < COLUMN; k++)
 			{
 				grids[i][k] = 0;
+				PlaySound(fxClear);
 			}
 			temp_bClear = true;
 			temp_CountClearedRows++;
@@ -297,6 +307,8 @@ Grid::Grid()
 	numCols = 10;
 	cellSize = 30;
 	std::cout << "construct!\n";
+	fxRotate = LoadSound("assets/sound/rotate.mp3");
+	fxClear = LoadSound("assets/sound/clear.mp3");
 }
 
 

@@ -12,7 +12,7 @@ class GAme
 {
 public:
 	State currentState = State::Playing;
-	
+	~GAme();
 	
 
 	void Start();
@@ -24,7 +24,9 @@ public:
 
 private:
 	Grid grid;
+	Music fxBgMusic;
 	void OnPlayingState();
+
 
 };
 

@@ -1,8 +1,17 @@
 #include "GAme.h"
 
+GAme::~GAme()
+{
+	
+}
+
 void GAme::Start()
 {
 	grid.Initialize();
+	
+	fxBgMusic = LoadMusicStream("assets/sound/music.mp3");
+
+	//PlayMusicStream(fxBgMusic);
 }
 
 void GAme::Draw()
@@ -37,10 +46,12 @@ void GAme::Update()
 	else
 	{
 	  //GAME OVER THINGS>>>
+		StopMusicStream(fxBgMusic);
 	}
 	if (currentKeyPressed == KEY_R)
 	{
 		grid.Initialize();
+		PlayMusicStream(fxBgMusic);
 	}
 	grid.Update();
 }

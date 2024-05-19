@@ -40,7 +40,8 @@ private:
 	void ClearRow(int a_iRow);
 	std::vector<Color> blockColors;
 
-
+	Sound fxRotate;
+	Sound fxClear;
 
 };
 

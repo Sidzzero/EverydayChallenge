@@ -14,7 +14,7 @@ int main(void)
     Image knightRunImg = LoadImage("assets/images/Knight_Run.png");
 
     Texture2D temp = LoadTextureFromImage(knightImg);
-
+    
     Rectangle rectanglesTemp[] = 
     {
         {0,0 ,589,709},
@@ -35,8 +35,10 @@ int main(void)
     auto tempKnightRect = Rectangle{ 0,80,512,709 };
     auto tempKnightRunRect = Rectangle{ 520,80,512,709 };
 
+    InitAudioDevice();
+    Music test = LoadMusicStream("assets/sound/music.mp3");
+    PlayMusicStream(test);
     SetTargetFPS(60);
-
     GAme tetris;
     tetris.Start();
 
@@ -70,7 +72,7 @@ int main(void)
 
         EndDrawing();
     }
-
+    CloseAudioDevice();
     CloseWindow();
 
     return 0;
