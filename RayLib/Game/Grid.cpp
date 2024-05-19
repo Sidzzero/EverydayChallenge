@@ -23,14 +23,14 @@ void Grid::Initialize()
 	nextBLock = GetRandomBlock();
 	std::cout << "ROW:" << numRows << ",COL:" << numCols << "\n";
 
-
+	/*
 	for (int j = 0; j < numCols; j++)
 	{
 		grids[ROW - 1][j] = 1;
 		grids[ROW - 2][j] = 4;
 	}
 	grids[ROW - 3][4] = 6;
-
+	*/
 
 }
 
@@ -63,7 +63,7 @@ void Grid::Update()
 	{
 		ChecAndClearRows();
 	}
-	//FallBlocks();
+	FallBlocks();
 }
 
 void Grid::MoveCurrentLeft()
@@ -188,7 +188,7 @@ void Grid::LockInBlock()
 	currentBLock = nextBLock;
 	nextBLock = GetRandomBlock();//Simple random giver but maybe random list each time?
 	std::cout << "After" << currentBLock.id << ":" << nextBLock.id << "\n";
-
+	ChecAndClearRows();
 	
 }
 
@@ -227,6 +227,10 @@ void Grid::ChecAndClearRows()
 			}
 			temp_CountClearedRows++;
 		}
+		else
+		{
+			break;
+		}
 	}
 	if (temp_CountClearedRows > 0)
 	{
@@ -240,9 +244,10 @@ void Grid::ShiftAllRows(int a_iRowStart , int a_Count)
 	{
 		for (int j = 0; j < COLUMN; j++)
 		{
-			grids[i - a_Count][j] = grids[i][j];
+			grids[i + a_Count][j] = grids[i][j];
 			grids[i][j] = 0;
 		}
+		iScore += 100;
 	}
 
 }
