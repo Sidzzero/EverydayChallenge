@@ -27,7 +27,8 @@ void GAme::Update()
 	}
 	else if (currentKeyPressed == KEY_DOWN)
 	{
-		grid.RotateccwCurrent();
+		//grid.RotateccwCurrent();
+		grid.MoveCurrentDown();
 	}
 
 	grid.Update();

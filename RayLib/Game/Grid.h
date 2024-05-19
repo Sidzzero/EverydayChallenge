@@ -11,6 +11,7 @@ public :
 	std::vector<Block> blocks;
 	Block currentBLock;
 	Block nextBLock;
+	bool bFull = false;
 
 	void Initialize();
 	void Draw();

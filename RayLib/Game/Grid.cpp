@@ -46,10 +46,19 @@ void Grid::Draw()
 	}
 
 	currentBLock.Draw();
+	if (bFull)
+	{
+		DrawRectangle(GetScreenWidth() / 9.f, GetScreenHeight() / 2,550,100,DARKBROWN);
+		DrawText("Game Over", GetScreenWidth() / 8.0f, GetScreenHeight() / 2, 100, RED);
+	}
 }
 int tempCurrentINdex = 0;
 void Grid::Update()
 {
+	if (bFull)
+	{
+		return;
+	}
 	//Make the current block fall or accept movement
 	//TESTING
 	if (IsKeyPressed(KEY_G))
@@ -146,6 +155,7 @@ bool Grid::CheckIfOutSide()
 	{
 		if (pos.x < 0 || pos.y < 0 || pos.x >= numCols || pos.y >= numRows)
 		{
+			std::cout <<"OUTSIDE" << "\n";
 			return true;
 		}
 	}
@@ -160,6 +170,7 @@ bool Grid::CheckCellNotFree()
 	{
 		if (grids[pos.y][pos.x] != 0)
 		{
+			std::cout << "NOT FREE" << "\n";
 			return true;
 		}
 	}
@@ -191,6 +202,10 @@ void Grid::LockInBlock()
 		nextBLock = GetRandomBlock();//Simple random giver but maybe random list each time?
 	}std::cout << "After" << currentBLock.id << ":" << nextBLock.id << "\n";
 	ChecAndClearRows();
+	if (CheckCellNotFree() == true)
+	{
+		bFull = true;
+	}
 	
 }
 
@@ -200,6 +215,7 @@ void Grid::LockInBlock()
 Block Grid::GetRandomBlock()
 {
 	int temp_iRand = GetRandomValue(0, blocks.size() - 1);
+	temp_iRand = 3;
 	std::cout << "Random Block Generated with ID:!" << temp_iRand << "\n";
 	return blocks[temp_iRand];
 }
