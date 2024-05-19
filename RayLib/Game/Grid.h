@@ -36,6 +36,7 @@ private:
 	int cellSize = 30 ;
 	float elaspedSinceLast = 0;
 	float waitTime = WAIT_TIME;
+	float dropSpeed = 1.0f;
 	void ShiftAllRows(int a_iRowStart, int a_Count);
 	void ClearRow(int a_iRow);
 	std::vector<Color> blockColors;

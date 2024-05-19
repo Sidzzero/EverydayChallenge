@@ -24,7 +24,8 @@ void Grid::Initialize()
 	nextBLock = GetRandomBlock();
 	std::cout << "ROW:" << numRows << ",COL:" << numCols << "\n";
 	bFull = false;
-
+	waitTime = WAIT_TIME;
+	elaspedSinceLast = 0;
 	/*
 	for (int j = 0; j < numCols; j++)
 	{
@@ -222,6 +223,11 @@ void Grid::LockInBlock()
 	{
 		bFull = true;
 	}
+	waitTime -= SPEED_INCREASE;
+	if (waitTime<0.01f)
+	{
+		waitTime = 0.01f;
+	}
 	
 }
 
@@ -309,6 +315,7 @@ Grid::Grid()
 	std::cout << "construct!\n";
 	fxRotate = LoadSound("assets/sound/rotate.mp3");
 	fxClear = LoadSound("assets/sound/clear.mp3");
+	waitTime = WAIT_TIME;
 }
 
 
