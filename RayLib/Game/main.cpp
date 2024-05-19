@@ -51,10 +51,18 @@ int main(void)
                      GetScreenWidth()*.45 * 0.65, GetScreenHeight()*0.15, BLUE);
 
         DrawText("SCORE", GetScreenWidth() * 0.76, GetScreenHeight() * .11, 25, YELLOW);
-        DrawText(std::to_string(tetris.GetCurrentGridScore()).c_str(), GetScreenWidth() * 0.80, GetScreenHeight() * .15, 55, DARKGRAY);
+        DrawText(std::to_string(tetris.GetCurrentGridScore()).c_str(), GetScreenWidth() * 0.75, GetScreenHeight() * .15, 55, DARKGRAY);
 
-        DrawRectangle(GetScreenWidth() * 0.68, GetScreenHeight() * .40,
-            GetScreenWidth() * .45 * 0.65, GetScreenHeight() * 0.45, BLUE);
+
+    
+        DrawRectangle(GetScreenWidth() * 0.68,
+            GetScreenHeight() * .40,
+            GetScreenWidth() * .45 * 0.65,
+            GetScreenHeight() * 0.25, BLUE);
+        DrawText("Next Block:", GetScreenWidth() * 0.68,
+            GetScreenHeight() * .40,
+            25, YELLOW);
+        tetris.DrawNextUI(GetScreenWidth() * 0.68, GetScreenHeight() * .40 + 20);
 
        
         tetris.Update();

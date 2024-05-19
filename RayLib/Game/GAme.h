@@ -20,6 +20,8 @@ public:
 	void Update();
 	void Shutdown();
 	int GetCurrentGridScore();
+	void DrawNextUI(float a_x, float a_y);
+
 private:
 	Grid grid;
 	void OnPlayingState();

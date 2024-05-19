@@ -45,3 +45,8 @@ int GAme::GetCurrentGridScore()
 {
 	return grid.iScore;
 }
+
+void GAme::DrawNextUI(float a_x, float a_y)
+{
+	grid.nextBLock.DrawAt(a_x,a_y);
+}

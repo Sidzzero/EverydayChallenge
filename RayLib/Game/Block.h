@@ -19,6 +19,16 @@ public:
 			DrawRectangle((tempCurrentPos[i].x)*CELL_SIZE +OFFSET_X+11,( tempCurrentPos[i].y) * CELL_SIZE + OFFSET_Y + 11, CELL_SIZE-1, CELL_SIZE-1, color);
 		}
 	}
+	void DrawAt(float a_x , float a_y)
+	{
+		auto tempCurrentPos = GetCurrentPositions();
+
+		for (int i = 0; i < tempCurrentPos.size(); i++)
+		{
+			DrawRectangle((tempCurrentPos[i].x) * CELL_SIZE + OFFSET_X + 11+ a_x, (tempCurrentPos[i].y) * CELL_SIZE + OFFSET_Y + 11 + a_y, 
+				CELL_SIZE - 1, CELL_SIZE - 1, color);
+		}
+	}
 
 	std::vector<Position> GetCurrentPositions()
 	{

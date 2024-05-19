@@ -186,8 +186,10 @@ void Grid::LockInBlock()
 	}
 	std::cout << "Before" << currentBLock.id << ":" << nextBLock.id << "\n";
 	currentBLock = nextBLock;
-	nextBLock = GetRandomBlock();//Simple random giver but maybe random list each time?
-	std::cout << "After" << currentBLock.id << ":" << nextBLock.id << "\n";
+	if (nextBLock.id != 0)
+	{
+		nextBLock = GetRandomBlock();//Simple random giver but maybe random list each time?
+	}std::cout << "After" << currentBLock.id << ":" << nextBLock.id << "\n";
 	ChecAndClearRows();
 	
 }

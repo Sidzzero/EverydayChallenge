@@ -5,8 +5,14 @@ D:\Projects\EverydayChallenge\RayLib\Game\Block.h(19,109): warning C4244: 'argum
 D:\Projects\EverydayChallenge\RayLib\Game\Block.h(19,59): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Grid.cpp')
   
+D:\Projects\EverydayChallenge\RayLib\Game\Block.h(28,124): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Grid.cpp')
+  
+D:\Projects\EverydayChallenge\RayLib\Game\Block.h(28,67): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Grid.cpp')
+  
 D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(43,68): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(43,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(124,59): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(200,51): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Projects\EverydayChallenge\RayLib\Game\Grid.cpp(202,51): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   Game.vcxproj -> D:\Projects\EverydayChallenge\RayLib\Game\x64\Debug\Game.exe

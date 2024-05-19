@@ -9,6 +9,9 @@ public :
 	int grids[20][10];//Holds the color 
 	int iScore = 0;
 	std::vector<Block> blocks;
+	Block currentBLock;
+	Block nextBLock;
+
 	void Initialize();
 	void Draw();
 	void Update();
@@ -36,8 +39,7 @@ private:
 	void ClearRow(int a_iRow);
 	std::vector<Color> blockColors;
 
-	Block currentBLock;
-	Block nextBLock;
+
 
 };
 
