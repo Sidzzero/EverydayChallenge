@@ -11,7 +11,7 @@ void GAme::Start()
 	
 	fxBgMusic = LoadMusicStream("assets/sound/music.mp3");
 
-	//PlayMusicStream(fxBgMusic);
+	PlayMusicStream(fxBgMusic);
 }
 
 void GAme::Draw()
@@ -25,6 +25,7 @@ void GAme::Update()
 	auto currentKeyPressed = GetKeyPressed();
 	if (grid.bFull == false)
 	{
+		UpdateMusicStream(fxBgMusic);
 		if (currentKeyPressed == KEY_LEFT)
 		{
 			grid.MoveCurrentLeft();

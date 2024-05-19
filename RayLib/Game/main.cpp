@@ -36,8 +36,8 @@ int main(void)
     auto tempKnightRunRect = Rectangle{ 520,80,512,709 };
 
     InitAudioDevice();
-    Music test = LoadMusicStream("assets/sound/music.mp3");
-    PlayMusicStream(test);
+    
+   
     SetTargetFPS(60);
     GAme tetris;
     tetris.Start();
@@ -60,11 +60,12 @@ int main(void)
         DrawRectangle(GetScreenWidth() * 0.68,
             GetScreenHeight() * .40,
             GetScreenWidth() * .45 * 0.65,
-            GetScreenHeight() * 0.25, BLUE);
-        DrawText("Next Block:", GetScreenWidth() * 0.68,
-            GetScreenHeight() * .40,
+            GetScreenHeight() * 0.30,
+            DARKGRAY);
+        DrawText("Next Block:", GetScreenWidth() * 0.72,
+            GetScreenHeight() * .42,
             25, YELLOW);
-        tetris.DrawNextUI(GetScreenWidth() * 0.68, GetScreenHeight() * .40 + 20);
+        tetris.DrawNextUI(GetScreenWidth() * 0.68, GetScreenHeight() * .40 + 10);
 
        
         tetris.Update();
