@@ -1,7 +1,7 @@
    EveryDay Challenge
    
    This will contain all the various games , tools and experiments I take up and complete within a timeframe. This might be 1 to 3 or (n) days. The main focus of this are,
-- Become better at C++ with some pratical projects.
+- Become better at C++ or programming in-general with some pratical projects.
 - Explore low level and high level of making a game more specifically but also other applications/tools. (structring , memeory managements , graphics , physics , game engines archiectures , etc to maybe ML too )
 - Doing thing from Scratch i.e no engines. 
 The last point is a bit tricky , as I said no engines , I will initially try to use frameworks  avaiable for rendering and other stuff libraries .
