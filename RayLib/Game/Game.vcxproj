@@ -139,11 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BaseState.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Ship.cpp" />
     <ClCompile Include="SpriteAnimation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseState.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Ship.h" />
     <ClInclude Include="SpriteAnimation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

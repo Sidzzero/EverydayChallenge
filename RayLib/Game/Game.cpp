@@ -3,6 +3,8 @@
 
 #include "Common.h"
 #include "SpriteAnimation.h"
+#include "MainGame.h"
+#include <string>
 int main(void)
 {
     InitWindow(1024, 768, "raylib [core] example - basic window");
@@ -32,14 +34,33 @@ int main(void)
     auto tempKnightRect = Rectangle{ 0,80,512,709 };
     auto tempKnightRunRect = Rectangle{ 520,80,512,709 };
 
+    MainGame asteroid;
+    asteroid.Init();
+    bool bEnableMousePos = true;
+    std::string temp_strMousePos;
+    Vector2 mosPos;
     while (!WindowShouldClose())
     {
         BeginDrawing();
-        ClearBackground(BLUE);
-        DrawText("Congrats! You created your first window!", 80, 80, 40, GREEN);
-      
-        knightSprite.Draw(GetTime(), tempKnightRect, Vector2{ 0,0 }, 0.0f, WHITE);
-        knightRunningSprite.Draw(GetTime(), tempKnightRunRect, Vector2{ 0,0 }, 0.0f, WHITE);
+        ClearBackground(BLACK);
+
+       // DrawText("Congrats! You created your first window!", 80, 80, 40, GREEN);
+        if (IsKeyPressed(KEY_KP_1))
+        {
+            bEnableMousePos = !bEnableMousePos;
+
+        }
+        if (bEnableMousePos)
+        {
+            mosPos = GetMousePosition();
+            temp_strMousePos = std::to_string(mosPos.x)+':'+ std::to_string(mosPos.y);
+            DrawText(temp_strMousePos.c_str(),GetScreenWidth()*0.75f,0, 30, GREEN);
+        }
+     //   knightSprite.Draw(GetTime(), tempKnightRect, Vector2{ 0,0 }, 0.0f, WHITE);
+     //   knightRunningSprite.Draw(GetTime(), tempKnightRunRect, Vector2{ 0,0 }, 0.0f, WHITE);
+
+        asteroid.Update();
+        asteroid.Draw();
         EndDrawing();
     }
 
