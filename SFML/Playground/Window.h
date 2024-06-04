@@ -5,7 +5,7 @@ class Window
 {
 public:
 	Window();
-	Window(const std::string& a_title, const sf::Vector2u* a_size);
+	Window(const std::string& a_title, const sf::Vector2u& a_size);
 	~Window();
 
 	void BeginDraw();
@@ -22,7 +22,7 @@ public:
 	void Draw(sf::Drawable & a_drawable);
 
 private:
-	void Setup(const std::string& a_title, const sf::Vector2u* a_size);
+	void Setup(const std::string& a_title, const sf::Vector2u& a_size);
 	void Destroy();
 	void Create();
 
