@@ -9,7 +9,9 @@ int main()
     sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
-
+    sf::RectangleShape rectange(sf::Vector2f(128.0f,128.0f));
+    rectange.setFillColor(sf::Color::Red);
+    rectange.setPosition(320,44);
     while (window.isOpen())
     {
         sf::Event event;
@@ -21,6 +23,7 @@ int main()
 
         window.clear();
         window.draw(shape);
+        window.draw(rectange);
         window.display();
     }
 
