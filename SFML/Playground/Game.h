@@ -1,9 +1,7 @@
 #pragma once
 #include "Window.h"
 
-#include <string>
-class Game
-{
+class Game {
 public:
 	Game();
 	~Game();
@@ -14,13 +12,16 @@ public:
 
 	Window* GetWindow();
 
+	sf::Time GetElapsed();
+	void RestartClock();
 private:
-	void Move();
+	void MoveMushroom();
+
 	Window m_window;
+	sf::Clock m_clock;
+	sf::Time m_elapsed;
 
-	sf::Texture m_mushTexture;
-	sf::Sprite m_mushSprite;
-	sf::Vector2f m_increment{0.4f,0.4f};
-
+	sf::Texture m_mushroomTexture;
+	sf::Sprite m_mushroom;
+	sf::Vector2i m_increment;
 };
-
